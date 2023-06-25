@@ -1,11 +1,11 @@
-import { store } from '@/store';
-import '@/styles/globals.css';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
+import '@/styles/globals.css'
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import type { AppProps } from 'next/app'
+import { store } from '@/store'
+import { Provider } from 'react-redux'
 
-export default function App({ Component, pageProps }: AppProps) {
-  const theme = createTheme();
+export default function App({ Component, pageProps }: AppProps): JSX.Element {
+  const theme = createTheme()
 
   return (
     <ThemeProvider theme={theme}>
@@ -14,5 +14,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </Provider>
     </ThemeProvider>
-  );
+  )
 }
