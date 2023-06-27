@@ -30,10 +30,10 @@ export const AuthProvider = ({ children }: Props) => {
         setUser({
           user,
         });
+        if (!user) router.push('/login');
       });
     } catch (error) {
       setUser(initialState);
-      router.push('/login');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
