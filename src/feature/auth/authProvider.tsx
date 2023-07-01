@@ -26,11 +26,13 @@ export const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     try {
-      return onAuthStateChanged(auth, (user) => {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
         setUser({
           user,
         });
-        if (!user) router.push('/login');
+        if (!user) return router.push('/login');
+
+        return () => unsubscribe();
       });
     } catch (error) {
       setUser(initialState);
