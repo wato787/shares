@@ -1,14 +1,13 @@
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { useRouter } from 'next/router';
 import {
   createContext,
   ReactNode,
-  useContext,
-  useEffect,
   useState,
+  useEffect,
+  useContext,
 } from 'react';
-import type { User } from '@firebase/auth';
-import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from '../../../firebase';
-import { useRouter } from 'next/router';
 
 export type GlobalAuthState = {
   user: User | null | undefined;
@@ -30,7 +29,7 @@ export const AuthProvider = ({ children }: Props) => {
         setUser({
           user,
         });
-        if (!user) return router.push('/login');
+        if (!user) router.push('/login');
 
         return () => unsubscribe();
       });

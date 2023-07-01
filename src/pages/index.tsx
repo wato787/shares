@@ -1,11 +1,10 @@
+import Image from 'next/image';
 import { Button } from '@mui/material';
 import { signOut } from 'firebase/auth';
-import { Inter } from 'next/font/google';
-import Image from 'next/image';
 import { auth } from '../../firebase';
 
 export default function Home() {
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     await signOut(auth);
   };
 
