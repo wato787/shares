@@ -15,6 +15,9 @@ module.exports = {
         primary: 'rgb(85,180,183, 1)',
         secondary: '#F5F5F5',
       },
+      fontFamily: {
+        shares: ['Kablammo'],
+      },
     },
   },
 
