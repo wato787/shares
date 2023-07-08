@@ -1,3 +1,4 @@
+import '../styles/globals.css';
 import { AuthProvider } from '@/feature/auth/AuthProvider';
 import { store } from '@/store';
 import { ThemeProvider } from '@emotion/react';
@@ -11,8 +12,8 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <CssBaseline />
         <AuthProvider>
+          <CssBaseline />
           <Component {...pageProps} />
         </AuthProvider>
       </Provider>
