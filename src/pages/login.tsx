@@ -11,7 +11,13 @@ const Login = () => {
     await router.push('/');
   };
 
-  return <Button onClick={signInWithGoogle}>google</Button>;
+  return (
+<>
+    <Button onClick={signInWithGoogle}>google</Button>;
+    
+</>
+    )
+
 };
 
 export default Login;
