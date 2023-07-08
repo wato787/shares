@@ -1,9 +1,7 @@
-import React from 'react';
-
 import { Button } from '@mui/material';
-import { auth } from '../../firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { auth } from '../../firebase';
 
 const Login = () => {
   const router = useRouter();
