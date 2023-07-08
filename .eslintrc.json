@@ -2,6 +2,7 @@
   "plugins": ["import unused-imports"],
   "rules": {
     "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/no-unused-vars": "off",
     "import/order": [
       "error",
       {
