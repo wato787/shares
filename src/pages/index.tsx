@@ -9,11 +9,5 @@ export default function Home() {
     await signOut(auth);
   };
 
-  return (
-<>
-    <PageLayout>muynbgfvd</PageLayout>;
-    <Button>awawa</Button>
-</>
-  )
-  
+  return <PageLayout>muynbgfutkjyh,yjmhgnfbdvd</PageLayout>;
 }
