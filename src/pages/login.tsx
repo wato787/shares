@@ -1,4 +1,4 @@
-import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { auth } from '../../firebase';
 import * as React from 'react';
@@ -6,8 +6,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import GoogleButton from 'react-google-button';
 import Image from 'next/image';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import { Box, Button, styled } from '@mui/material';
+
 
 
 const Login = () => {
@@ -18,11 +17,7 @@ const Login = () => {
     await router.push('/');
   };
 
-  const gitProvider = new GithubAuthProvider();
-  const signinWithGithub = async () => {
-    await signInWithPopup(auth, gitProvider);
-    await router.push('/');
-  };
+
 
   return (
     <div className='flex justify-center items-center h-screen w-full bg-primary'>
