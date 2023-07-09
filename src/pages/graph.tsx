@@ -1,5 +1,6 @@
 import Chart from '@/components/organisms/Chart';
 import PageLayout from '@/components/templates/PageLayout';
+import { CurrentPageType } from '@/types/type';
 
 import React, { ReactElement } from 'react';
 
@@ -15,7 +16,7 @@ const graph = ({ current }: Current): ReactElement => {
   );
 };
 
-export const getServerSideProps = async ({ query }: { query: any }) => {
+export const getServerSideProps = async ({ query }: CurrentPageType) => {
   const current = query.current;
   return {
     props: {

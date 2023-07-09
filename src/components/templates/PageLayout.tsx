@@ -1,6 +1,5 @@
-import { Tooltip, IconButton, Avatar, Divider } from '@mui/material';
+import { Tooltip, IconButton, Avatar } from '@mui/material';
 import Image from 'next/image';
-import React, { ReactElement, ReactNode, useCallback, useState } from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -10,6 +9,7 @@ import Link from 'next/link';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import { ReactElement, useCallback, cloneElement } from 'react';
 
 interface Props {
   children: ReactElement;
@@ -132,9 +132,7 @@ const PageLayout = (props: Props) => {
               </IconButton>
             </Tooltip>
           </header>
-          <div className='m-5'>
-            {React.cloneElement(props.children, { open })}
-          </div>
+          <div className='m-5'>{cloneElement(props.children, { open })}</div>
         </div>
       </div>
     </>

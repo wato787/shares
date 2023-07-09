@@ -1,6 +1,7 @@
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import PageLayout from '@/components/templates/PageLayout';
+import { CurrentPageType } from '@/types/type';
 
 interface Current {
   current: string | undefined | null;
@@ -18,7 +19,7 @@ export default function Home({ current }: Current, props: any) {
   );
 }
 
-export const getServerSideProps = async ({ query }: { query: any }) => {
+export const getServerSideProps = async ({ query }: CurrentPageType) => {
   if (!query.current) {
     return {
       props: {

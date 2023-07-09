@@ -1,4 +1,4 @@
-import React, { FC, Suspense, useEffect, useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import {
   CartesianGrid,
   BarChart,
