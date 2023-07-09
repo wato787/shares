@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
   const theme = createTheme({
     palette: {
       primary: {
-        main: 'rgb(85,180,183, 1)',
+        main: '#55B4B7',
       },
     },
   });
@@ -33,12 +33,7 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
       <Provider store={store}>
         <AuthProvider>
           <CssBaseline />
-          {showLoading ? (
-            <LoadingScreen />
-          ) : (
-            // コンポーネントを表示
-            <Component {...pageProps} />
-          )}
+          {showLoading ? <LoadingScreen /> : <Component {...pageProps} />}
         </AuthProvider>
       </Provider>
     </ThemeProvider>
