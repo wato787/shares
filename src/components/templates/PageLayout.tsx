@@ -110,11 +110,7 @@ const PageLayout = (props: Props) => {
           <header className='flex items-center justify-end h-16 px-6 py-1 bg-secondary border-b w-full'>
             <Tooltip title='プロフィール'>
               <IconButton>
-                <Avatar
-                  sx={{ bgcolor: 'lightblue' }}
-                  aria-label='recipe'
-                  // src='/../public/largelogo.png'
-                />
+                <Avatar sx={{ bgcolor: 'lightblue' }} aria-label='recipe' />
               </IconButton>
             </Tooltip>
           </header>
