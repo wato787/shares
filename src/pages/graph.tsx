@@ -1,12 +1,8 @@
 import Chart from '@/components/organisms/Chart';
 import PageLayout from '@/components/templates/PageLayout';
-import { CurrentPageType } from '@/types/type';
+import { Current, CurrentPageType } from '@/types/type';
 
 import React, { ReactElement } from 'react';
-
-interface Current {
-  current: string | undefined | null;
-}
 
 const graph = ({ current }: Current): ReactElement => {
   return (

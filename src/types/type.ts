@@ -3,3 +3,7 @@ export type CurrentPageType = {
     current: string;
   };
 };
+
+export type Current = {
+  current: string | undefined | null;
+};

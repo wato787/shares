@@ -29,7 +29,9 @@ export const AuthProvider = ({ children }: Props) => {
         setUser({
           user,
         });
-        if (!user) router.push('/login');
+        if (!user) {
+          router.push('/login');
+        }
 
         return () => unsubscribe();
       });
