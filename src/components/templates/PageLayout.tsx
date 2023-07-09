@@ -7,6 +7,9 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import classNames from 'classnames';
 import Link from 'next/link';
+import { toggleDrawer } from '@/slice/drawerSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 interface Props {
   children: ReactElement;
@@ -14,12 +17,12 @@ interface Props {
 }
 
 const PageLayout = (props: Props) => {
-  const [open, setOpen] = useState<boolean>(true);
+  const dispatch = useDispatch();
+  const open = useSelector((state: RootState) => state.drawer.open);
 
-  const toggleDrawer = useCallback(() => {
-    setOpen(!open);
-  }, [open]);
-
+  const handleToggleDrawer = useCallback(() => {
+    dispatch(toggleDrawer());
+  }, [dispatch]);
   return (
     <>
       <div className='flex w-full h-full'>
@@ -107,11 +110,11 @@ const PageLayout = (props: Props) => {
             )}
           >
             {open ? (
-              <IconButton size='small' onClick={toggleDrawer}>
+              <IconButton size='small' onClick={handleToggleDrawer}>
                 <ArrowBackIosNewIcon />
               </IconButton>
             ) : (
-              <IconButton size='small' onClick={toggleDrawer}>
+              <IconButton size='small' onClick={handleToggleDrawer}>
                 <ArrowForwardIosIcon />
               </IconButton>
             )}

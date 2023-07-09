@@ -1,5 +1,12 @@
-import React, { Suspense, useEffect, useState } from 'react';
-import { CartesianGrid, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import React, { FC, Suspense, useEffect, useState } from 'react';
+import {
+  CartesianGrid,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  LabelList,
+} from 'recharts';
 
 const data = [
   {
@@ -52,14 +59,20 @@ const data = [
   },
 ];
 
+const CustomLabel = (props: any) => {
+  return (
+    <text x={props.x} y={props.y} dy={-10} fill='#777' className='text-sm'>
+      {`¥${props.value.toLocaleString()}`}
+    </text>
+  );
+};
+
 const Chart = (props: any) => {
   const [renderData, setRenderData] = useState<any>([]);
   const [dataYear, setDataYear] = useState<any>([]);
 
   const handleClickXAxis = (e: any) => {
-    const selectedDate = e.value;
-    const findDate = renderData.find((item) => item.date === selectedDate);
-    alert(findDate?.cost);
+    alert(e.value);
   };
 
   useEffect(() => {
@@ -111,7 +124,13 @@ const Chart = (props: any) => {
             barSize={60}
             cursor={'pointer'}
             onClick={handleClickXAxis}
-          />
+          >
+            <LabelList
+              dataKey='cost'
+              position='top'
+              content={<CustomLabel />}
+            />
+          </Bar>
         </BarChart>
       </Suspense>
     </div>
