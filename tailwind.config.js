@@ -13,7 +13,7 @@ module.exports = {
       },
       colors: {
         primary: '#55B4B7',
-        secondary: '#F5F5F5',
+        secondary: '#F2F2F2',
       },
       fontFamily: {
         shares: ['Kablammo'],
