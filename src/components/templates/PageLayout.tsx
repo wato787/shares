@@ -8,8 +8,9 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+
 import { ReactElement, useCallback, cloneElement } from 'react';
+import { RootState } from '@/store';
 
 interface Props {
   children: ReactElement;

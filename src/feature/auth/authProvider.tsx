@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: Props) => {
     } catch (error) {
       setUser(initialState);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-ignore-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;

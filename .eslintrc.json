@@ -1,54 +1,15 @@
 {
-  "plugins": ["import", "unused-imports"],
+  "env": {
+    "es2022": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 13
+  },
+  "plugins": ["unused-imports"],
   "rules": {
     "unused-imports/no-unused-imports": "warn",
-    "@typescript-eslint/no-unused-vars": "off",
-    "import/order": [
-      "error",
-      {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling"],
-          "object",
-          "type",
-          "index"
-        ],
-        "newlines-between": "always",
-        "pathGroupsExcludedImportTypes": ["builtin"],
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        },
-        "pathGroups": [
-          {
-            "pattern": "@/components/*",
-            "group": "internal",
-            "position": "before"
-          },
-          {
-            "pattern": "@/lib/*",
-            "group": "internal",
-            "position": "before"
-          },
-          {
-            "pattern": "firebase",
-            "group": "external",
-            "position": "before"
-          },
-          {
-            "pattern": "next/*",
-            "group": "external",
-            "position": "before"
-          },
-          {
-            "pattern": "react/*",
-            "group": "external",
-            "position": "before"
-          }
-        ]
-      }
-    ]
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }
