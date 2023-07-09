@@ -28,7 +28,7 @@ const PageLayout = (props: Props) => {
       <div className='flex w-full h-full'>
         <aside
           className={classNames(
-            'w-1/5 border-r bg-secondary h-screen relative flex flex-col justify-between',
+            'w-1/5  bg-secondary h-screen relative flex flex-col justify-between',
             !open && 'w-16'
           )}
         >
@@ -86,21 +86,6 @@ const PageLayout = (props: Props) => {
                 </div>
               )}
             </Link>
-            <div
-              className={classNames(
-                'w-full px-4 py-5 flex items-center border-b relative  hover:bg-white',
-                !open && 'justify-center'
-              )}
-            >
-              <DashboardIcon color='primary' />
-              {open && (
-                <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-                  <span className='font-bold text-gray-500'>
-                    ダッシュボード
-                  </span>
-                </div>
-              )}
-            </div>
           </div>
 
           <div
