@@ -1,4 +1,4 @@
-import { Tooltip, IconButton, Avatar } from '@mui/material';
+import { Tooltip, IconButton, Avatar, Box, MenuItem, Menu } from '@mui/material';
 import Image from 'next/image';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -8,9 +8,12 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { ReactElement, useCallback, cloneElement } from 'react';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { ReactElement, useCallback, cloneElement, useState } from 'react';
 import { RootState } from '@/store';
+import { SettingsInputComponent } from '@mui/icons-material';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebase';
 
 interface Props {
   children: ReactElement;
@@ -20,7 +23,22 @@ interface Props {
 const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
+//ユーザーメニュー
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+//ログアウト
+const handleLogout = async (): Promise<void> => {
+  await signOut(auth)
+}
+  
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
   }, [dispatch]);
@@ -109,10 +127,37 @@ const PageLayout = (props: Props) => {
         <div className='flex flex-col w-full'>
           <header className='flex items-center justify-end h-16 px-6 py-1 bg-secondary border-b w-full'>
             <Tooltip title='プロフィール'>
-              <IconButton>
+              <IconButton onClick={handleOpenUserMenu}>
                 <Avatar sx={{ bgcolor: 'lightblue' }} aria-label='recipe' />
               </IconButton>
             </Tooltip>
+            <Menu
+                sx={{ mt: '45px' }}
+                id='menu-appbar'
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <Box>
+                  <MenuItem >
+                    <SettingsInputComponent sx={{ mr: 2 }} /> ユーザー設定
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <LogoutIcon sx={{ mr: 2 }}  />
+                    ログアウト
+                  </MenuItem>
+                </Box>
+              </Menu>
+
           </header>
           <div className='m-5'>{cloneElement(props.children, { open })}</div>
         </div>
