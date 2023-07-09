@@ -1,4 +1,6 @@
+import Chart from '@/components/organisms/Chart';
 import PageLayout from '@/components/templates/PageLayout';
+
 import React, { ReactElement } from 'react';
 
 interface Current {
@@ -6,7 +8,11 @@ interface Current {
 }
 
 const graph = ({ current }: Current): ReactElement => {
-  return <PageLayout current={current}>graph</PageLayout>;
+  return (
+    <PageLayout current={current}>
+      <Chart />
+    </PageLayout>
+  );
 };
 
 export const getServerSideProps = async ({ query }: { query: any }) => {

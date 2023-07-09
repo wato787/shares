@@ -6,12 +6,16 @@ interface Current {
   current: string | undefined | null;
 }
 
-export default function Home({ current }: Current) {
+export default function Home({ current }: Current, props: any) {
   const handleLogout = async (): Promise<void> => {
     await signOut(auth);
   };
 
-  return <PageLayout current={current}>muynbgfutkjyh,yjmhgnfbdvd</PageLayout>;
+  return (
+    <PageLayout current={current}>
+      <p>b{props.open}</p>
+    </PageLayout>
+  );
 }
 
 export const getServerSideProps = async ({ query }: { query: any }) => {

@@ -1,6 +1,6 @@
 import { Tooltip, IconButton, Avatar, Divider } from '@mui/material';
 import Image from 'next/image';
-import React, { useCallback, useState } from 'react';
+import React, { ReactElement, ReactNode, useCallback, useState } from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactElement;
   current: string | undefined | null;
 }
 
@@ -124,12 +124,14 @@ const PageLayout = (props: Props) => {
                 <Avatar
                   sx={{ bgcolor: 'lightblue' }}
                   aria-label='recipe'
-                  src='/../public/largelogo.png'
+                  // src='/../public/largelogo.png'
                 />
               </IconButton>
             </Tooltip>
           </header>
-          <div className='m-5'>{props.children}</div>
+          <div className='m-5'>
+            {React.cloneElement(props.children, { open })}
+          </div>
         </div>
       </div>
     </>
