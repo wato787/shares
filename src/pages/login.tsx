@@ -20,12 +20,16 @@ const Login = () => {
       // ユーザー情報をFirestoreに保存
       const user = result.user;
       const userRef = doc(db, 'users', user.uid);
-      await setDoc(userRef, {
-        id: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-      });
+      await setDoc(
+        userRef,
+        {
+          id: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        },
+        { merge: true }
+      );
 
       // ルートページにリダイレクト
       await router.push('/');
