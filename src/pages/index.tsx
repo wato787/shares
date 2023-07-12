@@ -4,9 +4,10 @@ import { Button, TextField } from '@mui/material';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
+import { setGroupId } from '@/slice/groupIdSlice';
 
 interface Props {
   open: boolean;
@@ -16,8 +17,9 @@ export default function Home({ current }: Current, props: Props) {
   const [name, setName] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
+  const dispatch = useDispatch();
 
-  const handleCreateGroup = async () => {
+  const handleCreateGroup = async (): Promise<void> => {
     const newDocRef = await addDoc(collection(db, 'group'), {
       name: name,
     });
@@ -33,6 +35,7 @@ export default function Home({ current }: Current, props: Props) {
       },
       { merge: true }
     );
+    dispatch(setGroupId(docId));
   };
 
   return (
