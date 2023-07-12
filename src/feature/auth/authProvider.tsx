@@ -8,6 +8,8 @@ import {
   useContext,
 } from 'react';
 import { auth } from '../../../firebase';
+import { setUserId } from '@/slice/userSlice';
+import { useDispatch } from 'react-redux';
 
 export type GlobalAuthState = {
   user: User | null | undefined;
@@ -22,6 +24,7 @@ type Props = { children: ReactNode };
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<GlobalAuthState>(initialState);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
@@ -29,7 +32,9 @@ export const AuthProvider = ({ children }: Props) => {
         setUser({
           user,
         });
-        if (!user) {
+        if (user) {
+          dispatch(setUserId(user.uid as string));
+        } else {
           router.push('/login');
         }
 

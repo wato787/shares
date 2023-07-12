@@ -16,13 +16,21 @@ import Link from 'next/link';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { ReactElement, useCallback, cloneElement, useState } from 'react';
+import {
+  ReactElement,
+  useCallback,
+  cloneElement,
+  useState,
+  useEffect,
+} from 'react';
 import { RootState } from '@/store';
 import { SettingsInputComponent } from '@mui/icons-material';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../../firebase';
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { auth, db } from '../../../firebase';
 import LoadingScreen from './LoadingScreen';
+import { setGroupId } from '@/slice/groupIdSlice';
+import { doc, getDoc } from 'firebase/firestore';
+import { useAuthContext } from '@/feature/auth/AuthProvider';
 
 interface Props {
   children: ReactElement;
@@ -33,8 +41,8 @@ const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const { userId } = useSelector((state: RootState) => state.userId);
   const { user } = useAuthContext();
-
   //ユーザーメニュー
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -52,6 +60,16 @@ const PageLayout = (props: Props) => {
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
   }, [dispatch]);
+
+  useEffect(() => {
+    (async () => {
+      if (!userId) return;
+
+      const userDocRef = doc(db, 'users', userId);
+      const userDocSnap = await getDoc(userDocRef);
+      dispatch(setGroupId(userDocSnap.data()?.groupId));
+    })();
+  }, [userId, dispatch]);
 
   return (
     <>

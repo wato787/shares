@@ -1,10 +1,12 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
 import { Button, TextField } from '@mui/material';
-import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useAuthContext } from '@/feature/auth/AuthProvider';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '@/store';
 
 interface Props {
   open: boolean;
@@ -12,55 +14,44 @@ interface Props {
 
 export default function Home({ current }: Current, props: Props) {
   const [name, setName] = useState('');
-  const [groupInfo, setGroupInfo] = useState<any>({});
-  const [groupName, setGroupName] = useState('');
-  const { user } = useAuthContext();
-  const userId: any = () => {
-    if (user) {
-      return user.uid;
-    }
-    return;
-  };
+  const { userId } = useSelector((state: RootState) => state.userId);
+  const { groupId } = useSelector((state: RootState) => state.groupId);
+
   const handleCreateGroup = async () => {
     const newDocRef = await addDoc(collection(db, 'group'), {
       name: name,
     });
-
     const docId = newDocRef.id;
-
     await setDoc(doc(db, 'group', docId), { id: docId }, { merge: true });
 
-    await setDoc(doc(db, 'users', userId, 'group', docId), {
-      name: name,
-      id: docId,
-    });
-  };
+    if (!userId) return;
 
-  const handleGetGroupId = async () => {
-    const groupCollectionRef = collection(db, 'users', userId, 'group');
-    const querySnapshot = await getDocs(groupCollectionRef);
-    querySnapshot.forEach((doc) => {
-      const groupData: any = doc.data();
-      if (groupData.name === groupName) {
-        setGroupInfo(groupData);
-      }
-    });
+    await setDoc(
+      doc(db, 'users', userId),
+      {
+        groupId: docId,
+      },
+      { merge: true }
+    );
   };
 
   return (
     <PageLayout current={current}>
       <>
-        <p>b{props.open}</p>
-        <TextField value={name} onChange={(e) => setName(e.target.value)} />
-        <Button onClick={handleCreateGroup}>作成</Button>
-        <TextField
-          value={groupName}
-          onChange={(e) => setGroupName(e.target.value)}
-        />
-        <Button onClick={handleGetGroupId}>グループID表示</Button>
-        <p>{groupInfo.id}</p>
-
-        {/* <Button>加入</Button> */}
+        {groupId ? (
+          <>
+            {/* <Button>加入</Button> */}
+            <p>グループ加入済み</p>
+            <p>userId:{userId}</p>
+            <p>groupId:{groupId}</p>
+          </>
+        ) : (
+          <>
+            <TextField value={name} onChange={(e) => setName(e.target.value)} />
+            <Button onClick={handleCreateGroup}>作成</Button>
+            {/* <p>{groupId}</p> */}
+          </>
+        )}
       </>
     </PageLayout>
   );
