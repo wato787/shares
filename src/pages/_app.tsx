@@ -7,6 +7,7 @@ import { createTheme, CssBaseline } from '@mui/material';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import LoadingScreen from '@/components/templates/LoadingScreen';
+import { SnackbarProvider } from 'notistack';
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   const [showLoading, setShowLoading] = useState(true); // ローディング画面の表示状態
@@ -31,10 +32,12 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <AuthProvider>
-          <CssBaseline />
-          {showLoading ? <LoadingScreen /> : <Component {...pageProps} />}
-        </AuthProvider>
+        <SnackbarProvider maxSnack={5}>
+          <AuthProvider>
+            <CssBaseline />
+            {showLoading ? <LoadingScreen /> : <Component {...pageProps} />}
+          </AuthProvider>
+        </SnackbarProvider>
       </Provider>
     </ThemeProvider>
   );

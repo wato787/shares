@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
+import { useSnackbar } from '@/hooks/useSnackBar';
 
 interface Props {
   open: boolean;
@@ -18,6 +19,7 @@ export default function Home({ current }: Current, props: Props) {
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const dispatch = useDispatch();
+  const { showSnackbar } = useSnackbar();
 
   // グループ作成
   const handleCreateGroup = async (): Promise<void> => {
@@ -37,12 +39,13 @@ export default function Home({ current }: Current, props: Props) {
       { merge: true }
     );
     dispatch(setGroupId(docId));
+    showSnackbar('グループを作成しました', 'success');
   };
 
   return (
     <PageLayout current={current}>
       <>
-        {groupId ? (
+        {!groupId ? (
           <>
             {/* <Button>加入</Button> */}
             <p>グループ加入済み</p>
