@@ -7,10 +7,12 @@ import CardActions from '@mui/material/CardActions';
 import GoogleButton from 'react-google-button';
 import Image from 'next/image';
 import { doc, setDoc } from 'firebase/firestore';
+import { useSnackbar } from '@/hooks/useSnackBar';
 
 const Login = () => {
   const router = useRouter();
   const provider = new GoogleAuthProvider();
+  const { showSnackbar } = useSnackbar();
 
   const signInWithGoogle = async () => {
     try {
@@ -33,6 +35,7 @@ const Login = () => {
 
       // ルートページにリダイレクト
       await router.push('/');
+      showSnackbar('ログインしました', 'success');
     } catch (error) {
       console.log(error);
     }
