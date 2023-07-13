@@ -10,16 +10,13 @@ import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
 import { useSnackbar } from '@/hooks/useSnackBar';
 
-interface Props {
-  open: boolean;
-}
-
-export default function Home({ current }: Current, props: Props) {
+export default function Home({ current }: Current) {
   const [name, setName] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
+  const open = useSelector((state: RootState) => state.drawer.open);
 
   // グループ作成
   const handleCreateGroup = async (): Promise<void> => {
@@ -42,18 +39,21 @@ export default function Home({ current }: Current, props: Props) {
     showSnackbar('グループを作成しました', 'success');
   };
 
+  // 	TODO: グループ加入 ユーザーにgroupId格納
+
   return (
     <PageLayout current={current}>
       <>
-        {!groupId ? (
+        {groupId ? (
           <>
-            {/* <Button>加入</Button> */}
             <p>グループ加入済み</p>
             <p>userId:{userId}</p>
             <p>groupId:{groupId}</p>
           </>
         ) : (
           <>
+            {/* 招待IDを入れるtextfield */}
+            {/* <Button>加入</Button> */}
             <TextField value={name} onChange={(e) => setName(e.target.value)} />
             <Button onClick={handleCreateGroup}>作成</Button>
             {/* <p>{groupId}</p> */}

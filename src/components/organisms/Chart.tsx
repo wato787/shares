@@ -1,5 +1,7 @@
+import { RootState } from '@/store';
 import { useRouter } from 'next/router';
 import { useState, useEffect, Suspense } from 'react';
+import { useSelector } from 'react-redux';
 import {
   CartesianGrid,
   BarChart,
@@ -68,14 +70,15 @@ const CustomLabel = (props: any) => {
   );
 };
 
-const Chart = (props: any) => {
+const Chart = () => {
   const [renderData, setRenderData] = useState<any>([]);
   const [dataYear, setDataYear] = useState<any>([]);
   const router = useRouter();
+  const open = useSelector((state: RootState) => state.drawer.open);
 
   const handleClickXAxis = (e: any) => {
     console.log(e.payload.month);
-    // 月を取り出して、その月のデータを表示する。[id]ページへ遷移
+    // 月を取り出して、その月のデータを表示する。detailページへ遷移
     router.push({
       pathname: 'detail',
       query: { year: dataYear, month: e.payload.month, current: 'graph' },
@@ -111,7 +114,7 @@ const Chart = (props: any) => {
       <Suspense fallback={<div>loading...</div>}>
         <BarChart
           id='myChart'
-          width={props.open ? 1100 : 1300}
+          width={open ? 1100 : 1300}
           height={650}
           data={renderData}
         >
