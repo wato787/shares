@@ -34,7 +34,7 @@ import { useAuthContext } from '@/feature/auth/AuthProvider';
 
 interface Props {
   children: ReactElement;
-  current: string | undefined | null;
+  current?: string | undefined | null;
 }
 
 const PageLayout = (props: Props) => {

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useState, useEffect, Suspense } from 'react';
 import {
   CartesianGrid,
@@ -70,9 +71,15 @@ const CustomLabel = (props: any) => {
 const Chart = (props: any) => {
   const [renderData, setRenderData] = useState<any>([]);
   const [dataYear, setDataYear] = useState<any>([]);
+  const router = useRouter();
 
   const handleClickXAxis = (e: any) => {
-    alert(e.value);
+    console.log(e.payload.month);
+    // 月を取り出して、その月のデータを表示する。[id]ページへ遷移
+    router.push({
+      pathname: 'detail',
+      query: { year: dataYear, month: e.payload.month, current: 'graph' },
+    });
   };
 
   useEffect(() => {
