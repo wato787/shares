@@ -20,13 +20,15 @@ export default function Home({ current }: Current) {
 
   // グループ作成
   const handleCreateGroup = async (): Promise<void> => {
+    if (!userId) {
+      showSnackbar('ログインしてください', 'error');
+      return;
+    }
     const newDocRef = await addDoc(collection(db, 'group'), {
       name: name,
     });
     const docId = newDocRef.id;
     await setDoc(doc(db, 'group', docId), { id: docId }, { merge: true });
-
-    if (!userId) return;
 
     await setDoc(
       doc(db, 'users', userId),
