@@ -77,7 +77,6 @@ const Chart = () => {
   const open = useSelector((state: RootState) => state.drawer.open);
 
   const handleClickXAxis = (e: any) => {
-    console.log(e.payload.month);
     // 月を取り出して、その月のデータを表示する。detailページへ遷移
     router.push({
       pathname: 'detail',
