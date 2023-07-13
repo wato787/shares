@@ -61,6 +61,7 @@ const PageLayout = (props: Props) => {
     dispatch(toggleDrawer());
   }, [dispatch]);
 
+  // グループID取得
   useEffect(() => {
     (async (): Promise<void> => {
       if (!userId) return;

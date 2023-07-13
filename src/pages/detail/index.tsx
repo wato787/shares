@@ -1,4 +1,5 @@
 import PageLayout from '@/components/templates/PageLayout';
+import { CurrentPageType } from '@/types/type';
 import React from 'react';
 
 interface Query {
@@ -10,7 +11,6 @@ interface Query {
 }
 
 const index = ({ query }: Query) => {
-  console.log(query);
   return (
     <PageLayout current={query.current}>
       <>
@@ -21,7 +21,7 @@ const index = ({ query }: Query) => {
   );
 };
 
-export const getServerSideProps = async ({ query }: any) => {
+export const getServerSideProps = async ({ query }: CurrentPageType) => {
   return {
     props: {
       query,

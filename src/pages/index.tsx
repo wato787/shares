@@ -19,6 +19,7 @@ export default function Home({ current }: Current, props: Props) {
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const dispatch = useDispatch();
 
+  // グループ作成
   const handleCreateGroup = async (): Promise<void> => {
     const newDocRef = await addDoc(collection(db, 'group'), {
       name: name,
