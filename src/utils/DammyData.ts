@@ -1,17 +1,18 @@
 import { CostData } from '@/types/type';
 import { CostType } from './CostType';
+import { useCallback } from 'react';
 
 type groupedCostData = {
   year: string;
   data: {
     month: string;
-    rentCost: number;
-    foodCost: number;
-    miscellaneousCost: number;
-    waterCost: number;
-    gasCost: number;
-    utilitiesCost: number;
-    totalCost: number;
+    rentCost: number; //家賃は別でいいかも
+    foodCost: number; //食費
+    miscellaneousCost: number; //雑費
+    waterCost: number; //水道代
+    gasCost: number; //ガス代
+    utilitiesCost: number; //光熱費
+    totalCost: number; //合計
   }[];
 };
 
@@ -455,7 +456,7 @@ export const groupCostData = (data: CostData[]): groupedCostData[] => {
   return groupedData;
 };
 
-const getMonthLabel = (month: string): string => {
+const getMonthLabel = useCallback((month: string): string => {
   const monthNumber = parseInt(month);
   const monthLabels = [
     '1月',
@@ -473,4 +474,4 @@ const getMonthLabel = (month: string): string => {
   ];
 
   return monthLabels[monthNumber - 1] || month;
-};
+}, []);
