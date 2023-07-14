@@ -1,6 +1,5 @@
 import { CostData } from '@/types/type';
 import { CostType } from './CostType';
-import { useCallback } from 'react';
 
 type groupedCostData = {
   year: string;
@@ -389,6 +388,26 @@ export const dammyData: CostData[] = [
   },
 ];
 
+const getMonthLabel = (month: string): string => {
+  const monthNumber = parseInt(month);
+  const monthLabels = [
+    '1月',
+    '2月',
+    '3月',
+    '4月',
+    '5月',
+    '6月',
+    '7月',
+    '8月',
+    '9月',
+    '10月',
+    '11月',
+    '12月',
+  ];
+
+  return monthLabels[monthNumber - 1] || month;
+};
+
 export const groupCostData = (data: CostData[]): groupedCostData[] => {
   const groupedData: groupedCostData[] = [];
 
@@ -455,23 +474,3 @@ export const groupCostData = (data: CostData[]): groupedCostData[] => {
 
   return groupedData;
 };
-
-const getMonthLabel = useCallback((month: string): string => {
-  const monthNumber = parseInt(month);
-  const monthLabels = [
-    '1月',
-    '2月',
-    '3月',
-    '4月',
-    '5月',
-    '6月',
-    '7月',
-    '8月',
-    '9月',
-    '10月',
-    '11月',
-    '12月',
-  ];
-
-  return monthLabels[monthNumber - 1] || month;
-}, []);
