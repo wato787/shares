@@ -1,7 +1,7 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
 import { Button, TextField } from '@mui/material';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,6 +41,14 @@ export default function Home({ current }: Current) {
     showSnackbar('グループを作成しました', 'success');
   };
 
+  // 再読み込み時にグループID取得
+  const handleReload = async (): Promise<void> => {
+    if (!userId) return;
+    const userDocRef = doc(db, 'users', userId);
+    const userDocSnap = await getDoc(userDocRef);
+    dispatch(setGroupId(userDocSnap.data()?.groupId));
+  };
+
   // 	TODO: グループ加入 ユーザーにgroupId格納
 
   return (
@@ -58,6 +66,7 @@ export default function Home({ current }: Current) {
             {/* <Button>加入</Button> */}
             <TextField value={name} onChange={(e) => setName(e.target.value)} />
             <Button onClick={handleCreateGroup}>作成</Button>
+            <Button onClick={handleReload}>再読み込み</Button>
             {/* <p>{groupId}</p> */}
           </>
         )}
