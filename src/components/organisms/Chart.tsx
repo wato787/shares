@@ -33,8 +33,6 @@ const Chart = () => {
   };
 
   const grouped = groupCostData(dammyData)[0];
-  console.log(grouped);
-  console.log(grouped.data);
 
   return (
     <div className='container mt-4 space-y-4'>
