@@ -8,7 +8,7 @@ interface Props {
 }
 
 const CostColorTitle = (props: Props) => {
-  const color = useCallback(() => {
+  const color = useCallback((): string => {
     if (props.type === CostType.RENT) return 'bg-rent';
     if (props.type === CostType.FOOD) return 'bg-food';
     if (props.type === CostType.GAS) return 'bg-gas';

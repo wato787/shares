@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import { addDoc, collection } from 'firebase/firestore';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
 
@@ -34,6 +34,17 @@ const InputCard = () => {
     setAmount('');
   };
 
+  const options = useMemo(
+    () => [
+      { value: '雑費', label: '雑費' },
+      { value: '水道代', label: '水道代' },
+      { value: '光熱費', label: '光熱費' },
+      { value: 'ガス代', label: 'ガス代' },
+      { value: '食費', label: '食費' },
+    ],
+    []
+  );
+
   return (
     <div className='w-1/3 '>
       <Card>
@@ -57,14 +68,15 @@ const InputCard = () => {
               <Select
                 fullWidth
                 onChange={(e) => setSelectCostType(e.target.value as string)}
+                defaultValue=''
               >
                 {/* 家賃別のとこに移動 */}
                 {/* <MenuItem value='家賃'>家賃</MenuItem> */}
-                <MenuItem value='雑費'>雑費</MenuItem>
-                <MenuItem value='水道代'>水道代</MenuItem>
-                <MenuItem value='光熱費'>光熱費</MenuItem>
-                <MenuItem value='ガス代'>ガス代</MenuItem>
-                <MenuItem value='食費'>食費</MenuItem>
+                {options.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
               </Select>
               <form
                 onSubmit={addCost}
@@ -80,11 +92,12 @@ const InputCard = () => {
                   onSubmit={addCost}
                 />
                 <Button
-                  variant='outlined'
+                  variant='contained'
                   fullWidth
                   sx={{ height: 50 }}
-                  color='primary'
                   onClick={addCost}
+                  disabled={!selectCostType || !amount}
+                  className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
                 >
                   送信
                 </Button>
