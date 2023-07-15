@@ -82,7 +82,7 @@ export default function Home({ current }: Current) {
       <>
         {/* TODO:データ取得のローディングで分岐する */}
         {groupId ? (
-          <div className={classNames(' p-5 w-full flex flex-col gap-y-10 ')}>
+          <div className={classNames('p-5 w-full flex flex-col gap-y-10')}>
             <ExpensesCard />
 
             <div className='flex w-full gap-x-10'>
