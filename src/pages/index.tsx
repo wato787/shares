@@ -86,7 +86,7 @@ export default function Home({ current }: Current) {
     <PageLayout current={current} grayBg>
       <>
         {/* TODO:データ取得のローディングで分岐する */}
-        {!groupId ? (
+        {groupId ? (
           <div className={classNames('p-5 w-full flex flex-col gap-y-10')}>
             <ExpensesCard />
 
