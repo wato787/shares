@@ -5,9 +5,9 @@ import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
+import InputCard from '@/components/organisms/InputCard';
 
 interface Props {
   open: boolean;
@@ -47,6 +47,7 @@ export default function Home({ current }: Current, props: Props) {
             <p>グループ加入済み</p>
             <p>userId:{userId}</p>
             <p>groupId:{groupId}</p>
+            <InputCard />
           </>
         ) : (
           <>
