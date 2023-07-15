@@ -11,6 +11,7 @@ import InputCard from '@/components/organisms/card/InputCard';
 import { useSnackbar } from '@/hooks/useSnackBar';
 import classNames from 'classnames';
 import TotalCard from '@/components/organisms/card/TotalCard';
+import IndividualCard from '@/components/organisms/card/IndividualCard';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -66,6 +67,7 @@ export default function Home({ current }: Current) {
             <div className='flex w-full gap-x-10'>
               <InputCard />
               <TotalCard />
+              <IndividualCard />
             </div>
           </div>
         ) : (
