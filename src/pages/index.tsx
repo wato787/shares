@@ -58,6 +58,7 @@ export default function Home({ current }: Current) {
   return (
     <PageLayout current={current}>
       <>
+        {/* TODO:groupIDで分岐ではなくデータ取得のローディングで分岐する */}
         {groupId ? (
           <div
             className={classNames(
