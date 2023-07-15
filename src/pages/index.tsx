@@ -62,14 +62,13 @@ export default function Home({ current }: Current) {
         {groupId ? (
           <div
             className={classNames(
-              ' bg-secondary p-5 w-full flex flex-col gap-y-10 '
+              'bg-secondary p-5 w-full flex flex-col gap-y-10 '
             )}
           >
-            <div className='w-full' >
-            <ExpensesCard/>
+            <div className='w-full'>
+              <ExpensesCard />
             </div>
-            
-            
+
             <div className='flex w-full gap-x-10'>
               <InputCard />
               <TotalCard />
