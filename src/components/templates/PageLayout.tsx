@@ -6,13 +6,9 @@ import {
   MenuItem,
   Menu,
 } from '@mui/material';
-import Image from 'next/image';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
 import classNames from 'classnames';
-import Link from 'next/link';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -31,6 +27,7 @@ import { auth, db } from '../../../firebase';
 import { setGroupId } from '@/slice/groupIdSlice';
 import { doc, getDoc } from 'firebase/firestore';
 import { useAuthContext } from '@/feature/auth/AuthProvider';
+import PageNavigation from './PageNavigation';
 
 interface Props {
   children: ReactElement;
@@ -43,6 +40,7 @@ const PageLayout = (props: Props) => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { userId } = useSelector((state: RootState) => state.userId);
   const { user } = useAuthContext();
+
   //ユーザーメニュー
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -82,59 +80,7 @@ const PageLayout = (props: Props) => {
           )}
         >
           <div>
-            <div className='flex items-center justify-around border-b h-16 z-10'>
-              <Image
-                src='/../public/largelogo.png'
-                width={40}
-                height={20}
-                alt='Shares'
-              />
-              {open && (
-                <>
-                  <span className='text-3xl font-bold font-shares text-primary'>
-                    Shares
-                  </span>
-                  <Image
-                    src='/../public/largelogo.png'
-                    width={40}
-                    height={20}
-                    alt='Shares'
-                  />
-                </>
-              )}
-            </div>
-            <Link
-              className={classNames(
-                'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
-                !open && 'justify-center',
-                props.current === 'dashboad' || !props.current ? 'bg-white' : ''
-              )}
-              href={{ pathname: '/', query: { current: 'dashboad' } }}
-            >
-              <DashboardIcon color='primary' />
-              {open && (
-                <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-                  <span className='font-bold text-gray-500'>
-                    ダッシュボード
-                  </span>
-                </div>
-              )}
-            </Link>
-            <Link
-              className={classNames(
-                'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
-                !open && 'justify-center',
-                props.current === 'graph' ? 'bg-white' : ''
-              )}
-              href={{ pathname: '/graph', query: { current: 'graph' } }}
-            >
-              <ShowChartIcon color='primary' />
-              {open && (
-                <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-                  <span className='font-bold text-gray-500'>グラフ</span>
-                </div>
-              )}
-            </Link>
+            <PageNavigation current={props.current} />
           </div>
 
           <div
