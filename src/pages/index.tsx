@@ -43,6 +43,7 @@ export default function Home({ current }: Current) {
       id: userId,
       photoUrl: user?.photoURL,
       name: user?.displayName,
+      position: position,
     });
 
     await setDoc(
@@ -74,6 +75,7 @@ export default function Home({ current }: Current) {
       id: userId,
       photoUrl: user?.photoURL,
       name: user?.displayName,
+      position: joinPositon,
     });
 
     dispatch(setGroupId(joinId));
@@ -84,7 +86,7 @@ export default function Home({ current }: Current) {
     <PageLayout current={current} grayBg>
       <>
         {/* TODO:データ取得のローディングで分岐する */}
-        {groupId ? (
+        {!groupId ? (
           <div className={classNames('p-5 w-full flex flex-col gap-y-10')}>
             <ExpensesCard />
 
@@ -99,16 +101,26 @@ export default function Home({ current }: Current) {
             <TextField
               value={joinId}
               onChange={(e) => setJoinId(e.target.value)}
+              label='グループID'
             />
-            <TextField
-              value={position}
-              onChange={(e) => setPosition(e.target.value)}
-            />
-            <Button onClick={handleJoinGroup}>加入</Button>
-            <TextField value={name} onChange={(e) => setName(e.target.value)} />
             <TextField
               value={joinPositon}
               onChange={(e) => setJoinPosition(e.target.value)}
+              label='役割'
+            />
+
+            <Button onClick={handleJoinGroup}>加入</Button>
+
+            <TextField
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              label='id'
+            />
+
+            <TextField
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+              label='役割'
             />
             <Button onClick={handleCreateGroup}>作成</Button>
             {/* <p>{groupId}</p> */}
