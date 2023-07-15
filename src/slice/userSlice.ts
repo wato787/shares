@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: any = {
-  userId: null,
+type UserIdType = {
+  userId: string | undefined | null;
+};
+
+const initialState: UserIdType = {
+  userId: undefined,
 };
 
 const userSlice = createSlice({

@@ -8,7 +8,7 @@ export const useSnackbar = (): {
   const showSnackbar = (value: string, variant?: any): void => {
     enqueueSnackbar(value, {
       // preventDuplicate: true,
-      autoHideDuration: 3500,
+      autoHideDuration: 2000,
       variant: variant ? variant : 'default',
       anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
       style: {

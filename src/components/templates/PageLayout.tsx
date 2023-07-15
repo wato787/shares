@@ -18,7 +18,6 @@ import {
   cloneElement,
   useState,
   useEffect,
-  Suspense,
 } from 'react';
 import { RootState } from '@/store';
 import { SettingsInputComponent } from '@mui/icons-material';
@@ -138,11 +137,7 @@ const PageLayout = (props: Props) => {
               </Box>
             </Menu>
           </header>
-          <div className='m-5'>
-            <Suspense fallback={<div>loading...</div>}>
-              {cloneElement(props.children, { open })}
-            </Suspense>
-          </div>
+          <div className='m-5'>{cloneElement(props.children, { open })}</div>
         </div>
       </div>
     </>
