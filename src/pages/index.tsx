@@ -10,10 +10,6 @@ import { setGroupId } from '@/slice/groupIdSlice';
 import InputCard from '@/components/organisms/InputCard';
 import { useSnackbar } from '@/hooks/useSnackBar';
 
-import InputCard from '@/components/organisms/InputCard';
-
-import { useSnackbar } from '@/hooks/useSnackBar';
-
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
