@@ -62,7 +62,7 @@ export default function Home({ current }: Current) {
             )}
           >
             <div className='w-full h-[125px] bg-white shadow' />
-            <div className='flex w-full gap-x-5'>
+            <div className='flex w-full gap-x-10'>
               <InputCard />
               <InputCard />
             </div>
