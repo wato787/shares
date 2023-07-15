@@ -7,9 +7,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
-import InputCard from '@/components/organisms/InputCard';
+import InputCard from '@/components/organisms/card/InputCard';
 import { useSnackbar } from '@/hooks/useSnackBar';
 import classNames from 'classnames';
+import TotalCard from '@/components/organisms/card/TotalCard';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -64,7 +65,7 @@ export default function Home({ current }: Current) {
             <div className='w-full h-[125px] bg-white shadow' />
             <div className='flex w-full gap-x-10'>
               <InputCard />
-              <InputCard />
+              <TotalCard />
             </div>
           </div>
         ) : (
