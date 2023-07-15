@@ -31,6 +31,7 @@ import { useAuthContext } from '@/feature/auth/AuthProvider';
 interface Props {
   children: ReactElement;
   current?: string | undefined | null;
+  grayBg?: boolean;
 }
 
 const PageLayout = (props: Props) => {
@@ -99,7 +100,7 @@ const PageLayout = (props: Props) => {
             )}
           </div>
         </aside>
-        <div className='flex flex-col w-full'>
+        <div className='flex flex-col h-screen w-full'>
           <header className='flex items-center justify-end h-16 px-6 py-1 bg-secondary border-b w-full'>
             <Tooltip title='プロフィール'>
               <IconButton onClick={handleOpenUserMenu}>
@@ -137,7 +138,11 @@ const PageLayout = (props: Props) => {
               </Box>
             </Menu>
           </header>
-          <div className='m-5'>{cloneElement(props.children, { open })}</div>
+          <div
+            className={classNames('m-5 flex-1', props.grayBg && 'bg-secondary')}
+          >
+            {cloneElement(props.children, { open })}
+          </div>
         </div>
       </div>
     </>
