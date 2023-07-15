@@ -19,7 +19,8 @@ const InputCard = () => {
   const [amount, setAmount] = useState('');
   const { groupId } = useSelector((state: RootState) => state.groupId);
 
-  const addCost = async () => {
+  const addCost = async (e: any) => {
+    e.preventDefault();
     if (!groupId) return;
     const groupRef = collection(db, 'group', groupId, 'cost');
     await addDoc(groupRef, {
@@ -31,7 +32,6 @@ const InputCard = () => {
       inputUserPhotoUrl: user?.photoURL,
     });
     setAmount('');
-    setSelectCostType('');
   };
 
   return (
@@ -46,9 +46,10 @@ const InputCard = () => {
               aria-label='recipe'
               src={user?.photoURL as string}
             />
+
             <span>{user?.displayName}</span>
           </div>
-          <form onSubmit={addCost} className='flex flex-col  w-full'>
+          <div className='flex flex-col  w-full'>
             <span className='text-gray-500 font-bold text-xs mb-2'>
               出費項目
             </span>
@@ -64,25 +65,31 @@ const InputCard = () => {
                 <MenuItem value='ガス代'>ガス代</MenuItem>
                 <MenuItem value='食費'>食費</MenuItem>
               </Select>
-              <TextField
-                type='number'
-                id='input-with-sx'
-                label='金額'
-                fullWidth
-                value={amount}
-                onChange={(e) => setAmount(e.target.value as string)}
-              />
-              <Button
-                variant='outlined'
-                fullWidth
-                sx={{ height: 50 }}
-                color='primary'
-                onClick={addCost}
+              <form
+                onSubmit={addCost}
+                className='flex flex-col  w-full space-y-7'
               >
-                送信
-              </Button>
+                <TextField
+                  type='number'
+                  id='input-with-sx'
+                  label='金額'
+                  fullWidth
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value as string)}
+                  onSubmit={addCost}
+                />
+                <Button
+                  variant='outlined'
+                  fullWidth
+                  sx={{ height: 50 }}
+                  color='primary'
+                  onClick={addCost}
+                >
+                  送信
+                </Button>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </Card>
     </div>
