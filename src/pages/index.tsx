@@ -18,6 +18,7 @@ export default function Home({ current }: Current) {
   const [name, setName] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
+  const [joinId, setJoinId] = useState('');
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
   const open = useSelector((state: RootState) => state.drawer.open);
@@ -46,6 +47,21 @@ export default function Home({ current }: Current) {
   };
 
   // 	TODO: グループ加入 ユーザーにgroupId格納
+  const handleJoinGroup = async (): Promise<void> => {
+    if (!userId) {
+      showSnackbar('ログインしてください', 'error');
+      return;
+    }
+    const userDocRef = doc(db, 'users', userId);
+    await setDoc(
+      userDocRef,
+      {
+        groupId: joinId,
+      },
+      { merge: true }
+    );
+    dispatch(setGroupId(joinId));
+  };
 
   return (
     <PageLayout current={current}>
@@ -69,8 +85,11 @@ export default function Home({ current }: Current) {
           </div>
         ) : (
           <>
-            {/* 招待IDを入れるtextfield */}
-            {/* <Button>加入</Button> */}
+            <TextField
+              value={joinId}
+              onChange={(e) => setJoinId(e.target.value)}
+            />
+            <Button onClick={handleJoinGroup}>加入</Button>
             <TextField value={name} onChange={(e) => setName(e.target.value)} />
             <Button onClick={handleCreateGroup}>作成</Button>
             {/* <p>{groupId}</p> */}
