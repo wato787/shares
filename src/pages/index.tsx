@@ -74,6 +74,7 @@ export default function Home({ current }: Current) {
     });
 
     dispatch(setGroupId(joinId));
+    showSnackbar('グループに加入しました', 'success');
   };
 
   return (
