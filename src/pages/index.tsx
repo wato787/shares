@@ -1,32 +1,39 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
 import { Button, TextField } from '@mui/material';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
 import InputCard from '@/components/organisms/InputCard';
+import { useSnackbar } from '@/hooks/useSnackBar';
 
-interface Props {
-  open: boolean;
-}
+import InputCard from '@/components/organisms/InputCard';
 
-export default function Home({ current }: Current, props: Props) {
+import { useSnackbar } from '@/hooks/useSnackBar';
+
+
+export default function Home({ current }: Current) {
   const [name, setName] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const dispatch = useDispatch();
+  const { showSnackbar } = useSnackbar();
+  const open = useSelector((state: RootState) => state.drawer.open);
 
+  // グループ作成
   const handleCreateGroup = async (): Promise<void> => {
+    if (!userId) {
+      showSnackbar('ログインしてください', 'error');
+      return;
+    }
     const newDocRef = await addDoc(collection(db, 'group'), {
       name: name,
     });
     const docId = newDocRef.id;
     await setDoc(doc(db, 'group', docId), { id: docId }, { merge: true });
-
-    if (!userId) return;
 
     await setDoc(
       doc(db, 'users', userId),
@@ -36,14 +43,24 @@ export default function Home({ current }: Current, props: Props) {
       { merge: true }
     );
     dispatch(setGroupId(docId));
+    showSnackbar('グループを作成しました', 'success');
   };
+
+  // 再読み込み時にグループID取得
+  const handleReload = async (): Promise<void> => {
+    if (!userId) return;
+    const userDocRef = doc(db, 'users', userId);
+    const userDocSnap = await getDoc(userDocRef);
+    dispatch(setGroupId(userDocSnap.data()?.groupId));
+  };
+
+  // 	TODO: グループ加入 ユーザーにgroupId格納
 
   return (
     <PageLayout current={current}>
       <>
         {groupId ? (
           <>
-            {/* <Button>加入</Button> */}
             <p>グループ加入済み</p>
             <p>userId:{userId}</p>
             <p>groupId:{groupId}</p>
@@ -51,8 +68,11 @@ export default function Home({ current }: Current, props: Props) {
           </>
         ) : (
           <>
+            {/* 招待IDを入れるtextfield */}
+            {/* <Button>加入</Button> */}
             <TextField value={name} onChange={(e) => setName(e.target.value)} />
             <Button onClick={handleCreateGroup}>作成</Button>
+            <Button onClick={handleReload}>再読み込み</Button>
             {/* <p>{groupId}</p> */}
           </>
         )}
