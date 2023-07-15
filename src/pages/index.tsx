@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
+import { useAuthContext } from '@/feature/auth/AuthProvider';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -22,6 +23,7 @@ export default function Home({ current }: Current) {
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
   const open = useSelector((state: RootState) => state.drawer.open);
+  const { user } = useAuthContext();
 
   // グループ作成
   const handleCreateGroup = async (): Promise<void> => {
@@ -34,6 +36,11 @@ export default function Home({ current }: Current) {
     });
     const docId = newDocRef.id;
     await setDoc(doc(db, 'group', docId), { id: docId }, { merge: true });
+    await addDoc(collection(db, 'group', docId, 'users'), {
+      id: userId,
+      photoUrl: user?.photoURL,
+      name: user?.displayName,
+    });
 
     await setDoc(
       doc(db, 'users', userId),
@@ -60,6 +67,12 @@ export default function Home({ current }: Current) {
       },
       { merge: true }
     );
+    await addDoc(collection(db, 'group', joinId, 'users'), {
+      id: userId,
+      photoUrl: user?.photoURL,
+      name: user?.displayName,
+    });
+
     dispatch(setGroupId(joinId));
   };
 
