@@ -17,8 +17,11 @@ import { useAuthContext } from '@/feature/auth/AuthProvider';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
+  const [position, setPosition] = useState('');
+  const [joinPositon, setJoinPosition] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
+
   const [joinId, setJoinId] = useState('');
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
@@ -97,8 +100,16 @@ export default function Home({ current }: Current) {
               value={joinId}
               onChange={(e) => setJoinId(e.target.value)}
             />
+            <TextField
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+            />
             <Button onClick={handleJoinGroup}>加入</Button>
             <TextField value={name} onChange={(e) => setName(e.target.value)} />
+            <TextField
+              value={joinPositon}
+              onChange={(e) => setJoinPosition(e.target.value)}
+            />
             <Button onClick={handleCreateGroup}>作成</Button>
             {/* <p>{groupId}</p> */}
           </>

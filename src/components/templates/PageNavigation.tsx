@@ -6,6 +6,7 @@ import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
 import { Current } from '@/types/type';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 
 const PageNavigation = ({ current }: Current): ReactElement => {
@@ -60,6 +61,21 @@ const PageNavigation = ({ current }: Current): ReactElement => {
         {open && (
           <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
             <span className='font-bold text-gray-500'>グラフ</span>
+          </div>
+        )}
+      </Link>
+      <Link
+        className={classNames(
+          'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
+          !open && 'justify-center',
+          current === 'graph' ? 'bg-white' : ''
+        )}
+        href={{ pathname: '/setting', query: { current: 'setting' } }}
+      >
+        <ManageAccountsIcon color='primary' />
+        {open && (
+          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+            <span className='font-bold text-gray-500'>設定 ＆ 管理</span>
           </div>
         )}
       </Link>
