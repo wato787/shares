@@ -14,6 +14,12 @@ module.exports = {
       colors: {
         primary: '#55B4B7',
         secondary: '#F5F5F5',
+        rent: '#55B4B7',
+        gas: '#ff7f50',
+        utilities: '#ffd700',
+        water: '#00ffff',
+        food: '#00ff00',
+        miscellaneous: '#ff00ff',
       },
       fontFamily: {
         shares: ['Kablammo'],

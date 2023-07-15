@@ -33,7 +33,8 @@ const InputCard = () => {
               <Select fullWidth>
                 <MenuItem value='家賃'>家賃</MenuItem>
                 <MenuItem value='雑費'>雑費</MenuItem>
-                <MenuItem value='水道光熱費'>水道光熱費</MenuItem>
+                <MenuItem value='水道代'>水道代</MenuItem>
+                <MenuItem value='光熱費'>光熱費</MenuItem>
                 <MenuItem value='ガス代'>ガス代</MenuItem>
                 <MenuItem value='食費'>食費</MenuItem>
               </Select>
