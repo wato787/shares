@@ -27,7 +27,7 @@ import { setGroupId } from '@/slice/groupIdSlice';
 import { doc, getDoc } from 'firebase/firestore';
 
 import PageNavigation from './PageNavigation';
-import { useAuthContext } from '@/feature/auth/authProvider';
+import { useAuthContext } from '@/feature/auth/AuthProvider';
 
 interface Props {
   children: ReactElement;
@@ -72,7 +72,7 @@ const PageLayout = (props: Props) => {
 
   return (
     <>
-      <div className='flex w-full h-full'>
+      <div className='flex w-full fixed '>
         <aside
           className={classNames(
             'w-1/5  bg-secondary h-screen relative flex flex-col justify-between',

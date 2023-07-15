@@ -9,7 +9,7 @@ import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
 import InputCard from '@/components/organisms/InputCard';
 import { useSnackbar } from '@/hooks/useSnackBar';
-
+import classNames from 'classnames';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -56,12 +56,17 @@ export default function Home({ current }: Current) {
     <PageLayout current={current}>
       <>
         {groupId ? (
-          <>
-            <p>グループ加入済み</p>
-            <p>userId:{userId}</p>
-            <p>groupId:{groupId}</p>
-            <InputCard />
-          </>
+          <div
+            className={classNames(
+              ' bg-secondary p-5 w-full flex flex-col gap-y-10 '
+            )}
+          >
+            <div className='w-full h-[125px] bg-white shadow' />
+            <div className='flex w-full gap-x-5'>
+              <InputCard />
+              <InputCard />
+            </div>
+          </div>
         ) : (
           <>
             {/* 招待IDを入れるtextfield */}

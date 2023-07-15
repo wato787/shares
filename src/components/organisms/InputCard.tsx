@@ -1,19 +1,12 @@
-import { useAuthContext } from "@/feature/auth/authProvider";
-import { Avatar, Box, Button, Card, TextField } from "@mui/material";
+import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { Avatar, Box, Button, Card, TextField } from '@mui/material';
 
 const InputCard = () => {
   const { user } = useAuthContext();
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#f1f1f1',
-        padding: '1rem',
-        maxWidth: 733,
-        minWidth: 733,
-      }}
-    >
-      <Card>
+    <div className='w-1/2 '>
+      <Card sx={{ height: '500px' }}>
         <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 1 }}>
           <Avatar
             sx={{ bgcolor: 'lightblue' }}
@@ -24,7 +17,7 @@ const InputCard = () => {
           <Button>送信</Button>
         </Box>
       </Card>
-    </Box>
+    </div>
   );
 };
 
