@@ -2,7 +2,7 @@ import React from 'react';
 
 const ExpensesCard = () => {
   return (
-    <div className='flex p-4 bg-white'>
+    <div className='flex p-4 bg-white shadow rounded'>
       <div className='w-1/2 p-2 border-r'>
         <h2 className='text-2xl'>出費合計</h2>
         <div className='flex justify-end pr-4'>

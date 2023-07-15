@@ -10,7 +10,10 @@ export type Current = {
 
 // フォームで入力するデータ
 export type CostData = {
-  date: string; //2021-01-01
+  date: any; //2021-01-01
   cost: number; //100000
-  costType: string; //housing,utilityなど家賃、雑費などを英語で
+  costType: string; //utilityなど家賃、雑費などを英語で
+  inputUserName?: string; //入力したユーザー名
+  inputUserId?: string; //入力したユーザーID
+  inputUserPhotoUrl?: string; //入力したユーザーのプロフィール画像
 };
