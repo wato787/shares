@@ -25,9 +25,8 @@ import { signOut } from 'firebase/auth';
 import { auth, db } from '../../../firebase';
 import { setGroupId } from '@/slice/groupIdSlice';
 import { doc, getDoc } from 'firebase/firestore';
-
 import PageNavigation from './PageNavigation';
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { useAuthContext } from '@/feature/auth/authProvider';
 
 interface Props {
   children: ReactElement;

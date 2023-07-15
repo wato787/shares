@@ -12,6 +12,7 @@ import { useSnackbar } from '@/hooks/useSnackBar';
 import classNames from 'classnames';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
+import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -63,7 +64,11 @@ export default function Home({ current }: Current) {
               ' bg-secondary p-5 w-full flex flex-col gap-y-10 '
             )}
           >
-            <div className='w-full h-[125px] bg-white shadow' />
+            <div className='w-full' >
+            <ExpensesCard/>
+            </div>
+            
+            
             <div className='flex w-full gap-x-10'>
               <InputCard />
               <TotalCard />
