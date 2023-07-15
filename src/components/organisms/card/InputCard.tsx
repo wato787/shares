@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { useAuthContext } from '@/feature/auth/authProvider';
 import {
   Avatar,
   Button,
@@ -10,6 +10,7 @@ import {
 
 const InputCard = () => {
   const { user } = useAuthContext();
+
 
   return (
     <div className='w-1/3 '>
@@ -49,6 +50,7 @@ const InputCard = () => {
                 fullWidth
                 sx={{ height: 50 }}
                 color='primary'
+
               >
                 送信
               </Button>
