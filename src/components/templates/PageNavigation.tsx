@@ -8,7 +8,7 @@ import { Current } from '@/types/type';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 
-const PageNavigation = (props: Current): ReactElement => {
+const PageNavigation = ({ current }: Current): ReactElement => {
   const open = useSelector((state: RootState) => state.drawer.open);
   return (
     <>
@@ -37,7 +37,7 @@ const PageNavigation = (props: Current): ReactElement => {
         className={classNames(
           'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
           !open && 'justify-center',
-          props.current === 'dashboad' || !props.current ? 'bg-white' : ''
+          current === 'dashboad' || !current ? 'bg-white' : ''
         )}
         href={{ pathname: '/', query: { current: 'dashboad' } }}
       >
@@ -52,7 +52,7 @@ const PageNavigation = (props: Current): ReactElement => {
         className={classNames(
           'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
           !open && 'justify-center',
-          props.current === 'graph' ? 'bg-white' : ''
+          current === 'graph' ? 'bg-white' : ''
         )}
         href={{ pathname: '/graph', query: { current: 'graph' } }}
       >
