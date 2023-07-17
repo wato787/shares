@@ -24,6 +24,7 @@ const RentCard = () => {
       { merge: true }
     );
     setIsChangeMode(false);
+    setRentCost('');
   };
 
   return (
