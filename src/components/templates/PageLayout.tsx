@@ -72,7 +72,7 @@ const PageLayout = (props: Props) => {
         <div className='flex flex-col h-screen w-full'>
           <Header />
           <div
-            className={classNames('m-5 flex-1', props.grayBg && 'bg-secondary')}
+            className={classNames('m-6 flex-1', props.grayBg && 'bg-secondary')}
           >
             {cloneElement(props.children, { open })}
           </div>

@@ -28,7 +28,7 @@ const RentCard = () => {
   };
 
   return (
-    <Card>
+    <Card sx={{ height: '100%' }}>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5 w-full'>
         <span className='font-bold text-xl text-gray-600'>家賃設定</span>
         {!isChangeMode ? (
