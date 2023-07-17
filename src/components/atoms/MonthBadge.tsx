@@ -23,7 +23,7 @@ const MonthBadge = (): ReactElement => {
 
   return (
     <span
-      className={classNames(' font-bold text-3xl p-3 font-shares', monthColor)}
+      className={classNames('font-bold text-3xl p-3 font-shares', monthColor)}
     >
       January
     </span>
