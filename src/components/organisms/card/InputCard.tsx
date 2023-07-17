@@ -46,67 +46,63 @@ const InputCard = () => {
   );
 
   return (
-    <div className='w-1/3 '>
-      <Card>
-        <div className='p-5 flex flex-col items-center justify-center gap-y-5 w-full'>
-          <span className='font-bold text-xl text-gray-600'>出費入力</span>
-          <div className='flex items-center gap-x-2'>
-            <span>入力者：</span>
-            <Avatar
-              sx={{ width: 30, height: 30 }}
-              aria-label='recipe'
-              src={user?.photoURL as string}
-            />
+    <Card>
+      <div className='p-5 flex flex-col items-center justify-center gap-y-5 w-full'>
+        <span className='font-bold text-xl text-gray-600'>出費入力</span>
+        <div className='flex items-center gap-x-2'>
+          <span>入力者：</span>
+          <Avatar
+            sx={{ width: 30, height: 30 }}
+            aria-label='recipe'
+            src={user?.photoURL as string}
+          />
 
-            <span>{user?.displayName}</span>
-          </div>
-          <div className='flex flex-col  w-full'>
-            <span className='text-gray-500 font-bold text-xs mb-2'>
-              出費項目
-            </span>
-            <div className='space-y-8'>
-              <Select
+          <span>{user?.displayName}</span>
+        </div>
+        <div className='flex flex-col  w-full'>
+          <span className='text-gray-500 font-bold text-xs mb-2'>出費項目</span>
+          <div className='space-y-8'>
+            <Select
+              fullWidth
+              onChange={(e) => setSelectCostType(e.target.value as string)}
+              defaultValue=''
+            >
+              {/* 家賃別のとこに移動 */}
+              {/* <MenuItem value='家賃'>家賃</MenuItem> */}
+              {options.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+            <form
+              onSubmit={addCost}
+              className='flex flex-col  w-full space-y-7'
+            >
+              <TextField
+                type='number'
+                id='input-with-sx'
+                label='金額'
                 fullWidth
-                onChange={(e) => setSelectCostType(e.target.value as string)}
-                defaultValue=''
-              >
-                {/* 家賃別のとこに移動 */}
-                {/* <MenuItem value='家賃'>家賃</MenuItem> */}
-                {options.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-              <form
+                value={amount}
+                onChange={(e) => setAmount(e.target.value as string)}
                 onSubmit={addCost}
-                className='flex flex-col  w-full space-y-7'
+              />
+              <Button
+                variant='contained'
+                fullWidth
+                sx={{ height: 50 }}
+                onClick={addCost}
+                disabled={!selectCostType || !amount}
+                className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
               >
-                <TextField
-                  type='number'
-                  id='input-with-sx'
-                  label='金額'
-                  fullWidth
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value as string)}
-                  onSubmit={addCost}
-                />
-                <Button
-                  variant='contained'
-                  fullWidth
-                  sx={{ height: 50 }}
-                  onClick={addCost}
-                  disabled={!selectCostType || !amount}
-                  className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
-                >
-                  送信
-                </Button>
-              </form>
-            </div>
+                送信
+              </Button>
+            </form>
           </div>
         </div>
-      </Card>
-    </div>
+      </div>
+    </Card>
   );
 };
 

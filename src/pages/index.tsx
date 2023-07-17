@@ -91,9 +91,15 @@ export default function Home({ current }: Current) {
             <ExpensesCard />
 
             <div className='flex w-full gap-x-10'>
-              <InputCard />
-              <TotalCard />
-              <IndividualCard />
+              <div className='w-1/3'>
+                <InputCard />
+              </div>
+              <div className='w-1/3'>
+                <TotalCard />
+              </div>
+              <div className='w-1/3'>
+                <IndividualCard />
+              </div>
             </div>
           </div>
         ) : (

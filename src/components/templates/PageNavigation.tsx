@@ -68,7 +68,7 @@ const PageNavigation = ({ current }: Current): ReactElement => {
         className={classNames(
           'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
           !open && 'justify-center',
-          current === 'graph' ? 'bg-white' : ''
+          current === 'setting' ? 'bg-white' : ''
         )}
         href={{ pathname: '/setting', query: { current: 'setting' } }}
       >
