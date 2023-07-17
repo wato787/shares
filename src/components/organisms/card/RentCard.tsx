@@ -1,12 +1,30 @@
 import { RootState } from '@/store';
 import { Button, Card, TextField } from '@mui/material';
-import { useState } from 'react';
+import { doc, setDoc } from 'firebase/firestore';
+import { FormEvent, MouseEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { db } from '../../../../firebase';
 
 const RentCard = () => {
   const [rentCost, setRentCost] = useState('');
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const [isChangeMode, setIsChangeMode] = useState(false);
+
+  const changeRentCost = async (
+    e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    if (!groupId) return;
+    const groupRef = doc(db, 'group', groupId);
+    await setDoc(
+      groupRef,
+      {
+        rentCost: parseInt(rentCost),
+      },
+      { merge: true }
+    );
+    setIsChangeMode(false);
+  };
 
   return (
     <Card>
@@ -27,7 +45,7 @@ const RentCard = () => {
         ) : (
           <div className='w-full'>
             <form
-              // onSubmit={addCost}
+              onSubmit={changeRentCost}
               className='flex flex-col  w-full space-y-7'
             >
               <TextField
@@ -37,12 +55,11 @@ const RentCard = () => {
                 fullWidth
                 value={rentCost}
                 onChange={(e) => setRentCost(e.target.value as string)}
-                // onSubmit={addCost}
               />
               <Button
                 variant='contained'
                 fullWidth
-                // onClick={addCost}
+                onClick={changeRentCost}
                 disabled={!rentCost}
                 className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
               >
