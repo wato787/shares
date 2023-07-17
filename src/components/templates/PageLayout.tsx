@@ -32,32 +32,33 @@ const PageLayout = (props: Props) => {
 
   // グループ取得
   useEffect(() => {
-    (async (): Promise<void> => {
+    // Firestoreからデータを取得するための関数を定義
+    const fetchData = async (): Promise<void> => {
       if (!userId) return;
-      // groupIdを取得
+      // ユーザからgroupIdを取得
       const userDocRef = doc(db, 'users', userId);
       const userDocSnap = await getDoc(userDocRef);
       dispatch(setGroupId(userDocSnap.data()?.groupId));
 
       // groupからgroupデータを取得
-      if (!groupId) return;
-      const groupDocRef = doc(db, 'group', groupId as string);
+      const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
       const groupDocSnap: any = await getDoc(groupDocRef);
       dispatch(setGroupData(groupDocSnap.data()));
 
       // groupからuserデータを取得
-      if (!groupId) return;
       const userCollectionRef = collection(
         db,
         'group',
-        groupId as string,
+        userDocSnap.data()?.groupId,
         'users'
       );
       const userCollectionSnap = await getDocs(userCollectionRef);
       const userData = userCollectionSnap.docs.map((doc) => doc.data());
       dispatch(setGroupUsers(userData));
-    })();
-  }, [userId, dispatch]);
+    };
+    // ページの初期表示時にのみデータを取得
+    fetchData();
+  }, [dispatch, userId]);
 
   return (
     <>
