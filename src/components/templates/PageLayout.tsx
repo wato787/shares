@@ -22,6 +22,7 @@ const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
   const { userId } = useSelector((state: RootState) => state.userId);
+  const { groupId } = useSelector((state: RootState) => state.groupId);
 
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
@@ -35,6 +36,10 @@ const PageLayout = (props: Props) => {
       const userDocRef = doc(db, 'users', userId);
       const userDocSnap = await getDoc(userDocRef);
       dispatch(setGroupId(userDocSnap.data()?.groupId));
+
+      const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
+      const groupDocSnap = await getDoc(groupDocRef);
+      console.log(groupDocSnap.data());
     })();
   }, [userId, dispatch]);
 
