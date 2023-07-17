@@ -38,9 +38,9 @@ const BankAccountDialog = (props: Props): ReactElement => {
 
   return (
     <Dialog open={props.open} onClose={props.onClose}>
-      <div className='p-5 w-[400px]'>
+      <div className='p-5 w-[400px] space-y-5'>
         <h3 className='text-xl font-bold text-center'>残高追加</h3>
-        <div className='flex items-center gap-x-2 my-5'>
+        <div className='flex items-center gap-x-2'>
           <span>入力者：</span>
           <Avatar
             sx={{ width: 30, height: 30 }}

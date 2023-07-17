@@ -1,6 +1,6 @@
 import { CostType } from '@/utils/CostType';
 import classNames from 'classnames';
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 
 interface Props {
   title: string;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const CostColorTitle = (props: Props) => {
-  const color = useCallback((): string => {
+  const color = useMemo((): string => {
     if (props.type === CostType.RENT) return 'bg-rent';
     if (props.type === CostType.FOOD) return 'bg-food';
     if (props.type === CostType.GAS) return 'bg-gas';
@@ -20,7 +20,7 @@ const CostColorTitle = (props: Props) => {
 
   return (
     <div className='flex items-center gap-x-2'>
-      <div className={classNames('w-3 h-3', color())} />
+      <div className={classNames('w-3 h-3', color)} />
       <span className='text-gray-600 font-bold'>{props.title}</span>
     </div>
   );

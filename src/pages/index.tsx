@@ -13,6 +13,7 @@ import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 import { useAuthContext } from '@/feature/auth/AuthProvider';
+import MonthBadge from '@/components/atoms/MonthBadge';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -86,6 +87,9 @@ export default function Home({ current }: Current) {
         {/* TODO:データ取得のローディングで分岐する */}
         {groupId ? (
           <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
+            <div className=' -mt-2 -mb-6 mx-auto'>
+              <MonthBadge />
+            </div>
             <ExpensesCard />
 
             <div className='flex gap-x-10 flex-1'>

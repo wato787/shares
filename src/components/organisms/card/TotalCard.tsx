@@ -13,8 +13,8 @@ const TotalCard = () => {
         <div className='w-full space-y-4'>
           <div className='flex items-center justify-between border-b p-1'>
             <CostColorTitle title='家賃' type={CostType.RENT} />
-            <span className='text-base'>
-              {groupData.rentCost ? groupData.rentCost.toLocaleString() : 0}円
+            <span className='text-lg '>
+              ¥{groupData.rentCost ? groupData.rentCost.toLocaleString() : 0}
             </span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
