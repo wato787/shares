@@ -1,4 +1,5 @@
 import InputCard from '@/components/organisms/card/InputCard';
+import RentCard from '@/components/organisms/card/RentCard';
 import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
 
@@ -8,11 +9,11 @@ const Setting = ({ current }: Current): ReactElement => {
   return (
     <PageLayout current={current} grayBg>
       <div className='flex flex-col w-full p-5'>
-        <div className='flex  w-full gap-x-5'>
-          <div className='w-1/2'>
-            <InputCard />
+        <div className='flex  w-full gap-x-10'>
+          <div className='w-1/3'>
+            <RentCard />
           </div>
-          <div className='w-1/2'>
+          <div className='flex-1'>
             <InputCard />
           </div>
         </div>
