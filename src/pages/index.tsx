@@ -89,7 +89,7 @@ export default function Home({ current }: Current) {
             <ExpensesCard />
 
             <div className='flex w-full gap-x-10 flex-1'>
-              <div className='w-1/3 h-full'>
+              <div className='w-1/3'>
                 <InputCard />
               </div>
               <div className='w-1/3'>
