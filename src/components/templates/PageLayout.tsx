@@ -24,6 +24,7 @@ const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
   const { userId } = useSelector((state: RootState) => state.userId);
+  const { groupId } = useSelector((state: RootState) => state.groupId);
 
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
@@ -39,15 +40,17 @@ const PageLayout = (props: Props) => {
       dispatch(setGroupId(userDocSnap.data()?.groupId));
 
       // groupからgroupデータを取得
-      const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
+      if (!groupId) return;
+      const groupDocRef = doc(db, 'group', groupId as string);
       const groupDocSnap: any = await getDoc(groupDocRef);
       dispatch(setGroupData(groupDocSnap.data()));
 
       // groupからuserデータを取得
+      if (!groupId) return;
       const userCollectionRef = collection(
         db,
         'group',
-        userDocSnap.data()?.groupId,
+        groupId as string,
         'users'
       );
       const userCollectionSnap = await getDocs(userCollectionRef);
