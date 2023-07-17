@@ -1,5 +1,4 @@
 import { useAuthContext } from '@/feature/auth/AuthProvider';
-import { SettingsInputComponent } from '@mui/icons-material';
 import {
   IconButton,
   Avatar,
@@ -62,9 +61,6 @@ const Header = (): ReactElement => {
         onClose={handleCloseUserMenu}
       >
         <Box>
-          <MenuItem>
-            <SettingsInputComponent sx={{ mr: 2 }} /> ユーザー設定
-          </MenuItem>
           <MenuItem onClick={handleLogout}>
             <LogoutIcon sx={{ mr: 2 }} />
             ログアウト
