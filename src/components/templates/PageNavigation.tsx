@@ -15,7 +15,7 @@ const PageNavigation = ({ current }: Current): ReactElement => {
     <>
       <div className='flex items-center justify-around border-b h-16 z-10'>
         <Image
-          src='/../public/largelogo.png'
+          src='/../public/toumeilogo.png'
           width={40}
           height={20}
           alt='Shares'
@@ -26,7 +26,7 @@ const PageNavigation = ({ current }: Current): ReactElement => {
               Shares
             </span>
             <Image
-              src='/../public/largelogo.png'
+              src='/../public/toumeilogo.png'
               width={40}
               height={20}
               alt='Shares'
