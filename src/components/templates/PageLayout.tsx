@@ -1,32 +1,16 @@
-import {
-  Tooltip,
-  IconButton,
-  Avatar,
-  Box,
-  MenuItem,
-  Menu,
-} from '@mui/material';
+import { IconButton } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import classNames from 'classnames';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import LogoutIcon from '@mui/icons-material/Logout';
-import {
-  ReactElement,
-  useCallback,
-  cloneElement,
-  useState,
-  useEffect,
-} from 'react';
+import { ReactElement, useCallback, cloneElement, useEffect } from 'react';
 import { RootState } from '@/store';
-import { SettingsInputComponent } from '@mui/icons-material';
-import { signOut } from 'firebase/auth';
-import { auth, db } from '../../../firebase';
+import { db } from '../../../firebase';
 import { setGroupId } from '@/slice/groupIdSlice';
 import { doc, getDoc } from 'firebase/firestore';
 import PageNavigation from './PageNavigation';
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import Header from './Header';
 
 interface Props {
   children: ReactElement;
@@ -37,23 +21,7 @@ interface Props {
 const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { userId } = useSelector((state: RootState) => state.userId);
-  const { user } = useAuthContext();
-
-  //ユーザーメニュー
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  //ログアウト
-  const handleLogout = async (): Promise<void> => {
-    await signOut(auth);
-  };
 
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
@@ -68,7 +36,7 @@ const PageLayout = (props: Props) => {
       const userDocSnap = await getDoc(userDocRef);
       dispatch(setGroupId(userDocSnap.data()?.groupId));
     })();
-  }, []);
+  }, [userId, dispatch]);
 
   return (
     <>
@@ -100,44 +68,9 @@ const PageLayout = (props: Props) => {
             )}
           </div>
         </aside>
+        {/* ヘッダーとchidrenを縦並び */}
         <div className='flex flex-col h-screen w-full'>
-          <header className='flex items-center justify-end h-16 px-6 py-1 bg-secondary border-b w-full'>
-            <Tooltip title='プロフィール'>
-              <IconButton onClick={handleOpenUserMenu}>
-                <Avatar
-                  sx={{ bgcolor: 'lightblue' }}
-                  aria-label='recipe'
-                  src={user?.photoURL as string}
-                />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <Box>
-                <MenuItem>
-                  <SettingsInputComponent sx={{ mr: 2 }} /> ユーザー設定
-                </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  <LogoutIcon sx={{ mr: 2 }} />
-                  ログアウト
-                </MenuItem>
-              </Box>
-            </Menu>
-          </header>
+          <Header />
           <div
             className={classNames('m-5 flex-1', props.grayBg && 'bg-secondary')}
           >
