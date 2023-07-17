@@ -25,12 +25,7 @@ const PageNavigation = ({ current }: Current): ReactElement => {
             <span className='text-3xl font-bold font-shares text-primary'>
               Shares
             </span>
-            {/* <Image
-              src='/../public/LogoTitle.png'
-              width={120}
-              height={20}
-              alt='Shares'
-            /> */}
+
             <Image
               src='/../public/toumeilogo.png'
               width={40}
