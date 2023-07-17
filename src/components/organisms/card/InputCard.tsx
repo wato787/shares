@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import { addDoc, collection } from 'firebase/firestore';
-import { useMemo, useState } from 'react';
+import { FormEvent, MouseEvent, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
 
@@ -19,7 +19,9 @@ const InputCard = () => {
   const [amount, setAmount] = useState('');
   const { groupId } = useSelector((state: RootState) => state.groupId);
 
-  const addCost = async (e: any) => {
+  const addCost = async (
+    e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
     if (!groupId) return;
     const groupRef = collection(db, 'group', groupId, 'cost');
@@ -84,7 +86,6 @@ const InputCard = () => {
                 fullWidth
                 value={amount}
                 onChange={(e) => setAmount(e.target.value as string)}
-                onSubmit={addCost}
               />
               <Button
                 variant='contained'

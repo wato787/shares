@@ -5,6 +5,7 @@ interface GroupDataState {
     id: string;
     name: string;
     rentCost?: number;
+    bankBalance?: number;
   };
 }
 
@@ -13,6 +14,7 @@ const initialState: GroupDataState = {
     id: '',
     name: '',
     rentCost: 0,
+    bankBalance: 0,
   },
 };
 
