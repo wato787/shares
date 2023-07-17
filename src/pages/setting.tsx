@@ -1,4 +1,4 @@
-import InputCard from '@/components/organisms/card/InputCard';
+import InviteCard from '@/components/organisms/card/InviteCard';
 import RentCard from '@/components/organisms/card/RentCard';
 import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
@@ -13,8 +13,8 @@ const Setting = ({ current }: Current): ReactElement => {
           <div className='w-1/3'>
             <RentCard />
           </div>
-          <div className='flex-1'>
-            <InputCard />
+          <div className='w-1/3'>
+            <InviteCard />
           </div>
         </div>
       </div>
