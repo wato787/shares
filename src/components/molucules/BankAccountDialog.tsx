@@ -6,6 +6,7 @@ import { db } from '../../../firebase';
 import { RootState } from '@/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGroupData } from '@/slice/groupDataSlice';
+import { useSnackbar } from '@/hooks/useSnackBar';
 
 interface Props {
   open: boolean;
@@ -18,6 +19,7 @@ const BankAccountDialog = (props: Props): ReactElement => {
   const [amount, setAmount] = useState<string>('');
   const { groupData } = useSelector((state: RootState) => state.groupData);
   const dispatch = useDispatch();
+  const { showSnackbar } = useSnackbar();
 
   // 残高追加
   const handleAddBankBalance = async (
@@ -32,6 +34,7 @@ const BankAccountDialog = (props: Props): ReactElement => {
     const newBankBalance = parseInt(groupBankBalance) + parseInt(amount);
     await setDoc(groupRef, { bankBalance: newBankBalance }, { merge: true });
     dispatch(setGroupData({ ...groupData, bankBalance: newBankBalance }));
+    showSnackbar('残高を追加しました', 'success');
     setAmount('');
     props.onClose();
   };
