@@ -21,11 +21,27 @@ const MonthBadge = (): ReactElement => {
     return 'text-gray-200'; // デフォルト: グレー (#808080) の薄いバージョン
   }, [Month]);
 
+  const monthName = useMemo((): string => {
+    if (Month === 1) return 'January';
+    if (Month === 2) return 'February';
+    if (Month === 3) return 'March';
+    if (Month === 4) return 'April';
+    if (Month === 5) return 'May';
+    if (Month === 6) return 'June';
+    if (Month === 7) return 'July';
+    if (Month === 8) return 'August';
+    if (Month === 9) return 'September';
+    if (Month === 10) return 'October';
+    if (Month === 11) return 'November';
+    if (Month === 12) return 'December';
+    return 'Unknown';
+  }, [Month]);
+
   return (
     <span
       className={classNames('font-bold text-3xl p-3 font-shares', monthColor)}
     >
-      January
+      {monthName}
     </span>
   );
 };
