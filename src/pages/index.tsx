@@ -9,7 +9,6 @@ import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
 import InputCard from '@/components/organisms/card/InputCard';
 import { useSnackbar } from '@/hooks/useSnackBar';
-import classNames from 'classnames';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
@@ -86,11 +85,11 @@ export default function Home({ current }: Current) {
       <>
         {/* TODO:データ取得のローディングで分岐する */}
         {groupId ? (
-          <div className={classNames('p-5 w-full flex flex-col gap-y-10')}>
+          <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
             <ExpensesCard />
 
-            <div className='flex w-full gap-x-10'>
-              <div className='w-1/3'>
+            <div className='flex w-full gap-x-10 flex-1'>
+              <div className='w-1/3 h-full'>
                 <InputCard />
               </div>
               <div className='w-1/3'>
