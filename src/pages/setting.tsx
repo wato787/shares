@@ -27,9 +27,11 @@ const Setting = ({ current }: Current): ReactElement => {
             <MemberCard />
           </div>
           <div className='w-1/3 h-full'>
+            {/* ユーザ設定、プロフィール */}
             <MemberCard />
           </div>
           <div className='w-1/3 h-full'>
+            {/* 入金履歴 */}
             <MemberCard />
           </div>
         </div>

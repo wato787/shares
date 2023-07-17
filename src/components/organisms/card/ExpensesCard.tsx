@@ -32,7 +32,7 @@ const ExpensesCard = () => {
           </h3>
         </div>
       </div>
-      <BankAccountDialog open={open} onClose={() => setOpen(false)} />
+      <BankAccountDialog open={open} onClose={(): void => setOpen(false)} />
     </div>
   );
 };
