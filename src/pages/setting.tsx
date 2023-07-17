@@ -10,7 +10,7 @@ import React, { ReactElement } from 'react';
 const Setting = ({ current }: Current): ReactElement => {
   return (
     <PageLayout current={current} grayBg>
-      <div className='flex flex-col w-full p-5 gap-y-8 h-full'>
+      <div className='flex flex-col w-full p-6 gap-y-8 h-full'>
         <div className='flex  w-full gap-x-10 flex-1'>
           <div className='w-1/3 h-full'>
             <RentCard />
