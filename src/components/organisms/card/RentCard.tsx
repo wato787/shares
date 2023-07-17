@@ -4,11 +4,13 @@ import { doc, setDoc } from 'firebase/firestore';
 import { FormEvent, MouseEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
+import { useSnackbar } from '@/hooks/useSnackBar';
 
 const RentCard = () => {
   const [rentCost, setRentCost] = useState('');
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const [isChangeMode, setIsChangeMode] = useState(false);
+  const { showSnackbar } = useSnackbar();
 
   const changeRentCost = async (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
@@ -24,6 +26,7 @@ const RentCard = () => {
       { merge: true }
     );
     setIsChangeMode(false);
+    showSnackbar('家賃を変更しました', 'success');
     setRentCost('');
   };
 

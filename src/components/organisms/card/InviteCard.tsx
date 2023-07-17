@@ -29,7 +29,7 @@ const InviteCard = () => {
             グループに追加したい人にこのIDを教えてください
           </span>
           {isOpen && (
-            <div className='flex items-center justify-between  bg-secondary rounded p-2'>
+            <div className='flex items-center justify-between  bg-secondary rounded p-1'>
               <span className='text-gray-500 font-bold text-base pl-4'>
                 {groupId}
               </span>
