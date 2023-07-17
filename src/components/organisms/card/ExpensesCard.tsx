@@ -1,9 +1,9 @@
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import BankAccountDialog from '@/components/molucules/BankAccountDialog';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import BankBalanceDialog from '@/components/molucules/BankBalanceDialog';
 
 const ExpensesCard = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const ExpensesCard = () => {
           </h3>
         </div>
       </div>
-      <BankAccountDialog open={open} onClose={(): void => setOpen(false)} />
+      <BankBalanceDialog open={open} onClose={(): void => setOpen(false)} />
     </div>
   );
 };
