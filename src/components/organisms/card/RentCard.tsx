@@ -2,15 +2,18 @@ import { RootState } from '@/store';
 import { Button, Card, TextField } from '@mui/material';
 import { doc, setDoc } from 'firebase/firestore';
 import { FormEvent, MouseEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
 import { useSnackbar } from '@/hooks/useSnackBar';
+import { setGroupData } from '@/slice/groupDataSlice';
 
 const RentCard = () => {
   const [rentCost, setRentCost] = useState('');
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const [isChangeMode, setIsChangeMode] = useState(false);
   const { showSnackbar } = useSnackbar();
+  const { groupData } = useSelector((state: RootState) => state.groupData);
+  const dispatch = useDispatch();
 
   const changeRentCost = async (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
@@ -25,6 +28,7 @@ const RentCard = () => {
       },
       { merge: true }
     );
+    dispatch(setGroupData({ ...groupData, rentCost: parseInt(rentCost) }));
     setIsChangeMode(false);
     showSnackbar('家賃を変更しました', 'success');
     setRentCost('');
@@ -41,7 +45,8 @@ const RentCard = () => {
                 現在の設定家賃
               </span>
               <span className='text-gray-500 font-bold text-base'>
-                1000000円
+                {groupData?.rentCost?.toLocaleString()}
+                <span className='ml-1 text-sm'>円</span>
               </span>
             </div>
             <Button onClick={() => setIsChangeMode(true)}>変更する</Button>

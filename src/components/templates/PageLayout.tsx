@@ -11,6 +11,7 @@ import { setGroupId } from '@/slice/groupIdSlice';
 import { doc, getDoc } from 'firebase/firestore';
 import PageNavigation from './PageNavigation';
 import Header from './Header';
+import { setGroupData } from '@/slice/groupDataSlice';
 
 interface Props {
   children: ReactElement;
@@ -22,7 +23,6 @@ const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
   const { userId } = useSelector((state: RootState) => state.userId);
-  const { groupId } = useSelector((state: RootState) => state.groupId);
 
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
@@ -38,8 +38,8 @@ const PageLayout = (props: Props) => {
       dispatch(setGroupId(userDocSnap.data()?.groupId));
 
       const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
-      const groupDocSnap = await getDoc(groupDocRef);
-      console.log(groupDocSnap.data());
+      const groupDocSnap: any = await getDoc(groupDocRef);
+      dispatch(setGroupData(groupDocSnap.data()));
     })();
   }, [userId, dispatch]);
 
