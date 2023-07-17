@@ -67,8 +67,6 @@ const InputCard = () => {
               onChange={(e) => setSelectCostType(e.target.value as string)}
               defaultValue=''
             >
-              {/* 家賃別のとこに移動 */}
-              {/* <MenuItem value='家賃'>家賃</MenuItem> */}
               {options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
@@ -79,7 +77,6 @@ const InputCard = () => {
               onSubmit={addCost}
               className='flex flex-col  w-full space-y-7'
             >
-
               <TextField
                 type='number'
                 id='input-with-sx'
