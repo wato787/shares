@@ -1,8 +1,11 @@
 import CostColorTitle from '@/components/atoms/CostColorTitle';
+import { RootState } from '@/store';
 import { CostType } from '@/utils/CostType';
 import { Card } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const TotalCard = () => {
+  const { groupData } = useSelector((state: RootState) => state.groupData);
   return (
     <Card sx={{ height: '100%' }}>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5'>
@@ -10,7 +13,9 @@ const TotalCard = () => {
         <div className='w-full space-y-4'>
           <div className='flex items-center justify-between border-b p-1'>
             <CostColorTitle title='家賃' type={CostType.RENT} />
-            <span className='text-base'>100000円</span>
+            <span className='text-base'>
+              {groupData.rentCost?.toLocaleString()}円
+            </span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
             <CostColorTitle title='雑費' type={CostType.MISCELLANEOUS} />
