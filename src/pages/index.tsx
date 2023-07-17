@@ -25,7 +25,6 @@ export default function Home({ current }: Current) {
   const [joinId, setJoinId] = useState('');
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
-  const open = useSelector((state: RootState) => state.drawer.open);
   const { user } = useAuthContext();
 
   // グループ作成

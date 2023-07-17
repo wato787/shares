@@ -1,28 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type GroupUsersState = [
-  {
-    id: string;
-    name: string;
-    photoUrl: string;
-    position: string;
-  }
-];
+type GroupUsersState = {
+  id: string;
+  name: string;
+  photoUrl: string;
+  position: string;
+}[];
 
-const initialState: GroupUsersState = [
-  {
-    id: '',
-    name: '',
-    photoUrl: '',
-    position: '',
-  },
-];
+const initialState: GroupUsersState = [];
 
 const groupUsersSlice = createSlice({
   name: 'groupUsers',
   initialState,
   reducers: {
-    setGroupUsers: (state, action) => {
+    setGroupUsers: (_state, action) => {
       return action.payload;
     },
   },

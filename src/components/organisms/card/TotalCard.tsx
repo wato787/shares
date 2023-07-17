@@ -4,7 +4,7 @@ import { Card } from '@mui/material';
 
 const TotalCard = () => {
   return (
-    <Card>
+    <Card sx={{ height: '100%' }}>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5'>
         <span className='font-bold text-xl text-gray-600'>出費詳細</span>
         <div className='w-full space-y-4'>
