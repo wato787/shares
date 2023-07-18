@@ -24,3 +24,10 @@ export type GroupData = {
   rentCost?: number;
   bankBalance?: number;
 };
+
+export type GroupUsers = {
+  id: string;
+  name: string;
+  photoUrl: string;
+  position: string;
+}[];

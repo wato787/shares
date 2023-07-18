@@ -23,6 +23,7 @@ export default function Home({ current }: Current) {
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const { groupData } = useSelector((state: RootState) => state.groupData);
+  const groupUsers = useSelector((state: RootState) => state.groupUsers);
   const { monthColor, monthName } = useDate();
 
   const [joinId, setJoinId] = useState('');
@@ -100,10 +101,10 @@ export default function Home({ current }: Current) {
                 <InputCard groupId={groupId} user={user} />
               </div>
               <div className='w-1/3'>
-                <TotalCard groupData={groupData}/>
+                <TotalCard groupData={groupData} />
               </div>
               <div className='w-1/3'>
-                <IndividualCard />
+                <IndividualCard groupUsers={groupUsers} />
               </div>
             </div>
           </div>

@@ -1,15 +1,18 @@
-import { RootState } from '@/store';
+import { GroupUsers } from '@/types/type';
 import { Avatar, Card } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { memo } from 'react';
 
-const IndividualCard = () => {
-  const groupUsers = useSelector((state: RootState) => state.groupUsers);
+interface Props {
+  groupUsers: GroupUsers;
+}
+
+const IndividualCard = memo((props: Props) => {
   return (
     <Card sx={{ height: '100%' }}>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5'>
         <span className='font-bold text-xl text-gray-600'>1人あたりの出費</span>
         <div className='w-full space-y-4'>
-          {groupUsers.map((user) => (
+          {props.groupUsers.map((user) => (
             <div
               className='flex items-center justify-between border-b p-1'
               key={user.id}
@@ -28,6 +31,6 @@ const IndividualCard = () => {
       </div>
     </Card>
   );
-};
+});
 
 export default IndividualCard;
