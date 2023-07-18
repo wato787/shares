@@ -26,12 +26,14 @@ const BankBalanceDialog = (props: Props): ReactElement => {
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (!groupId) return;
+    if (!groupId || !amount) return;
+
     const groupRef = doc(db, 'group', groupId);
     const groupBankBalance = await getDoc(groupRef).then((doc) => {
       return doc.data()?.bankBalance;
     });
     const newBankBalance = parseInt(groupBankBalance) + parseInt(amount);
+
     await setDoc(groupRef, { bankBalance: newBankBalance }, { merge: true });
     dispatch(setGroupData({ ...groupData, bankBalance: newBankBalance }));
     showSnackbar('残高を追加しました', 'success');
