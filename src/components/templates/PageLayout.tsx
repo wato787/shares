@@ -31,34 +31,34 @@ const PageLayout = (props: Props) => {
   }, [dispatch]);
 
   // グループ取得
-  useEffect(() => {
-    // Firestoreからデータを取得するための関数を定義
-    const fetchData = async (): Promise<void> => {
-      if (!userId) return;
-      // ユーザからgroupIdを取得
-      const userDocRef = doc(db, 'users', userId);
-      const userDocSnap = await getDoc(userDocRef);
-      dispatch(setGroupId(userDocSnap.data()?.groupId));
+  const fetchData = useCallback(async (): Promise<void> => {
+    if (!userId) return;
+    // ユーザからgroupIdを取得
+    const userDocRef = doc(db, 'users', userId);
+    const userDocSnap = await getDoc(userDocRef);
+    dispatch(setGroupId(userDocSnap.data()?.groupId));
 
-      // groupからgroupデータを取得
-      const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
-      const groupDocSnap: any = await getDoc(groupDocRef);
-      dispatch(setGroupData(groupDocSnap.data()));
+    // groupからgroupデータを取得
+    const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
+    const groupDocSnap: any = await getDoc(groupDocRef);
+    dispatch(setGroupData(groupDocSnap.data()));
 
-      // groupからuserデータを取得
-      const userCollectionRef = collection(
-        db,
-        'group',
-        userDocSnap.data()?.groupId,
-        'users'
-      );
-      const userCollectionSnap = await getDocs(userCollectionRef);
-      const userData = userCollectionSnap.docs.map((doc) => doc.data());
-      dispatch(setGroupUsers(userData));
-    };
-    // ページの初期表示時にのみデータを取得
-    fetchData();
+    // groupからuserデータを取得
+    const userCollectionRef = collection(
+      db,
+      'group',
+      userDocSnap.data()?.groupId,
+      'users'
+    );
+    const userCollectionSnap = await getDocs(userCollectionRef);
+    const userData = userCollectionSnap.docs.map((doc) => doc.data());
+    dispatch(setGroupUsers(userData));
   }, [dispatch, userId]);
+
+  // ページの初期表示時にのみデータを取得
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>
