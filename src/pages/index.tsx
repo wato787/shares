@@ -100,7 +100,7 @@ export default function Home({ current }: Current) {
                 <InputCard groupId={groupId} user={user} />
               </div>
               <div className='w-1/3'>
-                <TotalCard />
+                <TotalCard groupData={groupData}/>
               </div>
               <div className='w-1/3'>
                 <IndividualCard />

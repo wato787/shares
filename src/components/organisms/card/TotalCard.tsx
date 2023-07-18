@@ -1,11 +1,14 @@
 import CostColorTitle from '@/components/atoms/CostColorTitle';
-import { RootState } from '@/store';
+import { GroupData } from '@/types/type';
 import { CostType } from '@/utils/CostType';
 import { Card } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { memo } from 'react';
 
-const TotalCard = () => {
-  const { groupData } = useSelector((state: RootState) => state.groupData);
+interface Props {
+  groupData: GroupData;
+}
+
+const TotalCard = memo((props: Props) => {
   return (
     <Card sx={{ height: '100%' }}>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5'>
@@ -14,7 +17,10 @@ const TotalCard = () => {
           <div className='flex items-center justify-between border-b p-1'>
             <CostColorTitle type={CostType.RENT} />
             <span className='text-lg '>
-              ¥{groupData.rentCost ? groupData.rentCost.toLocaleString() : 0}
+              ¥
+              {props.groupData.rentCost
+                ? props.groupData.rentCost.toLocaleString()
+                : 0}
             </span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
@@ -41,6 +47,6 @@ const TotalCard = () => {
       </div>
     </Card>
   );
-};
+});
 
 export default TotalCard;

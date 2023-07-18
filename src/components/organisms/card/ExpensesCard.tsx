@@ -2,14 +2,10 @@ import { Button } from '@mui/material';
 import React, { memo, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import BankBalanceDialog from '@/components/molucules/BankBalanceDialog';
+import { GroupData } from '@/types/type';
 
 interface Props {
-  groupData: {
-    id: string;
-    name: string;
-    rentCost?: number;
-    bankBalance?: number;
-  };
+  groupData: GroupData;
 }
 
 const ExpensesCard = memo((props: Props) => {

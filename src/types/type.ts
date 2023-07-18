@@ -17,3 +17,10 @@ export type CostData = {
   inputUserId?: string; //入力したユーザーID
   inputUserPhotoUrl?: string; //入力したユーザーのプロフィール画像
 };
+
+export type GroupData = {
+  id: string;
+  name: string;
+  rentCost?: number;
+  bankBalance?: number;
+};
