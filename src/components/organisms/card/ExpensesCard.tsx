@@ -1,13 +1,19 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import BankBalanceDialog from '@/components/molucules/BankBalanceDialog';
 
-const ExpensesCard = () => {
+interface Props {
+  groupData: {
+    id: string;
+    name: string;
+    rentCost?: number;
+    bankBalance?: number;
+  };
+}
+
+const ExpensesCard = memo((props: Props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const { groupData } = useSelector((state: RootState) => state.groupData);
 
   return (
     <div className='flex p-4 bg-white shadow rounded'>
@@ -27,7 +33,7 @@ const ExpensesCard = () => {
         </div>
         <div className='flex justify-end pr-4 pt-2'>
           <h3 className='text-4xl font-bold'>
-            {groupData.bankBalance?.toLocaleString()}
+            {props.groupData.bankBalance?.toLocaleString()}
             <span className='text-base ml-2'>円</span>
           </h3>
         </div>
@@ -35,6 +41,6 @@ const ExpensesCard = () => {
       <BankBalanceDialog open={open} onClose={(): void => setOpen(false)} />
     </div>
   );
-};
+});
 
 export default ExpensesCard;

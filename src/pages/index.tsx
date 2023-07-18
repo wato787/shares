@@ -22,6 +22,7 @@ export default function Home({ current }: Current) {
   const [joinPositon, setJoinPosition] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
+  const { groupData } = useSelector((state: RootState) => state.groupData);
   const { monthColor, monthName } = useDate();
 
   const [joinId, setJoinId] = useState('');
@@ -92,7 +93,7 @@ export default function Home({ current }: Current) {
             <div className=' -mt-2 -mb-6 mx-auto'>
               <MonthBadge monthColor={monthColor} monthName={monthName} />
             </div>
-            <ExpensesCard />
+            <ExpensesCard groupData={groupData} />
 
             <div className='flex gap-x-10 flex-1'>
               <div className='w-1/3'>
