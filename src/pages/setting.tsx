@@ -20,7 +20,7 @@ const Setting = ({ current }: Current): ReactElement => {
             <InviteCard />
           </div>
           <div className='w-1/3'>
-            <InviteCard />
+            <ProfileCard />
           </div>
         </div>
         <div className='flex  w-full gap-x-10 h-full'>
@@ -28,8 +28,7 @@ const Setting = ({ current }: Current): ReactElement => {
             <MemberCard />
           </div>
           <div className='w-1/3 h-full'>
-            {/* ユーザ設定、プロフィール */}
-            <ProfileCard />
+            <MemberCard />
           </div>
           <div className='w-1/3 h-full'>
             {/* 入金履歴 */}
