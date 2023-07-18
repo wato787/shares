@@ -14,6 +14,7 @@ import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 import { useAuthContext } from '@/feature/auth/AuthProvider';
 import MonthBadge from '@/components/atoms/MonthBadge';
+import useDate from '@/hooks/useDate';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -21,6 +22,7 @@ export default function Home({ current }: Current) {
   const [joinPositon, setJoinPosition] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
+  const { monthColor, monthName } = useDate();
 
   const [joinId, setJoinId] = useState('');
   const dispatch = useDispatch();
@@ -88,7 +90,7 @@ export default function Home({ current }: Current) {
         {groupId ? (
           <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
             <div className=' -mt-2 -mb-6 mx-auto'>
-              <MonthBadge />
+              <MonthBadge monthColor={monthColor} monthName={monthName} />
             </div>
             <ExpensesCard />
 
