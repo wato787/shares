@@ -15,6 +15,7 @@ const Setting = ({ current }: Current): ReactElement => {
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const { groupData } = useSelector((state: RootState) => state.groupData);
   const { user } = useAuthContext();
+  const groupUsers = useSelector((state: RootState) => state.groupUsers);
   return (
     <PageLayout current={current} grayBg>
       <div className='flex flex-col w-full p-6 gap-y-8 h-full'>
@@ -31,14 +32,14 @@ const Setting = ({ current }: Current): ReactElement => {
         </div>
         <div className='flex  w-full gap-x-10 h-full'>
           <div className='w-1/3 h-full'>
-            <MemberCard />
+            <MemberCard groupUsers={groupUsers} />
           </div>
           <div className='w-1/3 h-full'>
-            <MemberCard />
+            <MemberCard groupUsers={groupUsers} />
           </div>
           <div className='w-1/3 h-full'>
             {/* 入金履歴 */}
-            <MemberCard />
+            <MemberCard groupUsers={groupUsers} />
           </div>
         </div>
       </div>
