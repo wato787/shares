@@ -1,5 +1,3 @@
-import { useAuthContext } from '@/feature/auth/AuthProvider';
-import { RootState } from '@/store';
 import {
   Avatar,
   Button,
@@ -9,43 +7,43 @@ import {
   TextField,
 } from '@mui/material';
 import { addDoc, collection } from 'firebase/firestore';
-import { FormEvent, MouseEvent, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { FormEvent, MouseEvent, memo, useState } from 'react';
 import { db } from '../../../../firebase';
+import { User } from 'firebase/auth';
 
-const InputCard = () => {
-  const { user } = useAuthContext();
+interface Props {
+  groupId: string;
+  user: User | null | undefined;
+}
+
+const options = [
+  { value: '雑費', label: '雑費' },
+  { value: '水道代', label: '水道代' },
+  { value: '光熱費', label: '光熱費' },
+  { value: 'ガス代', label: 'ガス代' },
+  { value: '食費', label: '食費' },
+];
+
+const InputCard = memo((props: Props) => {
   const [selectCostType, setSelectCostType] = useState('');
   const [amount, setAmount] = useState('');
-  const { groupId } = useSelector((state: RootState) => state.groupId);
 
   const addCost = async (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (!groupId) return;
-    const groupRef = collection(db, 'group', groupId, 'cost');
+    if (!props.groupId) return;
+    const groupRef = collection(db, 'group', props.groupId, 'cost');
     await addDoc(groupRef, {
       costType: selectCostType,
       cost: parseInt(amount),
       date: new Date(),
-      inputUserId: user?.uid,
-      inputUserName: user?.displayName,
-      inputUserPhotoUrl: user?.photoURL,
+      inputUserId: props.user?.uid,
+      inputUserName: props.user?.displayName,
+      inputUserPhotoUrl: props.user?.photoURL,
     });
     setAmount('');
   };
-
-  const options = useMemo(
-    () => [
-      { value: '雑費', label: '雑費' },
-      { value: '水道代', label: '水道代' },
-      { value: '光熱費', label: '光熱費' },
-      { value: 'ガス代', label: 'ガス代' },
-      { value: '食費', label: '食費' },
-    ],
-    []
-  );
 
   return (
     <Card sx={{ height: '100%' }}>
@@ -56,10 +54,10 @@ const InputCard = () => {
           <Avatar
             sx={{ width: 30, height: 30 }}
             aria-label='recipe'
-            src={user?.photoURL as string}
+            src={props.user?.photoURL as string}
           />
 
-          <span>{user?.displayName}</span>
+          <span>{props.user?.displayName}</span>
         </div>
         <div className='flex flex-col  w-full'>
           <span className='text-gray-500 font-bold text-xs mb-2'>出費項目</span>
@@ -103,6 +101,6 @@ const InputCard = () => {
       </div>
     </Card>
   );
-};
+});
 
 export default InputCard;

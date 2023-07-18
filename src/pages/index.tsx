@@ -97,7 +97,7 @@ export default function Home({ current }: Current) {
 
             <div className='flex gap-x-10 flex-1'>
               <div className='w-1/3'>
-                <InputCard />
+                <InputCard groupId={groupId} user={user} />
               </div>
               <div className='w-1/3'>
                 <TotalCard />

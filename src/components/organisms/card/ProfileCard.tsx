@@ -1,11 +1,8 @@
 import { useAuthContext } from '@/feature/auth/AuthProvider';
-import { RootState } from '@/store';
 import { Avatar, Button, Card } from '@mui/material';
-import { useSelector } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
 
 const ProfileCard = () => {
-  const groupUsers = useSelector((state: RootState) => state.groupUsers);
   const { user } = useAuthContext();
 
   return (
@@ -20,7 +17,7 @@ const ProfileCard = () => {
         <div className='w-full space-y-4 flex flex-col items-center'>
           <Avatar
             src={user?.photoURL as string}
-            sx={{ width: 50, height: 50 }}
+            sx={{ width: 60, height: 60 }}
           />
           <div className='flex items-center'>
             <span>名前：</span>
