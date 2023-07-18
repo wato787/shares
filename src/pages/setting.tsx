@@ -7,17 +7,21 @@ import { Current, CurrentPageType } from '@/types/type';
 
 import React, { ReactElement } from 'react';
 import ProfileCard from '@/components/organisms/card/ProfileCard';
+import { RootState } from '@/store';
+import { useSelector } from 'react-redux';
 
 const Setting = ({ current }: Current): ReactElement => {
+  const { groupId } = useSelector((state: RootState) => state.groupId);
+  const { groupData } = useSelector((state: RootState) => state.groupData);
   return (
     <PageLayout current={current} grayBg>
       <div className='flex flex-col w-full p-6 gap-y-8 h-full'>
         <div className='flex  w-full gap-x-10 flex-1'>
           <div className='w-1/3 h-full'>
-            <RentCard />
+            <RentCard groupData={groupData} groupId={groupId as string} />
           </div>
           <div className='w-1/3'>
-            <InviteCard />
+            <InviteCard groupId={groupId as string} />
           </div>
           <div className='w-1/3'>
             <ProfileCard />

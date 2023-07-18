@@ -1,18 +1,19 @@
-import { RootState } from '@/store';
 import { Button, Card, IconButton } from '@mui/material';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useSnackbar } from '@/hooks/useSnackBar';
 
-const InviteCard = () => {
+interface Props {
+  groupId: string;
+}
+
+const InviteCard = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { groupId } = useSelector((state: RootState) => state.groupId);
   const { showSnackbar } = useSnackbar();
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(groupId as string);
-    if (!groupId) {
+    navigator.clipboard.writeText(props.groupId as string);
+    if (!props.groupId) {
       showSnackbar('コピーに失敗しました', 'error');
       return;
     }
@@ -31,7 +32,7 @@ const InviteCard = () => {
           {isOpen && (
             <div className='flex items-center justify-between  bg-secondary rounded p-1'>
               <span className='text-gray-500 font-bold text-base pl-4'>
-                {groupId}
+                {props.groupId}
               </span>
               <IconButton onClick={handleCopy}>
                 <ContentCopyIcon />

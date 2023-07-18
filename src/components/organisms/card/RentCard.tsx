@@ -1,26 +1,31 @@
-import { RootState } from '@/store';
 import { Button, Card, TextField } from '@mui/material';
 import { doc, setDoc } from 'firebase/firestore';
-import { FormEvent, MouseEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FormEvent, MouseEvent, memo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { db } from '../../../../firebase';
 import { useSnackbar } from '@/hooks/useSnackBar';
 import { setGroupData } from '@/slice/groupDataSlice';
+import { GroupData } from '@/types/type';
 
-const RentCard = () => {
+interface Props {
+  groupData: GroupData;
+  groupId: string;
+}
+
+const RentCard = memo((props: Props) => {
   const [rentCost, setRentCost] = useState('');
-  const { groupId } = useSelector((state: RootState) => state.groupId);
+
   const [isChangeMode, setIsChangeMode] = useState(false);
   const { showSnackbar } = useSnackbar();
-  const { groupData } = useSelector((state: RootState) => state.groupData);
+
   const dispatch = useDispatch();
 
   const changeRentCost = async (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (!groupId) return;
-    const groupRef = doc(db, 'group', groupId);
+    if (!props.groupId) return;
+    const groupRef = doc(db, 'group', props.groupId);
     await setDoc(
       groupRef,
       {
@@ -28,7 +33,9 @@ const RentCard = () => {
       },
       { merge: true }
     );
-    dispatch(setGroupData({ ...groupData, rentCost: parseInt(rentCost) }));
+    dispatch(
+      setGroupData({ ...props.groupData, rentCost: parseInt(rentCost) })
+    );
     setIsChangeMode(false);
     showSnackbar('家賃を変更しました', 'success');
     setRentCost('');
@@ -45,7 +52,7 @@ const RentCard = () => {
                 現在の設定家賃
               </span>
               <span className='text-gray-500 font-bold text-base'>
-                {groupData?.rentCost?.toLocaleString()}
+                {props.groupData?.rentCost?.toLocaleString()}
                 <span className='ml-1 text-sm'>円</span>
               </span>
             </div>
@@ -80,6 +87,6 @@ const RentCard = () => {
       </div>
     </Card>
   );
-};
+});
 
 export default RentCard;
