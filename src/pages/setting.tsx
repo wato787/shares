@@ -9,10 +9,12 @@ import React, { ReactElement } from 'react';
 import ProfileCard from '@/components/organisms/card/ProfileCard';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
+import { useAuthContext } from '@/feature/auth/AuthProvider';
 
 const Setting = ({ current }: Current): ReactElement => {
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const { groupData } = useSelector((state: RootState) => state.groupData);
+  const { user } = useAuthContext();
   return (
     <PageLayout current={current} grayBg>
       <div className='flex flex-col w-full p-6 gap-y-8 h-full'>
@@ -24,7 +26,7 @@ const Setting = ({ current }: Current): ReactElement => {
             <InviteCard groupId={groupId as string} />
           </div>
           <div className='w-1/3'>
-            <ProfileCard />
+            <ProfileCard user={user} />
           </div>
         </div>
         <div className='flex  w-full gap-x-10 h-full'>

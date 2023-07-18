@@ -1,10 +1,13 @@
-import { useAuthContext } from '@/feature/auth/AuthProvider';
 import { Avatar, Button, Card } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { User } from 'firebase/auth';
+import { memo } from 'react';
 
-const ProfileCard = () => {
-  const { user } = useAuthContext();
+interface Props {
+  user: User | null | undefined;
+}
 
+const ProfileCard = memo((props: Props) => {
   return (
     <Card sx={{ height: '100%' }}>
       <div className='p-5  flex flex-col items-center justify-center gap-y-5 overflow-scroll'>
@@ -16,17 +19,19 @@ const ProfileCard = () => {
         </div>
         <div className='w-full space-y-4 flex flex-col items-center'>
           <Avatar
-            src={user?.photoURL as string}
+            src={props.user?.photoURL as string}
             sx={{ width: 60, height: 60 }}
           />
           <div className='flex items-center'>
             <span>名前：</span>
-            <span className='font-bold text-base'>{user?.displayName}</span>
+            <span className='font-bold text-base'>
+              {props.user?.displayName}
+            </span>
           </div>
         </div>
       </div>
     </Card>
   );
-};
+});
 
 export default ProfileCard;
