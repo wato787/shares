@@ -12,29 +12,29 @@ const TotalCard = () => {
         <span className='font-bold text-xl text-gray-600'>出費詳細</span>
         <div className='w-full space-y-4'>
           <div className='flex items-center justify-between border-b p-1'>
-            <CostColorTitle title='家賃' type={CostType.RENT} />
+            <CostColorTitle type={CostType.RENT} />
             <span className='text-lg '>
               ¥{groupData.rentCost ? groupData.rentCost.toLocaleString() : 0}
             </span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
-            <CostColorTitle title='雑費' type={CostType.MISCELLANEOUS} />
+            <CostColorTitle type={CostType.MISCELLANEOUS} />
             <span className='text-base'>100000円</span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
-            <CostColorTitle title='水道代' type={CostType.WATER} />
+            <CostColorTitle type={CostType.WATER} />
             <span className='text-base '>100000円</span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
-            <CostColorTitle title='光熱費' type={CostType.UTILITIES} />
+            <CostColorTitle type={CostType.UTILITIES} />
             <span className='text-base'>100000円</span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
-            <CostColorTitle title='ガス代' type={CostType.GAS} />
+            <CostColorTitle type={CostType.GAS} />
             <span className='text-base'>100000円</span>
           </div>
           <div className='flex items-center justify-between border-b p-1'>
-            <CostColorTitle title='食費' type={CostType.FOOD} />
+            <CostColorTitle type={CostType.FOOD} />
             <span className='text-base'>100000円</span>
           </div>
         </div>
