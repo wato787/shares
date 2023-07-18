@@ -52,7 +52,7 @@ const PageLayout = (props: Props) => {
     const userCollectionSnap = await getDocs(userCollectionRef);
     const userData = userCollectionSnap.docs.map((doc) => doc.data());
     dispatch(setGroupUsers(userData));
-  }, [dispatch, userId]);
+  }, [userId, dispatch]);
 
   // ページの初期表示時にのみデータを取得
   useEffect(() => {
