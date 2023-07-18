@@ -6,6 +6,7 @@ import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
 
 import React, { ReactElement } from 'react';
+import ProfileCard from '@/components/organisms/card/ProfileCard';
 
 const Setting = ({ current }: Current): ReactElement => {
   return (
@@ -28,7 +29,7 @@ const Setting = ({ current }: Current): ReactElement => {
           </div>
           <div className='w-1/3 h-full'>
             {/* ユーザ設定、プロフィール */}
-            <MemberCard />
+            <ProfileCard />
           </div>
           <div className='w-1/3 h-full'>
             {/* 入金履歴 */}
