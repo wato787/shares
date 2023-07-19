@@ -38,7 +38,6 @@ const Setting = ({ current }: Current): ReactElement => {
             <MemberCard groupUsers={groupUsers} />
           </div>
           <div className='w-1/3 h-full'>
-            {/* 入金履歴 */}
             <MemberCard groupUsers={groupUsers} />
           </div>
         </div>
