@@ -13,6 +13,7 @@ import PageNavigation from './PageNavigation';
 import Header from './Header';
 import { setGroupData } from '@/slice/groupDataSlice';
 import { setGroupUsers } from '@/slice/groupUsersSlice';
+import { GroupData } from '@/types/type';
 
 interface Props {
   children: ReactElement;
@@ -39,8 +40,8 @@ const PageLayout = (props: Props) => {
 
     // groupからgroupデータを取得
     const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
-    const groupDocSnap: any = await getDoc(groupDocRef);
-    dispatch(setGroupData(groupDocSnap.data()));
+    const groupDocSnap = await getDoc(groupDocRef);
+    dispatch(setGroupData(groupDocSnap.data() as GroupData));
 
     // groupからuserデータを取得
     const userCollectionRef = collection(
@@ -52,7 +53,7 @@ const PageLayout = (props: Props) => {
     const userCollectionSnap = await getDocs(userCollectionRef);
     const userData = userCollectionSnap.docs.map((doc) => doc.data());
     dispatch(setGroupUsers(userData));
-  }, [userId, dispatch]);
+  }, [dispatch, userId]);
 
   // ページの初期表示時にのみデータを取得
   useEffect(() => {
