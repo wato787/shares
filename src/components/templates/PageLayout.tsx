@@ -25,6 +25,7 @@ const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
   const { userId } = useSelector((state: RootState) => state.userId);
+  const { groupId } = useSelector((state: RootState) => state.groupId);
 
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
@@ -57,6 +58,7 @@ const PageLayout = (props: Props) => {
 
   // ページの初期表示時にのみデータを取得
   useEffect(() => {
+    if (groupId) return;
     fetchData();
   }, [fetchData]);
 
