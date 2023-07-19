@@ -1,5 +1,5 @@
 import { Button, Card, IconButton } from '@mui/material';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useSnackbar } from '@/hooks/useSnackBar';
 
@@ -11,14 +11,14 @@ const InviteCard = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { showSnackbar } = useSnackbar();
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(props.groupId as string);
     if (!props.groupId) {
       showSnackbar('コピーに失敗しました', 'error');
       return;
     }
     showSnackbar('コピーしました', 'success');
-  };
+  }, [props.groupId, showSnackbar]);
 
   return (
     <Card sx={{ height: '100%' }}>
