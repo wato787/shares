@@ -13,11 +13,11 @@ const InviteCard = (props: Props) => {
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(props.groupId as string);
-    if (!props.groupId) {
+    if (props.groupId) {
+      showSnackbar('コピーしました', 'success');
+    } else {
       showSnackbar('コピーに失敗しました', 'error');
-      return;
     }
-    showSnackbar('コピーしました', 'success');
   }, [props.groupId, showSnackbar]);
 
   return (
