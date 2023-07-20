@@ -25,9 +25,9 @@ export type GroupData = {
   bankBalance?: number;
 };
 
-export type GroupUsers = {
+export type GroupUser = {
   id: string;
   name: string;
   photoUrl: string;
   position: string;
-}[];
+};

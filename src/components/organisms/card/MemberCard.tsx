@@ -1,9 +1,9 @@
-import { GroupUsers } from '@/types/type';
+import { GroupUser } from '@/types/type';
 import { Avatar, Card } from '@mui/material';
 import { memo } from 'react';
 
 interface Props {
-  groupUsers: GroupUsers;
+  groupUsers: GroupUser[];
 }
 
 const MemberCard = memo((props: Props) => {

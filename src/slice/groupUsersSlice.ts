@@ -1,7 +1,7 @@
 import { GroupUsers } from '@/types/type';
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState: GroupUsers = [];
+const initialState: GroupUsers[] = [];
 
 const groupUsersSlice = createSlice({
   name: 'groupUsers',
