@@ -19,28 +19,17 @@ interface Props {
 }
 
 const options = [
-  { value: '雑費' },
-  { value: '水道代' },
-  { value: '光熱費' },
-  { value: 'ガス代' },
-  { value: '食費' },
-  { value: '通信費' },
-  { value: 'その他' },
+  { label: '雑費', value: CostType.MISCELLANEOUS },
+  { label: '水道代', value: CostType.WATER },
+  { label: '光熱費', value: CostType.UTILITIES },
+  { label: 'ガス代', value: CostType.GAS },
+  { label: '食費', value: CostType.FOOD },
+  { label: '通信費', value: CostType.COMMUNICATION },
+  { label: 'その他', value: CostType.OTHER },
 ];
 
-const selectCostTypeChange = (type: string): CostType => {
-  if (type === '雑費') return CostType.MISCELLANEOUS;
-  if (type === '水道代') return CostType.WATER;
-  if (type === '光熱費') return CostType.UTILITIES;
-  if (type === 'ガス代') return CostType.GAS;
-  if (type === '食費') return CostType.FOOD;
-  if (type === '通信費') return CostType.COMMUNICATION;
-  if (type === 'その他') return CostType.OTHER;
-  return CostType.OTHER;
-};
-
 const InputCard = memo((props: Props) => {
-  const [selectCostType, setSelectCostType] = useState('');
+  const [selectCostType, setSelectCostType] = useState<string>('');
   const [amount, setAmount] = useState('');
   const { showSnackbar } = useSnackbar();
 
@@ -51,7 +40,7 @@ const InputCard = memo((props: Props) => {
     if (!props.groupId) return;
     const groupRef = collection(db, 'group', props.groupId, 'cost');
     await addDoc(groupRef, {
-      costType: selectCostTypeChange(selectCostType),
+      costType: selectCostType,
       amount: parseInt(amount),
       createdAt: new Date(),
       createdUserId: props.user?.uid,
@@ -86,7 +75,7 @@ const InputCard = memo((props: Props) => {
             >
               {options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.value}
+                  {option.label}
                 </MenuItem>
               ))}
             </Select>
