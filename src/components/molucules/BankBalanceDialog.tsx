@@ -45,11 +45,12 @@ const BankBalanceDialog = (props: Props): ReactElement => {
   const handleAddGroupPayment = async (): Promise<void> => {
     if (!groupId || !amount) return;
     const groupPaymentRef = collection(db, 'group', groupId, 'payment');
-    await addDoc(groupPaymentRef, {
+    const newPaymentDoc = await addDoc(groupPaymentRef, {
       amount: parseInt(amount),
       createdAt: new Date(),
       createdBy: userId,
     });
+    await setDoc(newPaymentDoc, { id: newPaymentDoc.id }, { merge: true });
   };
 
   // 残高追加クリック時の処理
@@ -57,10 +58,13 @@ const BankBalanceDialog = (props: Props): ReactElement => {
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-
-    await handleAddGroupBankBalance();
-    await handleAddGroupPayment();
-    showSnackbar('残高を追加しました', 'success');
+    try {
+      await handleAddGroupBankBalance();
+      await handleAddGroupPayment();
+      showSnackbar('残高を追加しました', 'success');
+    } catch (e) {
+      showSnackbar('残高の追加に失敗しました', 'error');
+    }
     setAmount('');
     props.onClose();
   };
