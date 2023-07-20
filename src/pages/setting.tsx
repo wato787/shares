@@ -20,7 +20,7 @@ const Setting = ({ current }: Current): ReactElement => {
     <PageLayout current={current} grayBg>
       <div className='flex flex-col w-full p-6 gap-y-8 h-full'>
         <div className='flex  w-full gap-x-10 flex-1'>
-          <div className='w-1/3 h-full'>
+          <div className='w-1/3'>
             <RentCard groupData={groupData} groupId={groupId as string} />
           </div>
           <div className='w-1/3'>
@@ -31,13 +31,13 @@ const Setting = ({ current }: Current): ReactElement => {
           </div>
         </div>
         <div className='flex  w-full gap-x-10 h-full'>
-          <div className='w-1/3 h-full'>
+          <div className='w-1/3'>
             <MemberCard groupUsers={groupUsers} />
           </div>
-          <div className='w-1/3 h-full'>
+          <div className='w-1/3'>
             <MemberCard groupUsers={groupUsers} />
           </div>
-          <div className='w-1/3 h-full'>
+          <div className='w-1/3'>
             <MemberCard groupUsers={groupUsers} />
           </div>
         </div>
