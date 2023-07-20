@@ -88,7 +88,7 @@ export default function Home({ current }: Current) {
   return (
     <PageLayout current={current} grayBg>
       <>
-        {/* TODO:データ取得のローディングで分岐する */}
+        {/* TODO:データ取得時ローディング */}
         {groupId ? (
           <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
             <div className=' -mt-2 -mb-6 mx-auto'>
