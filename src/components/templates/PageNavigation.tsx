@@ -7,9 +7,8 @@ import { useSelector } from 'react-redux';
 import { Current } from '@/types/type';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsIcon from '@mui/icons-material/Settings';
-import ShowChartIcon from '@mui/icons-material/ShowChart';
 import HistoryIcon from '@mui/icons-material/History';
-
+import BarChartIcon from '@mui/icons-material/BarChart';
 const navigationItems = [
   {
     href: { pathname: '/', query: { current: 'dashboard' } },
@@ -20,7 +19,7 @@ const navigationItems = [
   {
     href: { pathname: '/graph', query: { current: 'graph' } },
     label: 'グラフ',
-    icon: <ShowChartIcon color='primary' />,
+    icon: <BarChartIcon color='primary' />,
     labelEn: 'graph',
   },
   {

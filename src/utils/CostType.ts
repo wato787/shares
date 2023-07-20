@@ -6,4 +6,6 @@ export enum CostType {
   GAS = 'gas', //ガス
   UTILITIES = 'utilities', //光熱費
   FOOD = 'food', //食費
+  COMMUNICATION = 'communication', //通信費
+  OTHER = 'other', //その他
 }

@@ -20,6 +20,8 @@ module.exports = {
         water: '#00ffff',
         food: '#00ff00',
         miscellaneous: '#ff00ff',
+        communication: '#0000ff',
+        other: '#000000',
       },
       fontFamily: {
         shares: ['Kablammo'],

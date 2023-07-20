@@ -11,6 +11,7 @@ import { FormEvent, MouseEvent, memo, useState } from 'react';
 import { db } from '../../../../firebase';
 import { User } from 'firebase/auth';
 import { useSnackbar } from '@/hooks/useSnackBar';
+import { CostType } from '@/utils/CostType';
 
 interface Props {
   groupId: string;
@@ -18,12 +19,25 @@ interface Props {
 }
 
 const options = [
-  { value: '雑費', label: '雑費' },
-  { value: '水道代', label: '水道代' },
-  { value: '光熱費', label: '光熱費' },
-  { value: 'ガス代', label: 'ガス代' },
-  { value: '食費', label: '食費' },
+  { value: '雑費' },
+  { value: '水道代' },
+  { value: '光熱費' },
+  { value: 'ガス代' },
+  { value: '食費' },
+  { value: '通信費' },
+  { value: 'その他' },
 ];
+
+const selectCostTypeChange = (type: string): CostType => {
+  if (type === '雑費') return CostType.MISCELLANEOUS;
+  if (type === '水道代') return CostType.WATER;
+  if (type === '光熱費') return CostType.UTILITIES;
+  if (type === 'ガス代') return CostType.GAS;
+  if (type === '食費') return CostType.FOOD;
+  if (type === '通信費') return CostType.COMMUNICATION;
+  if (type === 'その他') return CostType.OTHER;
+  return CostType.OTHER;
+};
 
 const InputCard = memo((props: Props) => {
   const [selectCostType, setSelectCostType] = useState('');
@@ -37,7 +51,7 @@ const InputCard = memo((props: Props) => {
     if (!props.groupId) return;
     const groupRef = collection(db, 'group', props.groupId, 'cost');
     await addDoc(groupRef, {
-      costType: selectCostType,
+      costType: selectCostTypeChange(selectCostType),
       amount: parseInt(amount),
       createdAt: new Date(),
       createdUserId: props.user?.uid,
@@ -72,7 +86,7 @@ const InputCard = memo((props: Props) => {
             >
               {options.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                  {option.value}
                 </MenuItem>
               ))}
             </Select>

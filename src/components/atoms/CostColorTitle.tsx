@@ -14,6 +14,8 @@ const CostColorTitle = (props: Props) => {
     if (props.type === CostType.MISCELLANEOUS) return 'bg-miscellaneous';
     if (props.type === CostType.UTILITIES) return 'bg-utilities';
     if (props.type === CostType.WATER) return 'bg-water';
+    if (props.type === CostType.COMMUNICATION) return 'bg-communication';
+    if (props.type === CostType.OTHER) return 'bg-other';
     return 'bg-gray-600';
   }, [props.type]);
 
@@ -24,6 +26,8 @@ const CostColorTitle = (props: Props) => {
     if (props.type === CostType.MISCELLANEOUS) return '雑費';
     if (props.type === CostType.UTILITIES) return '光熱費';
     if (props.type === CostType.WATER) return '水道代';
+    if (props.type === CostType.COMMUNICATION) return '通信費';
+    if (props.type === CostType.OTHER) return 'その他';
     return 'その他';
   }, [props.type]);
 

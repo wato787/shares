@@ -43,6 +43,14 @@ const TotalCard = memo((props: Props) => {
             <CostColorTitle type={CostType.FOOD} />
             <span className='text-base'>100000円</span>
           </div>
+          <div className='flex items-center justify-between border-b p-1'>
+            <CostColorTitle type={CostType.COMMUNICATION} />
+            <span className='text-base'>100000円</span>
+          </div>
+          <div className='flex items-center justify-between border-b p-1'>
+            <CostColorTitle type={CostType.OTHER} />
+            <span className='text-base'>100000円</span>
+          </div>
         </div>
       </div>
     </Card>
