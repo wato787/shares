@@ -85,7 +85,6 @@ const InputCard = memo((props: Props) => {
             >
               <TextField
                 type='number'
-                id='input-with-sx'
                 label='金額'
                 fullWidth
                 value={amount}
