@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Link from 'next/link';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import Image from 'next/image';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
@@ -10,8 +10,42 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import HistoryIcon from '@mui/icons-material/History';
 
+const navigationItems = useMemo(
+  () => [
+    {
+      href: { pathname: '/', query: { current: 'dashboard' } },
+      label: 'ダッシュボード',
+      icon: <DashboardIcon color='primary' />,
+    },
+    {
+      href: { pathname: '/graph', query: { current: 'graph' } },
+      label: 'グラフ',
+      icon: <ShowChartIcon color='primary' />,
+    },
+    {
+      href: {
+        pathname: '/detail',
+        query: {
+          year: new Date().getFullYear(),
+          month: new Date().getMonth() + 1,
+          current: 'detail',
+        },
+      },
+      label: '月別の詳細',
+      icon: <HistoryIcon color='primary' />,
+    },
+    {
+      href: { pathname: '/setting', query: { current: 'setting' } },
+      label: '設定 ＆ 管理',
+      icon: <SettingsIcon color='primary' />,
+    },
+  ],
+  [] // 依存配列は空にすることで、最初の一度だけメモ化する
+);
+
 const PageNavigation = ({ current }: Current): ReactElement => {
   const open = useSelector((state: RootState) => state.drawer.open);
+
   return (
     <>
       <div className='flex items-center justify-around border-b h-16 z-10'>
@@ -36,66 +70,28 @@ const PageNavigation = ({ current }: Current): ReactElement => {
           </>
         )}
       </div>
-      <Link
-        className={classNames(
-          'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
-          !open && 'justify-center',
-          current === 'dashboad' || !current ? 'bg-white' : ''
-        )}
-        href={{ pathname: '/', query: { current: 'dashboad' } }}
-      >
-        <DashboardIcon color='primary' />
-        {open && (
-          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-            <span className='font-bold text-gray-500'>ダッシュボード</span>
-          </div>
-        )}
-      </Link>
-      <Link
-        className={classNames(
-          'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
-          !open && 'justify-center',
-          current === 'graph' ? 'bg-white' : ''
-        )}
-        href={{ pathname: '/graph', query: { current: 'graph' } }}
-      >
-        <ShowChartIcon color='primary' />
-        {open && (
-          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-            <span className='font-bold text-gray-500'>グラフ</span>
-          </div>
-        )}
-      </Link>
-      <Link
-        className={classNames(
-          'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
-          !open && 'justify-center',
-          current === 'detail' ? 'bg-white' : ''
-        )}
-        href={{ pathname: '/detail', query: { current: 'detail' } }}
-      >
-        <HistoryIcon color='primary' />
-        {open && (
-          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-            <span className='font-bold text-gray-500'>月別の詳細</span>
-          </div>
-        )}
-      </Link>
-      <Link
-        className={classNames(
-          'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
-          !open && 'justify-center',
-          current === 'setting' ? 'bg-white' : ''
-        )}
-        href={{ pathname: '/setting', query: { current: 'setting' } }}
-      >
-        <SettingsIcon color='primary' />
-        {open && (
-          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-            <span className='font-bold text-gray-500'>設定 ＆ 管理</span>
-          </div>
-        )}
-      </Link>
+
+      {navigationItems.map((item) => (
+        <Link
+          key={item.label}
+          className={classNames(
+            'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
+            !open && 'justify-center',
+            current === item.label ||
+              (!current && item.label === 'ダッシュボード')
+              ? 'bg-white'
+              : ''
+          )}
+          href={item.href}
+        >
+          {item.icon}
+          {open && (
+            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+              <span className='font-bold text-gray-500'>{item.label}</span>
+            </div>
+          )}
+        </Link>
+      ))}
     </>
   );
 };
