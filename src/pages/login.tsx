@@ -37,7 +37,7 @@ const Login = () => {
       await router.push('/');
       showSnackbar('ログインしました', 'success');
     } catch (error) {
-      console.log(error);
+      showSnackbar('ログインに失敗しました', 'error');
     }
   };
 
