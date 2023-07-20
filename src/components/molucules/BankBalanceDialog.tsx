@@ -1,6 +1,6 @@
 import { useAuthContext } from '@/feature/auth/AuthProvider';
 import { Dialog, TextField, Button, Avatar } from '@mui/material';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import React, {
   FormEvent,
   MouseEvent,
@@ -22,6 +22,7 @@ interface Props {
 const BankBalanceDialog = (props: Props): ReactElement => {
   const { user } = useAuthContext();
   const { groupId } = useSelector((state: RootState) => state.groupId);
+  const { userId } = useSelector((state: RootState) => state.userId);
   const [amount, setAmount] = useState<string>('');
   const { groupData } = useSelector((state: RootState) => state.groupData);
   const dispatch = useDispatch();
@@ -38,13 +39,17 @@ const BankBalanceDialog = (props: Props): ReactElement => {
 
     await setDoc(groupRef, { bankBalance: newBankBalance }, { merge: true });
     dispatch(setGroupData({ ...groupData, bankBalance: newBankBalance }));
-    showSnackbar('残高を追加しました', 'success');
   }, [amount, dispatch, groupId, groupData, showSnackbar]);
 
   // group-paymentに残高を追加(履歴追跡用)
   const handleAddGroupPayment = async (): Promise<void> => {
     if (!groupId || !amount) return;
-    const groupPaymentRef = doc(db, 'group', groupId, 'payment');
+    const groupPaymentRef = collection(db, 'group', groupId, 'payment');
+    await addDoc(groupPaymentRef, {
+      amount: parseInt(amount),
+      createdAt: new Date(),
+      createdBy: userId,
+    });
   };
 
   // 残高追加クリック時の処理
@@ -54,7 +59,8 @@ const BankBalanceDialog = (props: Props): ReactElement => {
     e.preventDefault();
 
     await handleAddGroupBankBalance();
-
+    await handleAddGroupPayment();
+    showSnackbar('残高を追加しました', 'success');
     setAmount('');
     props.onClose();
   };

@@ -10,6 +10,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { FormEvent, MouseEvent, memo, useState } from 'react';
 import { db } from '../../../../firebase';
 import { User } from 'firebase/auth';
+import { useSnackbar } from '@/hooks/useSnackBar';
 
 interface Props {
   groupId: string;
@@ -27,6 +28,7 @@ const options = [
 const InputCard = memo((props: Props) => {
   const [selectCostType, setSelectCostType] = useState('');
   const [amount, setAmount] = useState('');
+  const { showSnackbar } = useSnackbar();
 
   const addCost = async (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
@@ -36,12 +38,13 @@ const InputCard = memo((props: Props) => {
     const groupRef = collection(db, 'group', props.groupId, 'cost');
     await addDoc(groupRef, {
       costType: selectCostType,
-      cost: parseInt(amount),
-      date: new Date(),
-      inputUserId: props.user?.uid,
-      inputUserName: props.user?.displayName,
-      inputUserPhotoUrl: props.user?.photoURL,
+      amount: parseInt(amount),
+      createdAt: new Date(),
+      createdUserId: props.user?.uid,
+      createdUserName: props.user?.displayName,
+      createdUserPhotoURL: props.user?.photoURL,
     });
+    showSnackbar('出費を追加しました', 'success');
     setAmount('');
   };
 
