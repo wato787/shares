@@ -8,8 +8,8 @@ import { configureStore } from '@reduxjs/toolkit';
 export const store = configureStore({
   reducer: {
     drawer: drawerSlice,
-    groupId: groupIdSlice,
     userId: userSlice,
+    groupId: groupIdSlice,
     groupData: groupDataSlice,
     groupUsers: groupUsersSlice,
   },

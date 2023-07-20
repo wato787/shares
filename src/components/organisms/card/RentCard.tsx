@@ -14,10 +14,8 @@ interface Props {
 
 const RentCard = memo((props: Props) => {
   const [rentCost, setRentCost] = useState('');
-
   const [isChangeMode, setIsChangeMode] = useState(false);
   const { showSnackbar } = useSnackbar();
-
   const dispatch = useDispatch();
 
   const changeRentCost = async (
