@@ -36,6 +36,7 @@ const Setting = ({ current }: Current): ReactElement => {
             <MemberCard groupUsers={groupUsers} />
           </div>
           <div className='w-1/3'>
+            {/* 変動費追加（選択できるように） */}
             <MemberCard groupUsers={groupUsers} />
           </div>
           <div className='w-1/3'>
