@@ -28,7 +28,7 @@ const Chart = () => {
   const handleClickXAxis = (e: any) => {
     router.push({
       pathname: 'detail',
-      query: { year: grouped.year, month: e.payload.month, current: 'graph' },
+      query: { year: grouped.year, month: e.payload.month, current: 'detail' },
     });
   };
 
