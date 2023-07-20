@@ -27,7 +27,7 @@ const InviteCard = (props: Props) => {
 
         <div className='flex flex-col  w-full gap-y-5'>
           <span className='text-gray-500 font-bold text-xs text-center'>
-            グループに追加したい人にこのIDを教えてください
+            グループに追加したい人にこのIDを渡してください
           </span>
           {isOpen && (
             <div className='flex items-center justify-between  bg-secondary rounded p-1'>
