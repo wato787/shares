@@ -64,21 +64,32 @@ const RentCard = memo((props: Props) => {
             >
               <TextField
                 type='number'
-                id='input-with-sx'
                 label='金額'
                 fullWidth
                 value={rentCost}
                 onChange={(e) => setRentCost(e.target.value as string)}
+                sx={{ height: '56px' }}
               />
-              <Button
-                variant='contained'
-                fullWidth
-                onClick={changeRentCost}
-                disabled={!rentCost}
-                className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
-              >
-                変更
-              </Button>
+              <div className='flex gap-x-2'>
+                <Button
+                  fullWidth
+                  onClick={() => setIsChangeMode(false)}
+                  className=' hover:opacity-[0.99] py-2 px-4 rounded'
+                  sx={{ height: '36px' }}
+                >
+                  戻る
+                </Button>
+                <Button
+                  variant='contained'
+                  fullWidth
+                  onClick={changeRentCost}
+                  disabled={!rentCost}
+                  className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
+                  sx={{ height: '36px' }}
+                >
+                  変更
+                </Button>
+              </div>
             </form>
           </div>
         )}
