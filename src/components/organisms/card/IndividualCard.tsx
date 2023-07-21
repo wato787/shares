@@ -1,12 +1,19 @@
-import { GroupUsers } from '@/types/type';
+import { GroupUser } from '@/types/type';
 import { Avatar, Card } from '@mui/material';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 interface Props {
-  groupUsers: GroupUsers;
+  groupUsers: GroupUser[];
 }
 
 const IndividualCard = memo((props: Props) => {
+  const totalCost = 100000;
+
+  const individualCost = useMemo((): string => {
+    const divisionCost = totalCost / props.groupUsers.length;
+    return divisionCost.toLocaleString();
+  }, [props.groupUsers.length, totalCost]);
+
   return (
     <Card sx={{ height: '100%' }}>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5'>
@@ -24,7 +31,7 @@ const IndividualCard = memo((props: Props) => {
                 />
                 <span>{user.name}</span>
               </div>
-              <span className='text-base'>100000円</span>
+              <span className='text-base'>{individualCost}円</span>
             </div>
           ))}
         </div>
