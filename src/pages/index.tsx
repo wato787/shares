@@ -1,9 +1,18 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
 import { Button, TextField } from '@mui/material';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
@@ -15,6 +24,7 @@ import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 import { useAuthContext } from '@/feature/auth/AuthProvider';
 import MonthBadge from '@/components/atoms/MonthBadge';
 import useDate from '@/hooks/useDate';
+import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -24,6 +34,9 @@ export default function Home({ current }: Current) {
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const { groupData } = useSelector((state: RootState) => state.groupData);
   const groupUsers = useSelector((state: RootState) => state.groupUsers);
+  const { thisMonthData } = useSelector(
+    (state: RootState) => state.thisMonthData
+  );
   const { monthColor, monthName } = useDate();
 
   const [joinId, setJoinId] = useState('');
@@ -84,6 +97,41 @@ export default function Home({ current }: Current) {
     dispatch(setGroupId(joinId));
     showSnackbar('グループに加入しました', 'success');
   };
+
+  // 今月のデータ取得
+  const getThisMonthData = useCallback(async (): Promise<void> => {
+    if (!groupId) return;
+
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const firstDayOfMonth = new Date(year, month - 1, 1);
+    const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59, 999);
+
+    const groupDocRef = collection(db, 'group', groupId, 'cost');
+    const groupQuery = query(
+      groupDocRef,
+      where('createdAt', '>=', firstDayOfMonth),
+      where('createdAt', '<=', lastDayOfMonth),
+      orderBy('createdAt', 'asc')
+    );
+
+    const querySnapshot = await getDocs(groupQuery);
+    const data = querySnapshot.docs.map((doc) => {
+      const firestoreTimestamp = doc.data().createdAt;
+      const isoTimestamp = firestoreTimestamp.toDate().toISOString();
+      return {
+        ...doc.data(),
+        createdAt: isoTimestamp,
+      };
+    });
+    dispatch(setThisMonthData(data));
+  }, [groupId]);
+
+  useEffect(() => {
+    if (thisMonthData.length > 0) return;
+    getThisMonthData();
+  }, [getThisMonthData]);
 
   return (
     <PageLayout current={current} grayBg>

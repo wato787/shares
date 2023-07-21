@@ -12,6 +12,7 @@ import { db } from '../../../../firebase';
 import { User } from 'firebase/auth';
 import { useSnackbar } from '@/hooks/useSnackBar';
 import { CostType } from '@/utils/CostType';
+import { CostData } from '@/types/type';
 
 interface Props {
   groupId: string;
@@ -46,7 +47,7 @@ const InputCard = memo((props: Props) => {
       createdUserId: props.user?.uid,
       createdUserName: props.user?.displayName,
       createdUserPhotoURL: props.user?.photoURL,
-    });
+    } as CostData);
     showSnackbar('出費を追加しました', 'success');
     setAmount('');
   };
