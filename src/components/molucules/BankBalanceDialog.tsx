@@ -32,13 +32,20 @@ const BankBalanceDialog = (props: Props): ReactElement => {
   const handleAddGroupBankBalance = useCallback(async (): Promise<void> => {
     if (!groupId || !amount) return;
     const groupRef = doc(db, 'group', groupId);
-    const groupBankBalance = await getDoc(groupRef).then((doc) => {
+    const groupBankBalance: number = await getDoc(groupRef).then((doc) => {
       return doc.data()?.bankBalance;
     });
-    const newBankBalance = parseInt(groupBankBalance) + parseInt(amount);
 
-    await setDoc(groupRef, { bankBalance: newBankBalance }, { merge: true });
-    dispatch(setGroupData({ ...groupData, bankBalance: newBankBalance }));
+    const newBankBalance = () => {
+      if (!groupBankBalance) {
+        return parseInt(amount);
+      } else {
+        return groupBankBalance + parseInt(amount);
+      }
+    };
+
+    await setDoc(groupRef, { bankBalance: newBankBalance() }, { merge: true });
+    dispatch(setGroupData({ ...groupData, bankBalance: newBankBalance() }));
   }, [amount, dispatch, groupId, groupData, showSnackbar]);
 
   // group-paymentに残高を追加(履歴追跡用)

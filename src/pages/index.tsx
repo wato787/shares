@@ -25,6 +25,7 @@ import { useAuthContext } from '@/feature/auth/AuthProvider';
 import MonthBadge from '@/components/atoms/MonthBadge';
 import useDate from '@/hooks/useDate';
 import { setThisMonthData } from '@/slice/thisMonthDataSlice';
+import LoadingScreen from '@/components/templates/LoadingScreen';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -40,6 +41,7 @@ export default function Home({ current }: Current) {
   const { monthColor, monthName } = useDate();
 
   const [joinId, setJoinId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
   const { user } = useAuthContext();
@@ -73,7 +75,7 @@ export default function Home({ current }: Current) {
     showSnackbar('グループを作成しました', 'success');
   };
 
-  // 	TODO: グループ加入 ユーザーにgroupId格納
+  // グループ加入
   const handleJoinGroup = async (): Promise<void> => {
     if (!userId) {
       showSnackbar('ログインしてください', 'error');
@@ -130,13 +132,17 @@ export default function Home({ current }: Current) {
 
   useEffect(() => {
     if (thisMonthData.length > 0) return;
-    getThisMonthData();
+    setIsLoading(true);
+    (async (): Promise<void> => {
+      await getThisMonthData();
+    })();
+    setIsLoading(false);
   }, [getThisMonthData]);
 
   return (
     <PageLayout current={current} grayBg>
       <>
-        {/* TODO:データ取得時ローディング */}
+        {isLoading && <LoadingScreen />}
         {groupId ? (
           <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
             <div className=' -mt-2 -mb-6 mx-auto'>
