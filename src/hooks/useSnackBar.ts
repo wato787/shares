@@ -12,7 +12,7 @@ export const useSnackbar = (): {
       variant: variant ? variant : 'default',
       anchorOrigin: { vertical: 'bottom', horizontal: 'right' },
       style: {
-        backgroundColor: '#55B4B7',
+        backgroundColor: variant === 'error' ? '#b22222' : '#55B4B7',
         color: '#fff',
         fontWeight: 'bold',
       },
