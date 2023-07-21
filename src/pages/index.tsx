@@ -1,5 +1,5 @@
 import PageLayout from '@/components/templates/PageLayout';
-import { Current, CurrentPageType } from '@/types/type';
+import { CostData, Current, CurrentPageType } from '@/types/type';
 import { Button, TextField } from '@mui/material';
 import {
   addDoc,
@@ -119,13 +119,13 @@ export default function Home({ current }: Current) {
     );
 
     const querySnapshot = await getDocs(groupQuery);
-    const data = querySnapshot.docs.map((doc) => {
+    const data: CostData[] = querySnapshot.docs.map((doc) => {
       const firestoreTimestamp = doc.data().createdAt;
       const isoTimestamp = firestoreTimestamp.toDate().toISOString();
       return {
         ...doc.data(),
         createdAt: isoTimestamp,
-      };
+      } as CostData;
     });
     dispatch(setThisMonthData(data));
   }, [groupId]);

@@ -13,7 +13,7 @@ const thisMonthDataSlice = createSlice({
   name: 'thisMonthData',
   initialState,
   reducers: {
-    setThisMonthData: (state, action: PayloadAction<any>) => {
+    setThisMonthData: (state, action: PayloadAction<CostData[]>) => {
       state.thisMonthData = action.payload;
     },
   },
