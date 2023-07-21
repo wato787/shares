@@ -36,7 +36,7 @@ const BankBalanceDialog = (props: Props): ReactElement => {
       return doc.data()?.bankBalance;
     });
 
-    const newBankBalance = () => {
+    const newBankBalance = (): number => {
       if (!groupBankBalance) {
         return parseInt(amount);
       } else {
