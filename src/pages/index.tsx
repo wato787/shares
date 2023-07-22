@@ -1,6 +1,5 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { CostData, Current, CurrentPageType } from '@/types/type';
-import { Button, TextField } from '@mui/material';
 import {
   addDoc,
   collection,
@@ -21,13 +20,14 @@ import { useSnackbar } from '@/hooks/useSnackBar';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+
 import GroupCreateCard from '@/components/organisms/card/GroupcreateCard';
 import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
 import MonthBadge from '@/components/atoms/MonthBadge';
 import useDate from '@/hooks/useDate';
 import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
+import { useAuthContext } from '@/feature/auth/authProvider';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');

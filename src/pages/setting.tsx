@@ -3,14 +3,13 @@ import RentCard from '@/components/organisms/card/RentCard';
 import MemberCard from '@/components/organisms/card/MemberCard';
 
 import PageLayout from '@/components/templates/PageLayout';
-import { RootState } from '@/store';
 import { Current, CurrentPageType } from '@/types/type';
 
 import React, { ReactElement } from 'react';
 import ProfileCard from '@/components/organisms/card/ProfileCard';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { useAuthContext } from '@/feature/auth/authProvider';
 
 const Setting = ({ current }: Current): ReactElement => {
   const { groupId } = useSelector((state: RootState) => state.groupId);
