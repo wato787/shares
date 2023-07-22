@@ -8,9 +8,12 @@ import { ReactElement, useCallback, cloneElement, useEffect } from 'react';
 import { RootState } from '@/store';
 import { db } from '../../../firebase';
 import { setGroupId } from '@/slice/groupIdSlice';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import PageNavigation from './PageNavigation';
 import Header from './Header';
+import { setGroupData } from '@/slice/groupDataSlice';
+import { setGroupUsers } from '@/slice/groupUsersSlice';
+import { GroupData } from '@/types/type';
 
 interface Props {
   children: ReactElement;
@@ -22,21 +25,42 @@ const PageLayout = (props: Props) => {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.drawer.open);
   const { userId } = useSelector((state: RootState) => state.userId);
+  const { groupId } = useSelector((state: RootState) => state.groupId);
 
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
   }, [dispatch]);
 
-  // グループID取得
-  useEffect(() => {
-    (async (): Promise<void> => {
-      if (!userId) return;
+  // グループ取得
+  const fetchData = useCallback(async (): Promise<void> => {
+    if (!userId) return;
+    // ユーザからgroupIdを取得
+    const userDocRef = doc(db, 'users', userId);
+    const userDocSnap = await getDoc(userDocRef);
+    dispatch(setGroupId(userDocSnap.data()?.groupId));
 
-      const userDocRef = doc(db, 'users', userId);
-      const userDocSnap = await getDoc(userDocRef);
-      dispatch(setGroupId(userDocSnap.data()?.groupId));
-    })();
-  }, [userId, dispatch]);
+    // groupからgroupデータを取得
+    const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
+    const groupDocSnap = await getDoc(groupDocRef);
+    dispatch(setGroupData(groupDocSnap.data() as GroupData));
+
+    // groupからuserデータを取得
+    const userCollectionRef = collection(
+      db,
+      'group',
+      userDocSnap.data()?.groupId,
+      'users'
+    );
+    const userCollectionSnap = await getDocs(userCollectionRef);
+    const userData = userCollectionSnap.docs.map((doc) => doc.data());
+    dispatch(setGroupUsers(userData));
+  }, [dispatch, userId]);
+
+  // ページの初期表示時にのみデータを取得
+  useEffect(() => {
+    if (groupId) return;
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>
@@ -72,7 +96,7 @@ const PageLayout = (props: Props) => {
         <div className='flex flex-col h-screen w-full'>
           <Header />
           <div
-            className={classNames('m-5 flex-1', props.grayBg && 'bg-secondary')}
+            className={classNames('m-6 flex-1', props.grayBg && 'bg-secondary')}
           >
             {cloneElement(props.children, { open })}
           </div>

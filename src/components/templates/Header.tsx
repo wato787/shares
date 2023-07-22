@@ -11,10 +11,13 @@ import { signOut } from 'firebase/auth';
 import React, { ReactElement, useCallback, useState } from 'react';
 import { auth } from '../../../firebase';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import { useRouter } from 'next/router';
 
 const Header = (): ReactElement => {
   const { user } = useAuthContext();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const router = useRouter();
 
   //ユーザーメニュー
   const handleOpenUserMenu = useCallback(
@@ -32,6 +35,11 @@ const Header = (): ReactElement => {
   const handleLogout = async (): Promise<void> => {
     await signOut(auth);
   };
+
+  //ユーザー設定
+  const handleClickSetting = useCallback(() => {
+    router.push({ pathname: '/setting', query: { current: 'setting' } });
+  }, []);
 
   return (
     <header className='flex items-center justify-end h-16 px-6 py-1 bg-secondary border-b w-full'>
@@ -61,6 +69,10 @@ const Header = (): ReactElement => {
         onClose={handleCloseUserMenu}
       >
         <Box>
+          <MenuItem onClick={handleClickSetting}>
+            <ManageAccountsIcon sx={{ mr: 2 }} />
+            ユーザ設定
+          </MenuItem>
           <MenuItem onClick={handleLogout}>
             <LogoutIcon sx={{ mr: 2 }} />
             ログアウト

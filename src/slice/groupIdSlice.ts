@@ -8,7 +8,7 @@ const initialState: GroupState = {
   groupId: null,
 };
 
-const groupSlice = createSlice({
+const groupIdSlice = createSlice({
   name: 'group',
   initialState,
   reducers: {
@@ -18,6 +18,6 @@ const groupSlice = createSlice({
   },
 });
 
-export const { setGroupId } = groupSlice.actions;
+export const { setGroupId } = groupIdSlice.actions;
 
-export default groupSlice.reducer;
+export default groupIdSlice.reducer;

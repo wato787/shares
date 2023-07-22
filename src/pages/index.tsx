@@ -1,20 +1,33 @@
 import PageLayout from '@/components/templates/PageLayout';
-import { Current, CurrentPageType } from '@/types/type';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { CostData, Current, CurrentPageType } from '@/types/type';
+import { Button, TextField } from '@mui/material';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { setGroupId } from '@/slice/groupIdSlice';
 import InputCard from '@/components/organisms/card/InputCard';
 import { useSnackbar } from '@/hooks/useSnackBar';
-import classNames from 'classnames';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 import { useAuthContext } from '@/feature/auth/AuthProvider';
 import GroupCreateCard from '@/components/organisms/card/GroupcreateCard';
 import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
+import MonthBadge from '@/components/atoms/MonthBadge';
+import useDate from '@/hooks/useDate';
+import { setThisMonthData } from '@/slice/thisMonthDataSlice';
+import LoadingScreen from '@/components/templates/LoadingScreen';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -22,10 +35,17 @@ export default function Home({ current }: Current) {
   const [joinPositon, setJoinPosition] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
+  const { groupData } = useSelector((state: RootState) => state.groupData);
+  const groupUsers = useSelector((state: RootState) => state.groupUsers);
+  const { thisMonthData } = useSelector(
+    (state: RootState) => state.thisMonthData
+  );
+  const { monthColor, monthName } = useDate();
+
   const [joinId, setJoinId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
-  const open = useSelector((state: RootState) => state.drawer.open);
   const { user } = useAuthContext();
 
   // グループ作成
@@ -57,7 +77,7 @@ export default function Home({ current }: Current) {
     showSnackbar('グループを作成しました', 'success');
   };
 
-  // 	TODO: グループ加入 ユーザーにgroupId格納
+  // グループ加入
   const handleJoinGroup = async (): Promise<void> => {
     if (!userId) {
       showSnackbar('ログインしてください', 'error');
@@ -82,23 +102,65 @@ export default function Home({ current }: Current) {
     showSnackbar('グループに加入しました', 'success');
   };
 
+  // 今月のデータ取得
+  const getThisMonthData = useCallback(async (): Promise<void> => {
+    if (!groupId) return;
+
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const firstDayOfMonth = new Date(year, month - 1, 1);
+    const lastDayOfMonth = new Date(year, month, 0, 23, 59, 59, 999);
+
+    const groupDocRef = collection(db, 'group', groupId, 'cost');
+    const groupQuery = query(
+      groupDocRef,
+      where('createdAt', '>=', firstDayOfMonth),
+      where('createdAt', '<=', lastDayOfMonth),
+      orderBy('createdAt', 'asc')
+    );
+
+    const querySnapshot = await getDocs(groupQuery);
+    const data: CostData[] = querySnapshot.docs.map((doc) => {
+      const firestoreTimestamp = doc.data().createdAt;
+      const isoTimestamp = firestoreTimestamp.toDate().toISOString();
+      return {
+        ...doc.data(),
+        createdAt: isoTimestamp,
+      } as CostData;
+    });
+    dispatch(setThisMonthData(data));
+  }, [groupId]);
+
+  useEffect(() => {
+    if (thisMonthData.length > 0) return;
+    setIsLoading(true);
+    (async (): Promise<void> => {
+      await getThisMonthData();
+    })();
+    setIsLoading(false);
+  }, [getThisMonthData]);
+
   return (
     <PageLayout current={current} grayBg>
       <>
-        {/* TODO:データ取得のローディングで分岐する */}
+        {isLoading && <LoadingScreen />}
         {groupId ? (
-          <div className={classNames('p-5 w-full flex flex-col gap-y-10')}>
-            <ExpensesCard />
+          <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
+            <div className=' -mt-2 -mb-6 mx-auto'>
+              <MonthBadge monthColor={monthColor} monthName={monthName} />
+            </div>
+            <ExpensesCard groupData={groupData} />
 
-            <div className='flex w-full gap-x-10'>
+            <div className='flex gap-x-10 flex-1'>
               <div className='w-1/3'>
-                <InputCard />
+                <InputCard groupId={groupId} user={user} />
               </div>
               <div className='w-1/3'>
-                <TotalCard />
+                <TotalCard groupData={groupData} />
               </div>
               <div className='w-1/3'>
-                <IndividualCard />
+                <IndividualCard groupUsers={groupUsers} />
               </div>
             </div>
           </div>
