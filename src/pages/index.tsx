@@ -1,6 +1,5 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { CostData, Current, CurrentPageType } from '@/types/type';
-import { Button, TextField } from '@mui/material';
 import {
   addDoc,
   collection,
@@ -21,11 +20,14 @@ import { useSnackbar } from '@/hooks/useSnackBar';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+
+import GroupCreateCard from '@/components/organisms/card/GroupcreateCard';
+import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
 import MonthBadge from '@/components/atoms/MonthBadge';
 import useDate from '@/hooks/useDate';
 import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
+import { useAuthContext } from '@/feature/auth/authProvider';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -164,37 +166,14 @@ export default function Home({ current }: Current) {
           </div>
         ) : (
           <>
-            <div className='p-5 flex  items-center justify-center gap-y-5 w-full'>
-              <div className='flex flex-col w-full p-5'>
-                <span className=' text-center'>グループIDに参加する</span>
-                <TextField
-                  value={joinId}
-                  onChange={(e) => setJoinId(e.target.value)}
-                  label='グループID'
-                />
-                <TextField
-                  value={joinPositon}
-                  onChange={(e) => setJoinPosition(e.target.value)}
-                  label='役割'
-                />
-                <Button onClick={handleJoinGroup}>加入</Button>
-              </div>
-
-              <div className='flex flex-col w-full p-5'>
-                <span className='text-center'>グループを作成する</span>
-                <TextField
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  label='id'
-                />
-
-                <TextField
-                  value={position}
-                  onChange={(e) => setPosition(e.target.value)}
-                  label='役割'
-                />
-                <Button onClick={handleCreateGroup}>作成</Button>
-                {/* <p>{groupId}</p> */}
+            <div className='p-5'>
+              <div className='flex  w-full gap-x-5'>
+                <div className='w-1/2 '>
+                  <GroupCreateCard />
+                </div>
+                <div className='w-1/2'>
+                  <GroupJoinCard />
+                </div>
               </div>
             </div>
           </>
