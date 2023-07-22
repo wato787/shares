@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { useAuthContext } from '@/feature/AuthProvider';
 import { RootState } from '@/store';
 import { Button, Card, TextField } from '@mui/material';
 import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -68,14 +68,13 @@ const GroupCreateCard = () => {
               onChange={(e) => setJoinId(e.target.value)}
               label='グループID'
               fullWidth
-              />
+            />
             <div className='flex flex-col  w-full space-y-7'>
-          
               <TextField
                 value={joinPositon}
                 onChange={(e) => setJoinPosition(e.target.value)}
                 label='役割'
-                />
+              />
 
               <Button
                 variant='contained'
@@ -84,11 +83,10 @@ const GroupCreateCard = () => {
                 onClick={handleJoinGroup}
                 disabled={!joinId || !joinPositon}
                 className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
-                >
+              >
                 送信
               </Button>
-
-                </div>
+            </div>
           </div>
         </div>
       </div>

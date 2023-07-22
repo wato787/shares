@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { useAuthContext } from '@/feature/AuthProvider';
 import { Dialog, TextField, Button, Avatar } from '@mui/material';
 import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import React, {

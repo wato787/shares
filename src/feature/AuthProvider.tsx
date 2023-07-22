@@ -7,7 +7,7 @@ import {
   useEffect,
   useContext,
 } from 'react';
-import { auth } from '../../../firebase';
+import { auth } from '../../firebase';
 import { setUserId } from '@/slice/userSlice';
 import { useDispatch } from 'react-redux';
 

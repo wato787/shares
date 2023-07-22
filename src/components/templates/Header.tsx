@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/feature/auth/AuthProvider';
+import { useAuthContext } from '@/feature/AuthProvider';
 import {
   IconButton,
   Avatar,

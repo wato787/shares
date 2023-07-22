@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/globals.css';
-import { AuthProvider } from '@/feature/auth/AuthProvider';
+import { AuthProvider } from '@/feature/AuthProvider';
 import { store } from '@/store';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme, CssBaseline } from '@mui/material';

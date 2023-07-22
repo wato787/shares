@@ -9,7 +9,7 @@ import React, { ReactElement } from 'react';
 import ProfileCard from '@/components/organisms/card/ProfileCard';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
-import { useAuthContext } from '@/feature/auth/authProvider';
+import { useAuthContext } from '@/feature/AuthProvider';
 
 const Setting = ({ current }: Current): ReactElement => {
   const { groupId } = useSelector((state: RootState) => state.groupId);

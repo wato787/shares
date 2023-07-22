@@ -27,7 +27,7 @@ import MonthBadge from '@/components/atoms/MonthBadge';
 import useDate from '@/hooks/useDate';
 import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
-import { useAuthContext } from '@/feature/auth/authProvider';
+import { useAuthContext } from '@/feature/AuthProvider';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
