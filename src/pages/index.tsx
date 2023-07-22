@@ -1,6 +1,5 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { Current, CurrentPageType } from '@/types/type';
-import { Button, TextField } from '@mui/material';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useState } from 'react';
@@ -105,16 +104,16 @@ export default function Home({ current }: Current) {
           </div>
         ) : (
           <>
-        <div className='p-5'>
-        <div className='flex  w-full gap-x-5'>
-          <div className='w-1/2 '>
-            <GroupCreateCard />
-          </div>
-          <div className='w-1/2'>
-            <GroupJoinCard />
-          </div>
-        </div>
-      </div>
+            <div className='p-5'>
+              <div className='flex  w-full gap-x-5'>
+                <div className='w-1/2 '>
+                  <GroupCreateCard />
+                </div>
+                <div className='w-1/2'>
+                  <GroupJoinCard />
+                </div>
+              </div>
+            </div>
           </>
         )}
       </>

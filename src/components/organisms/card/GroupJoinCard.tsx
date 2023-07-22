@@ -1,7 +1,7 @@
 import { useAuthContext } from '@/feature/auth/AuthProvider';
 import { RootState } from '@/store';
 import { Button, Card, TextField } from '@mui/material';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
@@ -26,6 +26,15 @@ const GroupCreateCard = () => {
       showSnackbar('ログインしてください', 'error');
       return;
     }
+
+    const groupRef = doc(db, 'group', joinId);
+    const groupSnapshot = await getDoc(groupRef);
+
+    if (!groupSnapshot.exists()) {
+      showSnackbar('指定されたグループIDは存在しません', 'error');
+      return;
+    }
+
     const userDocRef = doc(db, 'users', userId);
     await setDoc(
       userDocRef,
