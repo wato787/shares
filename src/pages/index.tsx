@@ -1,22 +1,11 @@
 import PageLayout from '@/components/templates/PageLayout';
 import { CostData, Current, CurrentPageType } from '@/types/type';
-import {
-  addDoc,
-  collection,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  setDoc,
-  where,
-} from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setGroupId } from '@/slice/groupIdSlice';
 import InputCard from '@/components/organisms/card/InputCard';
-import { useSnackbar } from '@/hooks/useSnackBar';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
@@ -28,12 +17,9 @@ import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
 import { useAuthContext } from '@/feature/AuthProvider';
 import GroupCreateCard from '@/components/organisms/card/GroupCreateCard';
+import GroupCreateCard from '@/components/organisms/card/GroupJoinCard';
 
 export default function Home({ current }: Current) {
-  const [name, setName] = useState('');
-  const [position, setPosition] = useState('');
-  const [joinPositon, setJoinPosition] = useState('');
-  const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const { groupData } = useSelector((state: RootState) => state.groupData);
   const groupUsers = useSelector((state: RootState) => state.groupUsers);
@@ -41,66 +27,9 @@ export default function Home({ current }: Current) {
     (state: RootState) => state.thisMonthData
   );
   const { monthColor, monthName } = useDate();
-
-  const [joinId, setJoinId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const { showSnackbar } = useSnackbar();
   const { user } = useAuthContext();
-
-  // グループ作成
-  const handleCreateGroup = async (): Promise<void> => {
-    if (!userId) {
-      showSnackbar('ログインしてください', 'error');
-      return;
-    }
-    const newDocRef = await addDoc(collection(db, 'group'), {
-      name: name,
-    });
-    const docId = newDocRef.id;
-    await setDoc(doc(db, 'group', docId), { id: docId }, { merge: true });
-    await addDoc(collection(db, 'group', docId, 'users'), {
-      id: userId,
-      photoUrl: user?.photoURL,
-      name: user?.displayName,
-      position: position,
-    });
-
-    await setDoc(
-      doc(db, 'users', userId),
-      {
-        groupId: docId,
-      },
-      { merge: true }
-    );
-    dispatch(setGroupId(docId));
-    showSnackbar('グループを作成しました', 'success');
-  };
-
-  // グループ加入
-  const handleJoinGroup = async (): Promise<void> => {
-    if (!userId) {
-      showSnackbar('ログインしてください', 'error');
-      return;
-    }
-    const userDocRef = doc(db, 'users', userId);
-    await setDoc(
-      userDocRef,
-      {
-        groupId: joinId,
-      },
-      { merge: true }
-    );
-    await addDoc(collection(db, 'group', joinId, 'users'), {
-      id: userId,
-      photoUrl: user?.photoURL,
-      name: user?.displayName,
-      position: joinPositon,
-    });
-
-    dispatch(setGroupId(joinId));
-    showSnackbar('グループに加入しました', 'success');
-  };
 
   // 今月のデータ取得
   const getThisMonthData = useCallback(async (): Promise<void> => {
