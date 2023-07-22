@@ -31,15 +31,7 @@ const Setting = ({ current }: Current): ReactElement => {
           </div>
         </div>
         <div className='flex  w-full gap-x-10 h-full'>
-          <div className='w-1/3'>
-            {/* 固定費追加（選択できるように） */}
-            <MemberCard groupUsers={groupUsers} />
-          </div>
-          <div className='w-1/3'>
-            {/* 変動費追加（選択できるように） */}
-            <MemberCard groupUsers={groupUsers} />
-          </div>
-          <div className='w-1/3'>
+          <div className='w-1/3 mx-auto'>
             <MemberCard groupUsers={groupUsers} />
           </div>
         </div>
