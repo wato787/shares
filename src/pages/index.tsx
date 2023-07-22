@@ -17,7 +17,6 @@ import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
 import { useAuthContext } from '@/feature/AuthProvider';
 import GroupCreateCard from '@/components/organisms/card/GroupCreateCard';
-import GroupCreateCard from '@/components/organisms/card/GroupJoinCard';
 
 export default function Home({ current }: Current) {
   const { groupId } = useSelector((state: RootState) => state.groupId);
