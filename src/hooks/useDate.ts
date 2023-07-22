@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 function useDate() {
   const Today = new Date();
-  const Month = Today.getMonth() + 1;
+  const Month = Today.getMonth() +1;
 
   const monthColor = useMemo((): string => {
     if (Month === 1) return 'text-red-300'; // January: 赤色 (#FF0000) の薄いバージョン

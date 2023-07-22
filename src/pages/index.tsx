@@ -21,13 +21,13 @@ import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 
-import GroupCreateCard from '@/components/organisms/card/GroupcreateCard';
 import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
 import MonthBadge from '@/components/atoms/MonthBadge';
 import useDate from '@/hooks/useDate';
 import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
 import { useAuthContext } from '@/feature/AuthProvider';
+import GroupCreateCard from '@/components/organisms/card/GroupCreateCard';
 
 export default function Home({ current }: Current) {
   const [name, setName] = useState('');
@@ -157,7 +157,10 @@ export default function Home({ current }: Current) {
                 <InputCard groupId={groupId} user={user} />
               </div>
               <div className='w-1/3'>
-                <TotalCard groupData={groupData} />
+                <TotalCard
+                  groupData={groupData}
+                  thisMonthData={thisMonthData}
+                />
               </div>
               <div className='w-1/3'>
                 <IndividualCard groupUsers={groupUsers} />
@@ -166,12 +169,12 @@ export default function Home({ current }: Current) {
           </div>
         ) : (
           <>
-            <div className='p-5'>
-              <div className='flex  w-full gap-x-5'>
-                <div className='w-1/2 '>
+            <div className='p-5 h-full'>
+              <div className='flex justify-center items-center w-full gap-x-5 h-full'>
+                <div className='w-1/3 '>
                   <GroupCreateCard />
                 </div>
-                <div className='w-1/2'>
+                <div className='w-1/3'>
                   <GroupJoinCard />
                 </div>
               </div>

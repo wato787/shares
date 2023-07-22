@@ -1,10 +1,11 @@
 import { Button } from '@mui/material';
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import BankBalanceDialog from '@/components/molucules/BankBalanceDialog';
 import { GroupData } from '@/types/type';
 import { RootState } from '@/store';
 import { useSelector } from 'react-redux';
+import { MonthTotalCost } from '@/utils/MonthTotalCost';
 
 interface Props {
   groupData: GroupData;
@@ -16,13 +17,7 @@ const ExpensesCard = memo((props: Props) => {
     (state: RootState) => state.thisMonthData
   );
 
-  const thisMonthTotalCost = useMemo(() => {
-    let totalCost = 0;
-    thisMonthData.forEach((data) => {
-      totalCost += data.amount;
-    });
-    return totalCost.toLocaleString();
-  }, [thisMonthData]);
+  const thisMonthTotalCost = MonthTotalCost(thisMonthData);
 
   return (
     <div className='flex p-4 bg-white shadow rounded'>

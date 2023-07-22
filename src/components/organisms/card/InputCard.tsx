@@ -13,6 +13,9 @@ import { User } from 'firebase/auth';
 import { useSnackbar } from '@/hooks/useSnackBar';
 import { CostType } from '@/utils/CostType';
 import { CostData } from '@/types/type';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 
 interface Props {
   groupId: string;
@@ -32,7 +35,11 @@ const options = [
 const InputCard = memo((props: Props) => {
   const [selectCostType, setSelectCostType] = useState<string>('');
   const [amount, setAmount] = useState('');
+  const { thisMonthData } = useSelector(
+    (state: RootState) => state.thisMonthData
+  );
   const { showSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
 
   const addCost = async (
     e: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
@@ -40,14 +47,18 @@ const InputCard = memo((props: Props) => {
     e.preventDefault();
     if (!props.groupId) return;
     const groupRef = collection(db, 'group', props.groupId, 'cost');
-    await addDoc(groupRef, {
+    const newData:CostData = {
       costType: selectCostType,
       amount: parseInt(amount),
       createdAt: new Date(),
       createdUserId: props.user?.uid,
-      createdUserName: props.user?.displayName,
-      createdUserPhotoURL: props.user?.photoURL,
+      createdUserName: props.user?.displayName as string,
+      createdUserPhotoUrl: props.user?.photoURL as string,
+    };
+    await addDoc(groupRef, {
+      ...newData,
     } as CostData);
+    dispatch(setThisMonthData([...thisMonthData, newData]));
     showSnackbar('出費を追加しました', 'success');
     setAmount('');
   };

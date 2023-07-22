@@ -1,18 +1,24 @@
+import { RootState } from '@/store';
 import { GroupUser } from '@/types/type';
+import { MonthTotalCost } from '@/utils/MonthTotalCost';
 import { Avatar, Card } from '@mui/material';
 import { memo, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 interface Props {
   groupUsers: GroupUser[];
 }
 
 const IndividualCard = memo((props: Props) => {
-  const totalCost = 100000;
+  const { thisMonthData } = useSelector(
+    (state: RootState) => state.thisMonthData
+  );
+  const thisMonthTotalCost = MonthTotalCost(thisMonthData);
 
   const individualCost = useMemo((): string => {
-    const divisionCost = totalCost / props.groupUsers.length;
+    const divisionCost = Math.round(thisMonthTotalCost / props.groupUsers.length);
     return divisionCost.toLocaleString();
-  }, [props.groupUsers.length, totalCost]);
+  }, [props.groupUsers.length, thisMonthTotalCost]);
 
   return (
     <Card sx={{ height: '100%' }}>
