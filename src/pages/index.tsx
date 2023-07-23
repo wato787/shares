@@ -12,11 +12,13 @@ import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 
 import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
 import MonthBadge from '@/components/atoms/MonthBadge';
-import useDate from '@/hooks/useDate';
+
 import { setThisMonthData } from '@/slice/thisMonthDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
 import { useAuthContext } from '@/feature/AuthProvider';
-import GroupCreateCard from '@/components/organisms/card/GroupCreateCard';
+
+import useMonthColor from '@/hooks/useMonthColor';
+import GroupCreateCard from '@/components/organisms/card/GroupJoinCard';
 
 export default function Home({ current }: Current) {
   const { groupId } = useSelector((state: RootState) => state.groupId);
@@ -25,7 +27,7 @@ export default function Home({ current }: Current) {
   const { thisMonthData } = useSelector(
     (state: RootState) => state.thisMonthData
   );
-  const { monthColor, monthName } = useDate();
+  const { monthColor, monthName } = useMonthColor();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const { user } = useAuthContext();
@@ -98,7 +100,7 @@ export default function Home({ current }: Current) {
         ) : (
           <>
             <div className='p-5 h-full'>
-              <div className='flex justify-center items-center w-full gap-x-5 h-full'>
+              <div className='flex justify-center items-center  w-full gap-x-5 h-full'>
                 <div className='w-1/3 '>
                   <GroupCreateCard />
                 </div>
