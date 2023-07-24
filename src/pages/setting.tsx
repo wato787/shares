@@ -30,6 +30,7 @@ const Setting = ({ current }: Current): ReactElement => {
             <ProfileCard user={user} />
           </div>
         </div>
+        {/* TODO:カード二枚追加 */}
         <div className='flex  w-full gap-x-10 h-full'>
           <div className='w-1/3 mx-auto'>
             <MemberCard groupUsers={groupUsers} />
