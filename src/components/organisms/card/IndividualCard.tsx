@@ -10,13 +10,15 @@ interface Props {
 }
 
 const IndividualCard = memo((props: Props) => {
-  const { thisMonthData } = useSelector(
-    (state: RootState) => state.thisMonthData
+  const thisMonthData = useSelector(
+    (state: RootState) => state.costData.thisMonthData
   );
   const thisMonthTotalCost = MonthTotalCost(thisMonthData);
 
   const individualCost = useMemo((): string => {
-    const divisionCost = Math.round(thisMonthTotalCost / props.groupUsers.length);
+    const divisionCost = Math.round(
+      thisMonthTotalCost / props.groupUsers.length
+    );
     return divisionCost.toLocaleString();
   }, [props.groupUsers.length, thisMonthTotalCost]);
 

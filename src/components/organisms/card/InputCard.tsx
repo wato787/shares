@@ -15,7 +15,7 @@ import { CostType } from '@/utils/CostType';
 import { CostData } from '@/types/type';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { setThisMonthData } from '@/slice/thisMonthDataSlice';
+import { setThisMonthData } from '@/slice/costDataSlice';
 
 interface Props {
   groupId: string;
@@ -35,8 +35,8 @@ const options = [
 const InputCard = memo((props: Props) => {
   const [selectCostType, setSelectCostType] = useState<string>('');
   const [amount, setAmount] = useState('');
-  const { thisMonthData } = useSelector(
-    (state: RootState) => state.thisMonthData
+  const thisMonthData = useSelector(
+    (state: RootState) => state.costData.thisMonthData
   );
   const { showSnackbar } = useSnackbar();
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const InputCard = memo((props: Props) => {
     e.preventDefault();
     if (!props.groupId) return;
     const groupRef = collection(db, 'group', props.groupId, 'cost');
-    const newData:CostData = {
+    const newData: CostData = {
       costType: selectCostType,
       amount: parseInt(amount),
       createdAt: new Date(),

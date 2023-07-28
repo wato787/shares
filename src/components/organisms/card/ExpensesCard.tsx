@@ -13,8 +13,8 @@ interface Props {
 
 const ExpensesCard = memo((props: Props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const { thisMonthData } = useSelector(
-    (state: RootState) => state.thisMonthData
+  const thisMonthData = useSelector(
+    (state: RootState) => state.costData.thisMonthData
   );
 
   const thisMonthTotalCost = MonthTotalCost(thisMonthData);

@@ -13,7 +13,7 @@ import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
 import MonthBadge from '@/components/atoms/MonthBadge';
 
-import { setThisMonthData } from '@/slice/thisMonthDataSlice';
+import { setThisMonthData } from '@/slice/costDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
 import { useAuthContext } from '@/feature/AuthProvider';
 
@@ -24,8 +24,8 @@ export default function Home({ current }: Current) {
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const { groupData } = useSelector((state: RootState) => state.groupData);
   const groupUsers = useSelector((state: RootState) => state.groupUsers);
-  const { thisMonthData } = useSelector(
-    (state: RootState) => state.thisMonthData
+  const thisMonthData = useSelector(
+    (state: RootState) => state.costData.thisMonthData
   );
   const { monthColor, monthName } = useMonthColor();
   const [isLoading, setIsLoading] = useState(false);

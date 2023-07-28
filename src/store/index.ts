@@ -2,7 +2,7 @@ import drawerSlice from '@/slice/drawerSlice';
 import groupDataSlice from '@/slice/groupDataSlice';
 import groupIdSlice from '@/slice/groupIdSlice';
 import groupUsersSlice from '@/slice/groupUsersSlice';
-import thisMonthDataSlice from '@/slice/thisMonthDataSlice';
+import costDataSliceReducer from '@/slice/costDataSlice';
 import userSlice from '@/slice/userSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
@@ -13,7 +13,7 @@ export const store = configureStore({
     groupId: groupIdSlice,
     groupData: groupDataSlice,
     groupUsers: groupUsersSlice,
-    thisMonthData: thisMonthDataSlice,
+    costData: costDataSliceReducer,
   },
 });
 

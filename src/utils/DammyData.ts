@@ -5,13 +5,13 @@ type groupedCostData = {
   year: string;
   data: {
     month: string;
-    rentCost: number; //家賃は別でいいかも
-    foodCost: number; //食費
-    miscellaneousCost: number; //雑費
-    waterCost: number; //水道代
-    gasCost: number; //ガス代
-    utilitiesCost: number; //光熱費
-    totalCost: number; //合計
+    rent: number; //家賃は別でいいかも
+    food: number; //食費
+    miscellaneous: number; //雑費
+    water: number; //水道代
+    gas: number; //ガス代
+    utilities: number; //光熱費
+    total: number; //合計
   }[];
 };
 
@@ -387,26 +387,6 @@ export const dammyData: CostData[] = [
     costType: CostType.GAS,
   },
 ];
-
-const getMonthLabel = (month: string): string => {
-  const monthNumber = parseInt(month);
-  const monthLabels = [
-    '1月',
-    '2月',
-    '3月',
-    '4月',
-    '5月',
-    '6月',
-    '7月',
-    '8月',
-    '9月',
-    '10月',
-    '11月',
-    '12月',
-  ];
-
-  return monthLabels[monthNumber - 1] || month;
-};
 
 export const groupCostData = (data: CostData[]): groupedCostData[] => {
   const groupedData: groupedCostData[] = [];
