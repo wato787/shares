@@ -9,6 +9,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HistoryIcon from '@mui/icons-material/History';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import GridOnIcon from '@mui/icons-material/GridOn';
 const navigationItems = [
   {
     href: { pathname: '/', query: { current: 'dashboard' } },
@@ -34,6 +35,17 @@ const navigationItems = [
     label: '月別の詳細',
     icon: <HistoryIcon color='primary' />,
     labelEn: 'detail',
+  },
+  {
+    href: {
+      pathname: '/history',
+      query: {
+        current: 'history',
+      },
+    },
+    label: '履歴',
+    icon: <GridOnIcon color='primary' />,
+    labelEn: 'history',
   },
   {
     href: { pathname: '/setting', query: { current: 'setting' } },
