@@ -80,7 +80,7 @@ const PageNavigation = ({ current }: Current): ReactElement => {
             current === item.labelEn ||
               (!current &&
                 item.labelEn === 'dashboard' &&
-                typeof window !== 'undefined' &&
+                typeof window !== undefined &&
                 window.location.pathname === '/')
               ? 'bg-white'
               : ''

@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface costDataState {
   thisMonthData: CostData[];
   allCostData: CostData[];
-  groupedCostData?: groupedCostData[];
+  groupedCostData?: groupedCostData;
 }
 
 type groupedCostData = {
@@ -25,7 +25,7 @@ type groupedCostData = {
 const initialState: costDataState = {
   thisMonthData: [],
   allCostData: [],
-  groupedCostData: [],
+  groupedCostData: undefined,
 };
 
 const costDataSlice = createSlice({
@@ -40,7 +40,10 @@ const costDataSlice = createSlice({
     },
     groupingCostData: (state, action: PayloadAction<CostData[]>) => {
       const costData = action.payload;
-      const groupingCostData: groupedCostData[] = [];
+      const groupedCostData: groupedCostData = {
+        year: '',
+        data: [],
+      };
 
       costData.forEach((data) => {
         const year = data.createdAt.slice(0, 4);
@@ -48,64 +51,61 @@ const costDataSlice = createSlice({
         const costType = data.costType;
         const amount = data.amount;
 
-        const existingGroup = groupingCostData.find(
-          (group) => group.year === year
+        const existingGroup = groupedCostData.data.find(
+          (group) => group.month === month
         );
 
         if (existingGroup) {
           // 既存のグループを更新
-          const categoryData = existingGroup.data[0];
           switch (costType) {
             case CostType.RENT:
-              categoryData.rent += amount;
+              existingGroup.rent += amount;
               break;
             case CostType.FOOD:
-              categoryData.food += amount;
+              existingGroup.food += amount;
               break;
             case CostType.MISCELLANEOUS:
-              categoryData.miscellaneous += amount;
+              existingGroup.miscellaneous += amount;
               break;
             case CostType.WATER:
-              categoryData.water += amount;
+              existingGroup.water += amount;
               break;
             case CostType.GAS:
-              categoryData.gas += amount;
+              existingGroup.gas += amount;
               break;
             case CostType.UTILITIES:
-              categoryData.utilities += amount;
+              existingGroup.utilities += amount;
               break;
             default:
               break;
           }
-          categoryData.total =
-            categoryData.rent +
-            categoryData.food +
-            categoryData.miscellaneous +
-            categoryData.water +
-            categoryData.gas +
-            categoryData.utilities;
+          existingGroup.total =
+            existingGroup.rent +
+            existingGroup.food +
+            existingGroup.miscellaneous +
+            existingGroup.water +
+            existingGroup.gas +
+            existingGroup.utilities;
         } else {
           // 新しいグループを作成
-          const newGroup: groupedCostData = {
-            year: year,
-            data: [
-              {
-                month: month,
-                rent: costType === CostType.RENT ? amount : 0,
-                food: costType === CostType.FOOD ? amount : 0,
-                miscellaneous: costType === CostType.MISCELLANEOUS ? amount : 0,
-                water: costType === CostType.WATER ? amount : 0,
-                gas: costType === CostType.GAS ? amount : 0,
-                utilities: costType === CostType.UTILITIES ? amount : 0,
-                total: amount,
-              },
-            ],
+          const newGroup = {
+            month: month,
+            rent: costType === CostType.RENT ? amount : 0,
+            food: costType === CostType.FOOD ? amount : 0,
+            miscellaneous: costType === CostType.MISCELLANEOUS ? amount : 0,
+            water: costType === CostType.WATER ? amount : 0,
+            gas: costType === CostType.GAS ? amount : 0,
+            utilities: costType === CostType.UTILITIES ? amount : 0,
+            total: amount,
           };
-          groupingCostData.push(newGroup);
+          groupedCostData.data.push(newGroup);
         }
+
+        // 全体の年を設定（最後の要素の年を使用）
+        groupedCostData.year = year;
       });
 
-      state.groupedCostData = groupingCostData;
+      state.groupedCostData = groupedCostData;
     },
   },
 });

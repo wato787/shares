@@ -54,8 +54,6 @@ const Chart = (props: ChartProps) => {
     dispatch(groupingCostData(AllCostData));
   }, [AllCostData]);
 
-  console.log(groupedCostData?.[0]);
-
   // 月を取り出して、その月のデータを表示する。detailページへ遷移
   // const handleClickXAxis = (e: any) => {
   //   router.push({
@@ -67,7 +65,7 @@ const Chart = (props: ChartProps) => {
   return (
     <div className='container mt-4 space-y-4'>
       <span className='text-gray-500 text-2xl font-bold flex justify-center'>
-        {groupedCostData?.[0]?.year}
+        {groupedCostData?.year}
         <small>年</small>
       </span>
       <Suspense fallback={<div>loading...</div>}>
@@ -75,7 +73,7 @@ const Chart = (props: ChartProps) => {
           id='myChart'
           width={open ? 1100 : 1300}
           height={650}
-          data={groupedCostData?.[0]?.data}
+          data={groupedCostData?.data}
         >
           <CartesianGrid strokeDasharray='1 1' />
           <XAxis dataKey='month' />
@@ -94,7 +92,7 @@ const Chart = (props: ChartProps) => {
             // onClick={handleClickXAxis}
           >
             <LabelList
-              dataKey='totalCost'
+              dataKey='total'
               position='top'
               content={<CustomLabel />}
             />

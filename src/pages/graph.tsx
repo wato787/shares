@@ -8,6 +8,7 @@ import React, { ReactElement, useCallback, useEffect } from 'react';
 import { db } from '../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store';
+import LoadingScreen from '@/components/templates/LoadingScreen';
 
 const graph = ({ current }: Current): ReactElement => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -46,13 +47,17 @@ const graph = ({ current }: Current): ReactElement => {
 
   return (
     <>
-      <PageLayout current={current}>
-        {AllCostData.length === 0 ? (
-          <Chart CostData={AllCostData} />
-        ) : (
-          <div>データがありません</div>
-        )}
-      </PageLayout>
+      {!isLoading ? (
+        <PageLayout current={current}>
+          {AllCostData.length !== 0 ? (
+            <Chart CostData={AllCostData} />
+          ) : (
+            <div>データがありません</div>
+          )}
+        </PageLayout>
+      ) : (
+        <LoadingScreen />
+      )}
     </>
   );
 };
