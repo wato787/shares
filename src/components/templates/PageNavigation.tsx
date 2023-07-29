@@ -78,10 +78,7 @@ const PageNavigation = ({ current }: Current): ReactElement => {
             'w-full px-4 py-5 flex items-center border-b relative hover:bg-white',
             !open && 'justify-center',
             current === item.labelEn ||
-              (!current &&
-                item.labelEn === 'dashboard' &&
-                typeof window !== undefined &&
-                window.location.pathname === '/')
+              (!current && item.labelEn === 'dashboard')
               ? 'bg-white'
               : ''
           )}
