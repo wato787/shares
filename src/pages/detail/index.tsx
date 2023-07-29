@@ -7,7 +7,7 @@ import { CostType } from '@/utils/CostType';
 import { collection, where, orderBy, getDocs, query } from 'firebase/firestore';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { db } from '../../../firebase';
 import { Color } from '@/utils/Color';
 
