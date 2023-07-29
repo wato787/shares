@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { db } from '../../../firebase';
 import { Color } from '@/utils/Color';
+import LoadingScreen from '@/components/templates/LoadingScreen';
 
 interface Query {
   queryPath: {
@@ -122,40 +123,49 @@ const index = ({ queryPath }: Query) => {
   ];
 
   return (
-    <PageLayout current={queryPath.current}>
-      <>
-        <div className='text-gray-500 text-2xl font-bold flex justify-center'>
-          <span>{queryPath.year + '年' + queryPath.month + '月'}</span>
-        </div>
-        <div className='flex  h-full'>
-          <div className='w-1/2'>
-            <ResponsiveContainer width='100%' height={650}>
-              <PieChart>
-                <Pie
-                  data={calcedCost}
-                  dataKey='totalCost'
-                  fill='#8884d8'
-                  outerRadius={200}
-                  label={(entry) => `¥${entry.value.toLocaleString()}`}
-                >
-                  {calcedCost.map((_entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className='w-1/2  h-full flex justify-center items-center'>
-            <div className='w-[80%]'>
-              <TotalCard groupData={groupData} thisMonthData={thisMonthData} />
+    <>
+      {!isLoading ? (
+        <PageLayout current={queryPath.current}>
+          <>
+            <div className='text-gray-500 text-2xl font-bold flex justify-center'>
+              <span>{queryPath.year + '年' + queryPath.month + '月'}</span>
             </div>
-          </div>
-        </div>
-      </>
-    </PageLayout>
+            <div className='flex  h-full'>
+              <div className='w-1/2'>
+                <ResponsiveContainer width='100%' height={650}>
+                  <PieChart>
+                    <Pie
+                      data={calcedCost}
+                      dataKey='totalCost'
+                      fill='#8884d8'
+                      outerRadius={200}
+                      label={(entry) => `¥${entry.value.toLocaleString()}`}
+                    >
+                      {calcedCost.map((_entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+              <div className='w-1/2  h-full flex justify-center items-center'>
+                <div className='w-[80%]'>
+                  <TotalCard
+                    groupData={groupData}
+                    thisMonthData={thisMonthData}
+                  />
+                </div>
+              </div>
+            </div>
+          </>
+        </PageLayout>
+      ) : (
+        <LoadingScreen />
+      )}
+    </>
   );
 };
 
