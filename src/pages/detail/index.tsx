@@ -125,8 +125,8 @@ const index = ({ queryPath }: Query) => {
   return (
     <>
       {calcedCost.length !== 0 ? (
-        <PageLayout>
-          <div className=''>データがありません</div>
+        <PageLayout current={queryPath.current}>
+          <div className=''>データが不足しています</div>
         </PageLayout>
       ) : (
         <>
