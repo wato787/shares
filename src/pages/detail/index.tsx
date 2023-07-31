@@ -61,7 +61,6 @@ const index = ({ queryPath }: Query) => {
   }, [groupId]);
 
   useEffect(() => {
-    if (thisMonthData.length > 0) return;
     setIsLoading(true);
     (async (): Promise<void> => {
       await getThisMonthData();
@@ -124,9 +123,9 @@ const index = ({ queryPath }: Query) => {
 
   return (
     <>
-      {calcedCost.length !== 0 ? (
+      {!groupData.rentCost ? (
         <PageLayout current={queryPath.current}>
-          <div className=''>データが不足しています</div>
+          <div className=''>家賃設定がされていません</div>
         </PageLayout>
       ) : (
         <>
