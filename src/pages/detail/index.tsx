@@ -124,46 +124,54 @@ const index = ({ queryPath }: Query) => {
 
   return (
     <>
-      {!isLoading ? (
-        <PageLayout current={queryPath.current}>
-          <>
-            <div className='text-gray-500 text-2xl font-bold flex justify-center'>
-              <span>{queryPath.year + '年' + queryPath.month + '月'}</span>
-            </div>
-            <div className='flex  h-full'>
-              <div className='w-1/2'>
-                <ResponsiveContainer width='100%' height={650}>
-                  <PieChart>
-                    <Pie
-                      data={calcedCost}
-                      dataKey='totalCost'
-                      fill='#8884d8'
-                      outerRadius={200}
-                      label={(entry) => `¥${entry.value.toLocaleString()}`}
-                    >
-                      {calcedCost.map((_entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[index % COLORS.length]}
-                        />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-              <div className='w-1/2  h-full flex justify-center items-center'>
-                <div className='w-[80%]'>
-                  <TotalCard
-                    groupData={groupData}
-                    thisMonthData={thisMonthData}
-                  />
-                </div>
-              </div>
-            </div>
-          </>
+      {calcedCost.length !== 0 ? (
+        <PageLayout>
+          <div className=''>データがありません</div>
         </PageLayout>
       ) : (
-        <LoadingScreen />
+        <>
+          {!isLoading ? (
+            <PageLayout current={queryPath.current}>
+              <>
+                <div className='text-gray-500 text-2xl font-bold flex justify-center'>
+                  <span>{queryPath.year + '年' + queryPath.month + '月'}</span>
+                </div>
+                <div className='flex  h-full'>
+                  <div className='w-1/2'>
+                    <ResponsiveContainer width='100%' height={650}>
+                      <PieChart>
+                        <Pie
+                          data={calcedCost}
+                          dataKey='totalCost'
+                          fill='#8884d8'
+                          outerRadius={200}
+                          label={(entry) => `¥${entry.value.toLocaleString()}`}
+                        >
+                          {calcedCost.map((_entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={COLORS[index % COLORS.length]}
+                            />
+                          ))}
+                        </Pie>
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                  <div className='w-1/2  h-full flex justify-center items-center'>
+                    <div className='w-[80%]'>
+                      <TotalCard
+                        groupData={groupData}
+                        thisMonthData={thisMonthData}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            </PageLayout>
+          ) : (
+            <LoadingScreen />
+          )}
+        </>
       )}
     </>
   );
