@@ -8,7 +8,7 @@ import { db } from '../../../../firebase';
 import { setGroupId } from '@/slice/groupIdSlice';
 import { useSnackbar } from '@/hooks/useSnackBar';
 
-const GroupCreateCard = () => {
+const GroupJoinCard = () => {
   const [name, setName] = useState('');
   const [position, setPosition] = useState('');
   const [joinPositon, setJoinPosition] = useState('');
@@ -94,4 +94,4 @@ const GroupCreateCard = () => {
   );
 };
 
-export default GroupCreateCard;
+export default GroupJoinCard;
