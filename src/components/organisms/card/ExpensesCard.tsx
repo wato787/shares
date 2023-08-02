@@ -40,7 +40,7 @@ const ExpensesCard = memo((props: Props) => {
         </div>
         <div className='flex justify-end pr-4 pt-2'>
           <h3 className='text-4xl font-bold'>
-            {props.groupData.bankBalance
+            {props.groupData?.bankBalance
               ? props.groupData.bankBalance.toLocaleString()
               : 0}
             <span className='text-base ml-2'>円</span>
