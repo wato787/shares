@@ -83,16 +83,16 @@ export default function Home({ current }: Current) {
             <ExpensesCard groupData={groupData} />
 
             <div className='grid grid-cols-3 gap-x-10'>
-              <div className=''>
+              <div>
                 <InputCard groupId={groupId} user={user} />
               </div>
-              <div className=''>
+              <div>
                 <TotalCard
                   groupData={groupData}
                   thisMonthData={thisMonthData}
                 />
               </div>
-              <div className=''>
+              <div>
                 <IndividualCard groupUsers={groupUsers} />
               </div>
             </div>

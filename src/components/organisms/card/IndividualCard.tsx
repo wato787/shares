@@ -13,7 +13,9 @@ const IndividualCard = memo((props: Props) => {
   const thisMonthData = useSelector(
     (state: RootState) => state.costData.thisMonthData
   );
-  const thisMonthTotalCost = MonthTotalCost(thisMonthData);
+  const { groupData } = useSelector((state: RootState) => state.groupData);
+  const rentCost = groupData.rentCost ?? 0;
+  const thisMonthTotalCost = MonthTotalCost(thisMonthData) + rentCost;
 
   const individualCost = useMemo((): string => {
     const divisionCost = Math.round(

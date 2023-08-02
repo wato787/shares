@@ -16,8 +16,10 @@ const ExpensesCard = memo((props: Props) => {
   const thisMonthData = useSelector(
     (state: RootState) => state.costData.thisMonthData
   );
+  const { groupData } = useSelector((state: RootState) => state.groupData);
 
-  const thisMonthTotalCost = MonthTotalCost(thisMonthData);
+  const rentCost = groupData.rentCost ?? 0;
+  const thisMonthTotalCost = MonthTotalCost(thisMonthData) + rentCost;
 
   return (
     <div className='flex p-4 bg-white shadow rounded'>
