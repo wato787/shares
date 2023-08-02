@@ -11,13 +11,9 @@ import { useSnackbar } from '@/hooks/useSnackBar';
 const GroupCreateCard = () => {
   const [name, setName] = useState('');
   const [position, setPosition] = useState('');
-  const [joinPositon, setJoinPosition] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
-  const { groupId } = useSelector((state: RootState) => state.groupId);
-  const [joinId, setJoinId] = useState('');
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
-  const open = useSelector((state: RootState) => state.drawer.open);
   const { user } = useAuthContext();
 
   // グループ作成
