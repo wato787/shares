@@ -40,6 +40,7 @@ const PageLayout = (props: Props) => {
     dispatch(setGroupId(userDocSnap.data()?.groupId));
 
     // groupからgroupデータを取得
+    if (!userDocSnap.data()?.groupId) return;
     const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
     const groupDocSnap = await getDoc(groupDocRef);
     dispatch(setGroupData(groupDocSnap.data() as GroupData));
@@ -59,7 +60,9 @@ const PageLayout = (props: Props) => {
   // ページの初期表示時にのみデータを取得
   useEffect(() => {
     if (groupId) return;
-    fetchData();
+    (async () => {
+      await fetchData();
+    })();
   }, [fetchData]);
 
   return (
@@ -95,16 +98,12 @@ const PageLayout = (props: Props) => {
         {/* ヘッダーとchidrenを縦並び */}
         <div className='flex flex-col h-screen w-full'>
           <Header />
-          {groupId && (
-            <div
-              className={classNames(
-                'm-6 flex-1',
-                props.grayBg && 'bg-secondary'
-              )}
-            >
-              {cloneElement(props.children, { open })}
-            </div>
-          )}
+
+          <div
+            className={classNames('m-6 flex-1', props.grayBg && 'bg-secondary')}
+          >
+            {cloneElement(props.children, { open })}
+          </div>
         </div>
       </div>
     </>

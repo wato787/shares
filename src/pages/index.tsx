@@ -32,6 +32,8 @@ export default function Home({ current }: Current) {
   const dispatch = useDispatch();
   const { user } = useAuthContext();
 
+  console.log(groupId);
+
   // 今月のデータ取得
   const getThisMonthData = useCallback(async (): Promise<void> => {
     if (!groupId) return;
