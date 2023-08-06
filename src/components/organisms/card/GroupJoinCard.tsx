@@ -80,7 +80,7 @@ const GroupJoinCard = () => {
                 disabled={!joinId || !joinPositon}
                 className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
               >
-                送信
+                加入
               </Button>
             </div>
           </div>
