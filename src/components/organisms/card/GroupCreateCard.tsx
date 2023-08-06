@@ -49,7 +49,7 @@ const GroupCreateCard = () => {
     <Card>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5 w-full'>
         <span className='font-bold text-xl text-gray-600'>
-          グループを作成する
+          グループ新規作成
         </span>
         <div className='flex items-center gap-x-2'></div>
         <div className='flex flex-col  w-full'>
