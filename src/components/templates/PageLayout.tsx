@@ -4,7 +4,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import classNames from 'classnames';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactElement, useCallback, cloneElement, useEffect } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import { RootState } from '@/store';
 import { db } from '../../../firebase';
 import { setGroupId } from '@/slice/groupIdSlice';
@@ -16,7 +16,7 @@ import { setGroupUsers } from '@/slice/groupUsersSlice';
 import { GroupData } from '@/types/type';
 
 interface Props {
-  children: ReactElement;
+  children: ReactNode;
   current?: string | undefined | null;
   grayBg?: boolean;
 }
@@ -102,7 +102,7 @@ const PageLayout = (props: Props) => {
           <div
             className={classNames('m-6 flex-1', props.grayBg && 'bg-secondary')}
           >
-            {cloneElement(props.children, { open })}
+            {props.children}
           </div>
         </div>
       </div>
