@@ -150,9 +150,8 @@ const Index = ({ queryPath }: Query) => {
               <>
                 <div className='text-gray-500 text-2xl font-bold flex justify-center gap-x-2'>
                   <FormControl sx={{ width: 100 }} size='small'>
-                    <InputLabel id='demo-simple-select-label'>年</InputLabel>
+                    <InputLabel>年</InputLabel>
                     <Select
-                      // value={selectYear}
                       label='月'
                       sx={{ width: 100 }}
                       defaultValue={0}
@@ -165,17 +164,15 @@ const Index = ({ queryPath }: Query) => {
                     </Select>
                   </FormControl>
                   <FormControl sx={{ width: 100 }} size='small'>
-                    <InputLabel id='demo-simple-select-label'>月</InputLabel>
+                    <InputLabel>月</InputLabel>
                     <Select
-                      // value={queryPath.month}
                       label='月'
                       sx={{ width: 100 }}
-                      defaultValue={0}
+                      defaultValue={queryPath.month}
                       onChange={(e): void =>
                         handleMonthChange(e.target.value as number)
                       }
                     >
-                      <MenuItem value={0}>{queryPath.month}</MenuItem>
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
                       <MenuItem value={3}>3</MenuItem>
