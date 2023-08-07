@@ -54,13 +54,16 @@ const Chart = (props: ChartProps) => {
     dispatch(groupingCostData(AllCostData));
   }, [AllCostData]);
 
-  // 月を取り出して、その月のデータを表示する。detailページへ遷移
-  // const handleClickXAxis = (e: any) => {
-  //   router.push({
-  //     pathname: 'detail',
-  //     query: { year: grouped.year, month: e.payload.month, current: 'detail' },
-  //   });
-  // };
+  const handleClickXAxis = (e: any) => {
+    router.push({
+      pathname: 'detail',
+      query: {
+        year: groupedCostData?.year,
+        month: e.payload.month,
+        current: 'detail',
+      },
+    });
+  };
 
   return (
     <div className='container mt-4 space-y-4'>
@@ -89,7 +92,7 @@ const Chart = (props: ChartProps) => {
             fill='#55B4B7'
             barSize={60}
             cursor={'pointer'}
-            // onClick={handleClickXAxis}
+            onClick={handleClickXAxis}
           >
             <LabelList
               dataKey='total'
