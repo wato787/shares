@@ -187,18 +187,11 @@ const Index = ({ queryPath }: Query) => {
                             handleMonthChange(e.target.value as number)
                           }
                         >
-                          <MenuItem value={1}>1</MenuItem>
-                          <MenuItem value={2}>2</MenuItem>
-                          <MenuItem value={3}>3</MenuItem>
-                          <MenuItem value={4}>4</MenuItem>
-                          <MenuItem value={5}>5</MenuItem>
-                          <MenuItem value={6}>6</MenuItem>
-                          <MenuItem value={7}>7</MenuItem>
-                          <MenuItem value={8}>8</MenuItem>
-                          <MenuItem value={9}>9</MenuItem>
-                          <MenuItem value={10}>10</MenuItem>
-                          <MenuItem value={11}>11</MenuItem>
-                          <MenuItem value={12}>12</MenuItem>
+                          {[...Array(12)].map((_, i) => (
+                            <MenuItem key={i} value={i + 1}>
+                              {i + 1}
+                            </MenuItem>
+                          ))}
                         </Select>
                       </FormControl>
                     </div>
