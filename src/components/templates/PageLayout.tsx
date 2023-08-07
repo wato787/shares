@@ -4,7 +4,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import classNames from 'classnames';
 import { toggleDrawer } from '@/slice/drawerSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactNode, useCallback, useEffect } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { RootState } from '@/store';
 import { db } from '../../../firebase';
 import { setGroupId } from '@/slice/groupIdSlice';
@@ -14,6 +14,7 @@ import Header from './Header';
 import { setGroupData } from '@/slice/groupDataSlice';
 import { setGroupUsers } from '@/slice/groupUsersSlice';
 import { GroupData } from '@/types/type';
+import LoadingScreen from './LoadingScreen';
 
 interface Props {
   children: ReactNode;
@@ -26,6 +27,7 @@ const PageLayout = (props: Props) => {
   const open = useSelector((state: RootState) => state.drawer.open);
   const { userId } = useSelector((state: RootState) => state.userId);
   const { groupId } = useSelector((state: RootState) => state.groupId);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleDrawer = useCallback(() => {
     dispatch(toggleDrawer());
@@ -60,9 +62,11 @@ const PageLayout = (props: Props) => {
   // ページの初期表示時にのみデータを取得
   useEffect(() => {
     if (groupId) return;
+    setIsLoading(true);
     (async () => {
       await fetchData();
     })();
+    setIsLoading(false);
   }, [fetchData]);
 
   return (
@@ -102,6 +106,7 @@ const PageLayout = (props: Props) => {
           <div
             className={classNames('m-6 flex-1', props.grayBg && 'bg-secondary')}
           >
+            {isLoading && <LoadingScreen />}
             {props.children}
           </div>
         </div>
