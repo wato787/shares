@@ -1,16 +1,17 @@
 import TotalCard from '@/components/organisms/card/TotalCard';
 import PageLayout from '@/components/templates/PageLayout';
-import { setThisMonthData } from '@/slice/costDataSlice';
 import { RootState } from '@/store';
 import { CostData, CurrentPageType } from '@/types/type';
 import { CostType } from '@/utils/CostType';
 import { collection, where, orderBy, getDocs, query } from 'firebase/firestore';
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { db } from '../../../firebase';
 import { Color } from '@/utils/Color';
 import LoadingScreen from '@/components/templates/LoadingScreen';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { useRouter } from 'next/router';
 
 interface Query {
   queryPath: {
@@ -27,14 +28,23 @@ interface CalcCost {
 
 const index = ({ queryPath }: Query) => {
   const { groupData } = useSelector((state: RootState) => state.groupData);
-  const { thisMonthData } = useSelector((state: RootState) => state.costData);
   const { groupId } = useSelector((state: RootState) => state.groupId);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  // const [selectYear, setSelectYear] = useState<number>(queryPath.year);
+  const [monthData, setMonthData] = useState<CostData[]>([]);
+  const router = useRouter();
 
-  // 今月のデータ取得
-  const getThisMonthData = useCallback(async (): Promise<void> => {
+  const handleMonthChange = (month: number) => {
+    router.push({
+      pathname: '/detail',
+      query: { year: queryPath.year, month: month, current: 'detail' },
+    });
+  };
+
+  // 月のデータ取得
+  const getMonthData = useCallback(async (): Promise<void> => {
     if (!groupId) return;
+    setMonthData([]);
     const month = queryPath.month;
     const year = queryPath.year;
     const firstDayOfMonth = new Date(year, month - 1, 1);
@@ -57,16 +67,16 @@ const index = ({ queryPath }: Query) => {
         createdAt: isoTimestamp,
       } as CostData;
     });
-    dispatch(setThisMonthData(data));
-  }, [groupId]);
+    setMonthData(data);
+  }, [groupId, queryPath.month, queryPath.year]);
 
   useEffect(() => {
     setIsLoading(true);
     (async (): Promise<void> => {
-      await getThisMonthData();
+      await getMonthData();
+      setIsLoading(false);
     })();
-    setIsLoading(false);
-  }, [getThisMonthData]);
+  }, [getMonthData]);
 
   const calcedCost = useMemo((): CalcCost[] => {
     const calcCost: CalcCost[] = [
@@ -80,7 +90,7 @@ const index = ({ queryPath }: Query) => {
       { type: CostType.OTHER, totalCost: 0 },
     ];
 
-    thisMonthData.forEach((data) => {
+    monthData.forEach((data) => {
       switch (data.costType) {
         case CostType.MISCELLANEOUS:
           calcCost[1].totalCost += data.amount;
@@ -108,7 +118,7 @@ const index = ({ queryPath }: Query) => {
       }
     });
     return calcCost;
-  }, [thisMonthData]);
+  }, [monthData]);
 
   const COLORS = [
     Color.RENT,
@@ -132,10 +142,50 @@ const index = ({ queryPath }: Query) => {
           {!isLoading ? (
             <PageLayout current={queryPath.current}>
               <>
-                <div className='text-gray-500 text-2xl font-bold flex justify-center'>
-                  <span>{queryPath.year + '年' + queryPath.month + '月'}</span>
+                <div className='text-gray-500 text-2xl font-bold flex justify-center gap-x-2'>
+                  <FormControl sx={{ width: 100 }} size='small'>
+                    <InputLabel id='demo-simple-select-label'>年</InputLabel>
+                    <Select
+                      // value={selectYear}
+                      label='月'
+                      sx={{ width: 100 }}
+                      defaultValue={0}
+                      // onChange={(e): void =>
+                      //   setSelectYear(e.target.value as number)
+                      // }
+                    >
+                      <MenuItem value={0}>{queryPath.year}</MenuItem>
+                      <MenuItem value={1}>{1}</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl sx={{ width: 100 }} size='small'>
+                    <InputLabel id='demo-simple-select-label'>月</InputLabel>
+                    <Select
+                      // value={queryPath.month}
+                      label='月'
+                      sx={{ width: 100 }}
+                      defaultValue={0}
+                      onChange={(e): void =>
+                        handleMonthChange(e.target.value as number)
+                      }
+                    >
+                      <MenuItem value={0}>{queryPath.month}</MenuItem>
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={6}>6</MenuItem>
+                      <MenuItem value={7}>7</MenuItem>
+                      <MenuItem value={8}>8</MenuItem>
+                      <MenuItem value={9}>9</MenuItem>
+                      <MenuItem value={10}>10</MenuItem>
+                      <MenuItem value={11}>11</MenuItem>
+                      <MenuItem value={12}>12</MenuItem>
+                    </Select>
+                  </FormControl>
                 </div>
-                <div className='flex  h-full'>
+                <div className='flex h-full'>
                   <div className='w-1/2'>
                     <ResponsiveContainer width='100%' height={650}>
                       <PieChart>
@@ -160,7 +210,7 @@ const index = ({ queryPath }: Query) => {
                     <div className='w-[80%]'>
                       <TotalCard
                         groupData={groupData}
-                        thisMonthData={thisMonthData}
+                        thisMonthData={monthData}
                       />
                     </div>
                   </div>
