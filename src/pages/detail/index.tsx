@@ -145,83 +145,101 @@ const Index = ({ queryPath }: Query) => {
         </PageLayout>
       ) : (
         <>
-          {!isLoading ? (
-            <PageLayout current={queryPath.current}>
-              <>
-                <div className='text-gray-500 text-2xl font-bold flex justify-center gap-x-2'>
-                  <FormControl sx={{ width: 100 }} size='small'>
-                    <InputLabel>年</InputLabel>
-                    <Select
-                      label='月'
-                      sx={{ width: 100 }}
-                      defaultValue={0}
-                      onChange={(e): void =>
-                        handleYearChange(e.target.value as number)
-                      }
-                    >
-                      <MenuItem value={0}>{queryPath.year}</MenuItem>
-                      <MenuItem value={1}>{1}</MenuItem>
-                    </Select>
-                  </FormControl>
-                  <FormControl sx={{ width: 100 }} size='small'>
-                    <InputLabel>月</InputLabel>
-                    <Select
-                      label='月'
-                      sx={{ width: 100 }}
-                      defaultValue={queryPath.month}
-                      onChange={(e): void =>
-                        handleMonthChange(e.target.value as number)
-                      }
-                    >
-                      <MenuItem value={1}>1</MenuItem>
-                      <MenuItem value={2}>2</MenuItem>
-                      <MenuItem value={3}>3</MenuItem>
-                      <MenuItem value={4}>4</MenuItem>
-                      <MenuItem value={5}>5</MenuItem>
-                      <MenuItem value={6}>6</MenuItem>
-                      <MenuItem value={7}>7</MenuItem>
-                      <MenuItem value={8}>8</MenuItem>
-                      <MenuItem value={9}>9</MenuItem>
-                      <MenuItem value={10}>10</MenuItem>
-                      <MenuItem value={11}>11</MenuItem>
-                      <MenuItem value={12}>12</MenuItem>
-                    </Select>
-                  </FormControl>
+          {monthData.length === 0 ? (
+            <div>
+              <PageLayout current={queryPath.current}>
+                <div className=''>
+                  {queryPath.year +
+                    '年' +
+                    queryPath.month +
+                    '月' +
+                    'のデータは存在しません'}
                 </div>
-                <div className='flex h-full'>
-                  <div className='w-1/2'>
-                    <ResponsiveContainer width='100%' height={650}>
-                      <PieChart>
-                        <Pie
-                          data={calcedCost}
-                          dataKey='totalCost'
-                          fill='#8884d8'
-                          outerRadius={200}
-                          label={(entry) => `¥${entry.value.toLocaleString()}`}
-                        >
-                          {calcedCost.map((_entry, index) => (
-                            <Cell
-                              key={`cell-${index}`}
-                              fill={COLORS[index % COLORS.length]}
-                            />
-                          ))}
-                        </Pie>
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <div className='w-1/2  h-full flex justify-center items-center'>
-                    <div className='w-[80%]'>
-                      <TotalCard
-                        groupData={groupData}
-                        thisMonthData={monthData}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </>
-            </PageLayout>
+              </PageLayout>
+            </div>
           ) : (
-            <LoadingScreen />
+            <>
+              {!isLoading ? (
+                <PageLayout current={queryPath.current}>
+                  <>
+                    <div className='text-gray-500 text-2xl font-bold flex justify-center gap-x-2'>
+                      <FormControl sx={{ width: 100 }} size='small'>
+                        <InputLabel>年</InputLabel>
+                        <Select
+                          label='月'
+                          sx={{ width: 100 }}
+                          defaultValue={queryPath.year}
+                          onChange={(e): void =>
+                            handleYearChange(e.target.value as number)
+                          }
+                        >
+                          <MenuItem value={2023}>2023</MenuItem>
+                          <MenuItem value={2024}>2024</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <FormControl sx={{ width: 100 }} size='small'>
+                        <InputLabel>月</InputLabel>
+                        <Select
+                          label='月'
+                          sx={{ width: 100 }}
+                          defaultValue={queryPath.month}
+                          onChange={(e): void =>
+                            handleMonthChange(e.target.value as number)
+                          }
+                        >
+                          <MenuItem value={1}>1</MenuItem>
+                          <MenuItem value={2}>2</MenuItem>
+                          <MenuItem value={3}>3</MenuItem>
+                          <MenuItem value={4}>4</MenuItem>
+                          <MenuItem value={5}>5</MenuItem>
+                          <MenuItem value={6}>6</MenuItem>
+                          <MenuItem value={7}>7</MenuItem>
+                          <MenuItem value={8}>8</MenuItem>
+                          <MenuItem value={9}>9</MenuItem>
+                          <MenuItem value={10}>10</MenuItem>
+                          <MenuItem value={11}>11</MenuItem>
+                          <MenuItem value={12}>12</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className='flex h-full'>
+                      <div className='w-1/2'>
+                        <ResponsiveContainer width='100%' height={650}>
+                          <PieChart>
+                            <Pie
+                              data={calcedCost}
+                              dataKey='totalCost'
+                              fill='#8884d8'
+                              outerRadius={200}
+                              label={(entry) =>
+                                `¥${entry.value.toLocaleString()}`
+                              }
+                            >
+                              {calcedCost.map((_entry, index) => (
+                                <Cell
+                                  key={`cell-${index}`}
+                                  fill={COLORS[index % COLORS.length]}
+                                />
+                              ))}
+                            </Pie>
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
+                      <div className='w-1/2  h-full flex justify-center items-center'>
+                        <div className='w-[80%]'>
+                          <TotalCard
+                            groupData={groupData}
+                            thisMonthData={monthData}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                </PageLayout>
+              ) : (
+                <LoadingScreen />
+              )}
+            </>
           )}
         </>
       )}
