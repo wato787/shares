@@ -26,11 +26,10 @@ interface CalcCost {
   totalCost: number;
 }
 
-const index = ({ queryPath }: Query) => {
+const Index = ({ queryPath }: Query) => {
   const { groupData } = useSelector((state: RootState) => state.groupData);
   const { groupId } = useSelector((state: RootState) => state.groupId);
   const [isLoading, setIsLoading] = useState(false);
-  // const [selectYear, setSelectYear] = useState<number>(queryPath.year);
   const [monthData, setMonthData] = useState<CostData[]>([]);
   const router = useRouter();
 
@@ -38,6 +37,13 @@ const index = ({ queryPath }: Query) => {
     router.push({
       pathname: '/detail',
       query: { year: queryPath.year, month: month, current: 'detail' },
+    });
+  };
+
+  const handleYearChange = (year: number) => {
+    router.push({
+      pathname: '/detail',
+      query: { year: year, month: queryPath.month, current: 'detail' },
     });
   };
 
@@ -150,9 +156,9 @@ const index = ({ queryPath }: Query) => {
                       label='月'
                       sx={{ width: 100 }}
                       defaultValue={0}
-                      // onChange={(e): void =>
-                      //   setSelectYear(e.target.value as number)
-                      // }
+                      onChange={(e): void =>
+                        handleYearChange(e.target.value as number)
+                      }
                     >
                       <MenuItem value={0}>{queryPath.year}</MenuItem>
                       <MenuItem value={1}>{1}</MenuItem>
@@ -235,4 +241,4 @@ export const getServerSideProps = async ({ query }: CurrentPageType) => {
   };
 };
 
-export default index;
+export default Index;
