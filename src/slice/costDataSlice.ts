@@ -18,6 +18,7 @@ type groupedCostData = {
     water: number; //水道代
     gas: number; //ガス代
     utilities: number; //光熱費
+    other: number;
     total: number; //合計
   }[];
 };
@@ -76,6 +77,8 @@ const costDataSlice = createSlice({
             case CostType.UTILITIES:
               existingGroup.utilities += amount;
               break;
+            case CostType.OTHER:
+              existingGroup.other += amount;
             default:
               break;
           }
@@ -85,6 +88,7 @@ const costDataSlice = createSlice({
             existingGroup.miscellaneous +
             existingGroup.water +
             existingGroup.gas +
+            existingGroup.other +
             existingGroup.utilities;
         } else {
           // 新しいグループを作成
@@ -96,6 +100,7 @@ const costDataSlice = createSlice({
             water: costType === CostType.WATER ? amount : 0,
             gas: costType === CostType.GAS ? amount : 0,
             utilities: costType === CostType.UTILITIES ? amount : 0,
+            other: costType === CostType.OTHER ? amount : 0,
             total: amount,
           };
           groupedCostData.data.push(newGroup);

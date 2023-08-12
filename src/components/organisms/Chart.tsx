@@ -1,6 +1,5 @@
 import { groupingCostData } from '@/slice/costDataSlice';
 import { RootState } from '@/store';
-import { CostData } from '@/types/type';
 import { useRouter } from 'next/router';
 import { Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,20 +12,6 @@ import {
   LabelList,
 } from 'recharts';
 
-type groupedCostData = {
-  year: string;
-  data: {
-    month: string;
-    rent: number; //家賃は別でいいかも
-    food: number; //食費
-    miscellaneous: number; //雑費
-    water: number; //水道代
-    gas: number; //ガス代
-    utilities: number; //光熱費
-    total: number; //合計
-  }[];
-};
-
 const CustomLabel = (props: any) => {
   return (
     <text x={props.x} y={props.y} dy={-10} fill='#777' className='text-sm'>
@@ -35,11 +20,7 @@ const CustomLabel = (props: any) => {
   );
 };
 
-interface ChartProps {
-  CostData: CostData[];
-}
-
-const Chart = (props: ChartProps) => {
+const Chart = () => {
   const router = useRouter();
   const open = useSelector((state: RootState) => state.drawer.open);
   const AllCostData = useSelector(
@@ -48,6 +29,26 @@ const Chart = (props: ChartProps) => {
   const groupedCostData = useSelector(
     (state: RootState) => state.costData.groupedCostData
   );
+  const groupData = useSelector(
+    (state: RootState) => state.groupData.groupData
+  );
+
+  const barChartData = groupedCostData?.data.map((data) => {
+    if (groupData.rentCost) {
+      return {
+        month: data.month,
+        total: data.total + groupData.rentCost,
+      };
+    } else {
+      return {
+        month: data.month,
+        total: data.total,
+      };
+    }
+  });
+
+  console.log(barChartData);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -76,7 +77,7 @@ const Chart = (props: ChartProps) => {
           id='myChart'
           width={open ? 1100 : 1300}
           height={650}
-          data={groupedCostData?.data}
+          data={barChartData}
         >
           <CartesianGrid strokeDasharray='1 1' />
           <XAxis dataKey='month' />

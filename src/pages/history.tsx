@@ -1,7 +1,7 @@
 import CostHistory from '@/components/organisms/card/CostHistory';
 import PaymentHistory from '@/components/organisms/card/PaymentHistory';
 import PageLayout from '@/components/templates/PageLayout';
-import { Current } from '@/types/type';
+import { Current, CurrentPageType } from '@/types/type';
 
 import React, { ReactElement } from 'react';
 
@@ -11,7 +11,7 @@ const History = ({ current }: Current): ReactElement => {
       <>
         <div className='flex'>
           <div className='flex-initial w-1/2 m-1 p-5 '>
-            <CostHistory current={current}/>
+            <CostHistory current={current} />
           </div>
           <div className='flex-initial w-1/2 m-1 p-5'>
             <PaymentHistory current={current} />
@@ -20,6 +20,15 @@ const History = ({ current }: Current): ReactElement => {
       </>
     </PageLayout>
   );
+};
+
+export const getServerSideProps = async ({ query }: CurrentPageType) => {
+  const current = query.current;
+  return {
+    props: {
+      current,
+    },
+  };
 };
 
 export default History;

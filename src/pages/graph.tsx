@@ -48,11 +48,7 @@ const graph = ({ current }: Current): ReactElement => {
     <>
       {!isLoading ? (
         <PageLayout current={current}>
-          {AllCostData.length !== 0 ? (
-            <Chart CostData={AllCostData} />
-          ) : (
-            <div>データがありません</div>
-          )}
+          {AllCostData.length !== 0 ? <Chart /> : <div>データがありません</div>}
         </PageLayout>
       ) : (
         <LoadingScreen />
