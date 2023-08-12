@@ -9,16 +9,14 @@ import InputCard from '@/components/organisms/card/InputCard';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
-
-import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
 import MonthBadge from '@/components/atoms/MonthBadge';
-
 import { setThisMonthData } from '@/slice/costDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
 import { useAuthContext } from '@/feature/AuthProvider';
 
 import useMonthColor from '@/hooks/useMonthColor';
-import GroupCreateCard from '@/components/organisms/card/GroupJoinCard';
+import GroupCreateCard from '@/components/organisms/card/GroupCreateCard';
+import GroupJoinCard from '@/components/organisms/card/GroupJoinCard';
 
 export default function Home({ current }: Current) {
   const { groupId } = useSelector((state: RootState) => state.groupId);

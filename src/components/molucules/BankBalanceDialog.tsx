@@ -56,6 +56,8 @@ const BankBalanceDialog = (props: Props): ReactElement => {
       amount: parseInt(amount),
       createdAt: new Date(),
       createdBy: userId,
+      createdUserName: user?.displayName,
+      createdUserPhotoUrl: user?.photoURL,
     });
     await setDoc(newPaymentDoc, { id: newPaymentDoc.id }, { merge: true });
   };

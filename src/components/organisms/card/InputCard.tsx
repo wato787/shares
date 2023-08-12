@@ -6,7 +6,7 @@ import {
   Select,
   TextField,
 } from '@mui/material';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, setDoc } from 'firebase/firestore';
 import { FormEvent, MouseEvent, memo, useState } from 'react';
 import { db } from '../../../../firebase';
 import { User } from 'firebase/auth';
@@ -54,10 +54,13 @@ const InputCard = memo((props: Props) => {
       createdUserId: props.user?.uid,
       createdUserName: props.user?.displayName as string,
       createdUserPhotoUrl: props.user?.photoURL as string,
+      
     };
-    await addDoc(groupRef, {
+    const added = await addDoc(groupRef, {
       ...newData,
     } as CostData);
+    await setDoc(added, { id: added.id }, { merge: true });
+
     dispatch(setThisMonthData([...thisMonthData, newData]));
     showSnackbar('出費を追加しました', 'success');
     setAmount('');
