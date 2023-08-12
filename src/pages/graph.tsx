@@ -37,7 +37,6 @@ const graph = ({ current }: Current): ReactElement => {
   }, [groupId]);
 
   useEffect(() => {
-    if (AllCostData.length > 0) return;
     setIsLoading(true);
     (async (): Promise<void> => {
       await getAllData();
