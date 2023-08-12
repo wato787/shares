@@ -11,7 +11,6 @@ import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
 
 import MonthBadge from '@/components/atoms/MonthBadge';
-
 import { setThisMonthData } from '@/slice/costDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
 import { useAuthContext } from '@/feature/AuthProvider';
