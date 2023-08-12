@@ -46,12 +46,7 @@ const Login = () => {
       <Card sx={{ maxWidth: '30%' }}>
         <div className='bg-secondary'>
           <div style={{ position: 'relative' }}>
-            <Image
-              src='/../public/logo.png'
-              width={900}
-              height={900}
-              alt='Shares'
-            />
+            <Image src='/logo.png' width={900} height={900} alt='Shares' />
             <CardActions
               sx={{
                 position: 'absolute',

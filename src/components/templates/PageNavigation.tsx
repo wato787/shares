@@ -61,24 +61,14 @@ const PageNavigation = ({ current }: Current): ReactElement => {
   return (
     <>
       <div className='flex items-center justify-around border-b h-16 z-10'>
-        <Image
-          src='/../public/toumeilogo.png'
-          width={40}
-          height={20}
-          alt='Shares'
-        />
+        <Image src='/toumeilogo.png' width={40} height={20} alt='Shares' />
         {open && (
           <>
             <span className='text-3xl font-bold font-shares text-primary'>
               Shares
             </span>
 
-            <Image
-              src='/../public/toumeilogo.png'
-              width={40}
-              height={20}
-              alt='Shares'
-            />
+            <Image src='/toumeilogo.png' width={40} height={20} alt='Shares' />
           </>
         )}
       </div>
