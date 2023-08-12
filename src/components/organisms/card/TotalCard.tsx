@@ -65,7 +65,7 @@ const TotalCard = memo((props: Props) => {
             <CostColorTitle type={CostType.RENT} />
             <span className='text-lg '>
               ¥
-              {props.groupData.rentCost
+              {props.groupData?.rentCost
                 ? props.groupData.rentCost.toLocaleString()
                 : 0}
             </span>

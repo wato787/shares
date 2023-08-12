@@ -11,13 +11,9 @@ import { useSnackbar } from '@/hooks/useSnackBar';
 const GroupCreateCard = () => {
   const [name, setName] = useState('');
   const [position, setPosition] = useState('');
-  const [joinPositon, setJoinPosition] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
-  const { groupId } = useSelector((state: RootState) => state.groupId);
-  const [joinId, setJoinId] = useState('');
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
-  const open = useSelector((state: RootState) => state.drawer.open);
   const { user } = useAuthContext();
 
   // グループ作成
@@ -53,7 +49,7 @@ const GroupCreateCard = () => {
     <Card>
       <div className='p-5 flex flex-col items-center justify-center gap-y-5 w-full'>
         <span className='font-bold text-xl text-gray-600'>
-          グループを作成する
+          グループ新規作成
         </span>
         <div className='flex items-center gap-x-2'></div>
         <div className='flex flex-col  w-full'>

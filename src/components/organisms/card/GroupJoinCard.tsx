@@ -9,15 +9,11 @@ import { setGroupId } from '@/slice/groupIdSlice';
 import { useSnackbar } from '@/hooks/useSnackBar';
 
 const GroupJoinCard = () => {
-  const [name, setName] = useState('');
-  const [position, setPosition] = useState('');
   const [joinPositon, setJoinPosition] = useState('');
   const { userId } = useSelector((state: RootState) => state.userId);
-  const { groupId } = useSelector((state: RootState) => state.groupId);
   const [joinId, setJoinId] = useState('');
   const dispatch = useDispatch();
   const { showSnackbar } = useSnackbar();
-  const open = useSelector((state: RootState) => state.drawer.open);
   const { user } = useAuthContext();
 
   // 	TODO: グループ加入 ユーザーにgroupId格納
@@ -84,7 +80,7 @@ const GroupJoinCard = () => {
                 disabled={!joinId || !joinPositon}
                 className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
               >
-                送信
+                加入
               </Button>
             </div>
           </div>

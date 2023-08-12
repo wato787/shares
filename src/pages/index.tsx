@@ -9,6 +9,7 @@ import InputCard from '@/components/organisms/card/InputCard';
 import TotalCard from '@/components/organisms/card/TotalCard';
 import IndividualCard from '@/components/organisms/card/IndividualCard';
 import ExpensesCard from '@/components/organisms/card/ExpensesCard';
+
 import MonthBadge from '@/components/atoms/MonthBadge';
 import { setThisMonthData } from '@/slice/costDataSlice';
 import LoadingScreen from '@/components/templates/LoadingScreen';
@@ -80,17 +81,17 @@ export default function Home({ current }: Current) {
             </div>
             <ExpensesCard groupData={groupData} />
 
-            <div className='flex gap-x-10 flex-1'>
-              <div className='w-1/3'>
+            <div className='grid grid-cols-3 gap-x-10'>
+              <div>
                 <InputCard groupId={groupId} user={user} />
               </div>
-              <div className='w-1/3'>
+              <div>
                 <TotalCard
                   groupData={groupData}
                   thisMonthData={thisMonthData}
                 />
               </div>
-              <div className='w-1/3'>
+              <div>
                 <IndividualCard groupUsers={groupUsers} />
               </div>
             </div>
