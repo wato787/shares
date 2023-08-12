@@ -20,7 +20,7 @@ import {
   query,
 } from 'firebase/firestore';
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
 import { red } from '@mui/material/colors';
 import { useDeleteDialog } from '@/hooks/useDeleteDialog';
@@ -62,7 +62,7 @@ const PaymentHistory = ({ current }: Current): ReactElement => {
   const { isDialogOpen, selectedItemId, openDialog, closeDialog } =
     useDeleteDialog();
 
-    console.log('rows', rows);
+  console.log('rows', rows);
 
   const getAllData = useCallback(async (): Promise<void> => {
     if (!groupId) return;
@@ -76,7 +76,7 @@ const PaymentHistory = ({ current }: Current): ReactElement => {
         const isoTimestamp = firestoreTimestamp.toDate().toISOString();
         return {
           createdAt: isoTimestamp.slice(5, 10),
-          amount: doc.data().amount.toLocaleString()+ '円',
+          amount: doc.data().amount.toLocaleString() + '円',
           createdUserName: doc.data().createdUserName,
           id: doc.id,
         } as any;
@@ -104,7 +104,7 @@ const PaymentHistory = ({ current }: Current): ReactElement => {
     <>
       <Card>
         <div className='text-center text-xl m-2'>入金履歴</div>
-        <DataGrid columns={columns} rows={rows} />
+        <DataGrid columns={columns} rows={rows} loading={isLoading} />
       </Card>
       <Dialog open={isDialogOpen} onClose={closeDialog}>
         <DialogTitle>本当に削除しますか？</DialogTitle>
