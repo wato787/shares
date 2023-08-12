@@ -7,6 +7,7 @@ import { createTheme, CssBaseline } from '@mui/material';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   const theme = createTheme({
@@ -23,6 +24,9 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
         <SnackbarProvider maxSnack={5}>
           <AuthProvider>
             <CssBaseline />
+            <Head>
+              <title>Shares</title>
+            </Head>
             <Component {...pageProps} />
           </AuthProvider>
         </SnackbarProvider>
