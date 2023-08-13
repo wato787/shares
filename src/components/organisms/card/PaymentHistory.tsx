@@ -1,6 +1,6 @@
 import DataGrid from '@/components/organisms/DataGrid';
 import { RootState } from '@/store';
-import { CostData, Current } from '@/types/type';
+import { CostData } from '@/types/type';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Button,
@@ -23,7 +23,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
 
-const PaymentHistory = ({ current }: Current): ReactElement => {
+const PaymentHistory = (): ReactElement => {
   const columns = [
     { field: 'createdAt', headerName: '日付', flex: 1 },
     { field: 'createdUserName', headerName: 'ユーザー', flex: 1 },

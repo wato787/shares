@@ -11,10 +11,10 @@ const History = ({ current }: Current): ReactElement => {
       <>
         <div className='flex'>
           <div className='flex-initial w-1/2 m-1 p-5 '>
-            <CostHistory current={current} />
+            <CostHistory />
           </div>
           <div className='flex-initial w-1/2 m-1 p-5'>
-            <PaymentHistory current={current} />
+            <PaymentHistory />
           </div>
         </div>
       </>
