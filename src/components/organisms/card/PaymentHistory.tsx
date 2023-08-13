@@ -94,7 +94,7 @@ const PaymentHistory = ({ current }: Current): ReactElement => {
   return (
     <>
       <Card>
-        <div className='text-center text-xl m-2'>入金履歴</div>
+        <div className='text-center text-xl my-3 font-bold'>入金履歴</div>
         <DataGrid columns={columns} rows={rows} loading={isLoading} />
       </Card>
       <Dialog open={isDialogOpen} onClose={(): void => setIsDialogOpen(true)}>

@@ -128,7 +128,7 @@ const CostHistory = (): ReactElement => {
   return (
     <>
       <Card>
-        <div className='text-center text-xl m-2 '>費用履歴</div>
+        <div className='text-center text-xl my-3 font-bold'>費用履歴</div>
         <DataGrid columns={columns} rows={rows} loading={isLoading} />
       </Card>
 
