@@ -62,8 +62,6 @@ const PaymentHistory = ({ current }: Current): ReactElement => {
   const { isDialogOpen, selectedItemId, openDialog, closeDialog } =
     useDeleteDialog();
 
-  console.log('rows', rows);
-
   const getAllData = useCallback(async (): Promise<void> => {
     if (!groupId) return;
 

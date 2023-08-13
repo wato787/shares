@@ -47,8 +47,6 @@ const Chart = () => {
     }
   });
 
-  console.log(barChartData);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
