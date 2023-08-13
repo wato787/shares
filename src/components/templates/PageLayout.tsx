@@ -41,8 +41,6 @@ const PageLayout = (props: Props) => {
     const userDocSnap = await getDoc(userDocRef);
     dispatch(setGroupId(userDocSnap.data()?.groupId));
 
-    
-
     // groupからgroupデータを取得
     if (!userDocSnap.data()?.groupId) return;
     const groupDocRef = doc(db, 'group', userDocSnap.data()?.groupId);
@@ -64,9 +62,13 @@ const PageLayout = (props: Props) => {
   // ページの初期表示時にのみデータを取得
   useEffect(() => {
     if (groupId) return;
-    fetchData();
-  }, [fetchData]);
+    setIsLoading(true);
+    (async (): Promise<void> => {
+      await fetchData();
+    })();
 
+    setIsLoading(false);
+  }, [fetchData]);
 
   return (
     <>
