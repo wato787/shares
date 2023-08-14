@@ -36,5 +36,6 @@ export type PaymentData = {
   createdAt: any;
   amount: string;
   createdUserName: string;
+  createdUserPhotoUrl?: string;
   id: string;
 };

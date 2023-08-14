@@ -3,6 +3,7 @@ import { RootState } from '@/store';
 import { CostData } from '@/types/type';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
+  Avatar,
   Button,
   Card,
   Dialog,
@@ -57,7 +58,22 @@ const CostHistory = (): ReactElement => {
 
   const columns = [
     { field: 'createdAt', headerName: '日付', flex: 1 },
-    { field: 'createdUserName', headerName: 'ユーザー', flex: 1 },
+    {
+      field: 'createdUserName',
+      headerName: 'ユーザー',
+      flex: 1,
+      renderCell: (params: GridCellParams) => {
+        return (
+          <div className='flex items-center gap-x-1'>
+            <Avatar
+              src={params.row.createdUserPhotoUrl}
+              sx={{ width: 26, height: 26 }}
+            />
+            <p>{params.row.createdUserName}</p>
+          </div>
+        );
+      },
+    },
     { field: 'costType', headerName: '項目', flex: 1 },
     {
       field: 'amount',

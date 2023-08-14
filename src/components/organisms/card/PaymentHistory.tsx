@@ -3,6 +3,7 @@ import { RootState } from '@/store';
 import { PaymentData } from '@/types/type';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
+  Avatar,
   Button,
   Card,
   Dialog,
@@ -26,7 +27,22 @@ import { db } from '../../../../firebase';
 const PaymentHistory = (): ReactElement => {
   const columns = [
     { field: 'createdAt', headerName: '日付', flex: 1 },
-    { field: 'createdUserName', headerName: 'ユーザー', flex: 1 },
+    {
+      field: 'createdUserName',
+      headerName: 'ユーザー',
+      flex: 1,
+      renderCell: (params: GridCellParams) => {
+        return (
+          <div className='flex items-center gap-x-1'>
+            <Avatar
+              src={params.row.createdUserPhotoUrl}
+              sx={{ width: 26, height: 26 }}
+            />
+            <p>{params.row.createdUserName}</p>
+          </div>
+        );
+      },
+    },
     { field: 'amount', headerName: '費用金額', flex: 1 },
     {
       field: 'delete',
@@ -70,6 +86,7 @@ const PaymentHistory = (): ReactElement => {
           amount: doc.data().amount.toLocaleString() + '円',
           createdUserName: doc.data().createdUserName,
           id: doc.id,
+          createdUserPhotoUrl: doc.data().createdUserPhotoUrl,
         } as PaymentData;
       });
       setRows(data);
