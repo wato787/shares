@@ -8,16 +8,14 @@ import React, { ReactElement } from 'react';
 const History = ({ current }: Current): ReactElement => {
   return (
     <PageLayout current={current} grayBg>
-      <>
-        <div className='flex'>
-          <div className='flex-initial w-1/2 m-1 p-5 '>
-            <CostHistory />
-          </div>
-          <div className='flex-initial w-1/2 m-1 p-5'>
-            <PaymentHistory />
-          </div>
+      <div className='flex p-6 gap-x-6'>
+        <div className='w-1/2'>
+          <CostHistory />
         </div>
-      </>
+        <div className='w-1/2'>
+          <PaymentHistory />
+        </div>
+      </div>
     </PageLayout>
   );
 };
