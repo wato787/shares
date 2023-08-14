@@ -63,12 +63,14 @@ const TotalCard = memo((props: Props) => {
         <div className='w-full space-y-4'>
           <div className='flex items-center justify-between border-b p-1'>
             <CostColorTitle type={CostType.RENT} />
-            <span className='text-lg '>
-              ¥
-              {props.groupData?.rentCost
-                ? props.groupData.rentCost.toLocaleString()
-                : 0}
-            </span>
+            <div>
+              <span className='text-lg '>
+                {props.groupData?.rentCost
+                  ? props.groupData.rentCost.toLocaleString()
+                  : 0}
+              </span>
+              <span className='text-xs ml-0.5'>円</span>
+            </div>
           </div>
           {calcedCost.map((item) => (
             <div
@@ -76,9 +78,12 @@ const TotalCard = memo((props: Props) => {
               key={item.type}
             >
               <CostColorTitle type={item.type} />
-              <span className='text-base'>
-                ¥{item.totalCost.toLocaleString()}
-              </span>
+              <div>
+                <span className='text-base'>
+                  {item.totalCost.toLocaleString()}
+                </span>
+                <span className='text-xs ml-0.5'>円</span>
+              </div>
             </div>
           ))}
         </div>

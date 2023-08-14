@@ -9,10 +9,10 @@ const History = ({ current }: Current): ReactElement => {
   return (
     <PageLayout current={current} grayBg>
       <div className='flex p-6 gap-x-6'>
-        <div className='w-1/2'>
+        <div className='w-1/2 flex'>
           <CostHistory />
         </div>
-        <div className='w-1/2'>
+        <div className='w-1/2 flex'>
           <PaymentHistory />
         </div>
       </div>

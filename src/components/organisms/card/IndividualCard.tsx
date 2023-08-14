@@ -41,7 +41,10 @@ const IndividualCard = memo((props: Props) => {
                 />
                 <span>{user.name}</span>
               </div>
-              <span className='text-base'>{individualCost}円</span>
+              <div>
+                <span className='text-lg'>{individualCost}</span>
+                <span className='text-xs ml-0.5'>円</span>
+              </div>
             </div>
           ))}
         </div>
