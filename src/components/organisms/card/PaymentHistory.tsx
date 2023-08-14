@@ -1,6 +1,6 @@
 import DataGrid from '@/components/organisms/DataGrid';
 import { RootState } from '@/store';
-import { CostData } from '@/types/type';
+import { PaymentData } from '@/types/type';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Button,
@@ -49,7 +49,7 @@ const PaymentHistory = (): ReactElement => {
     },
   ];
 
-  const [rows, setRows] = useState<CostData[]>([]);
+  const [rows, setRows] = useState<PaymentData[]>([]);
   const groupId = useSelector((state: RootState) => state.groupId.groupId);
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -62,7 +62,7 @@ const PaymentHistory = (): ReactElement => {
     const groupQuery = query(groupDocRef, orderBy('createdAt', 'desc'));
 
     onSnapshot(groupQuery, (querySnapshot) => {
-      const data: any[] = querySnapshot.docs.map((doc) => {
+      const data: PaymentData[] = querySnapshot.docs.map((doc) => {
         const firestoreTimestamp = doc.data().createdAt;
         const isoTimestamp = firestoreTimestamp.toDate().toISOString();
         return {
@@ -70,7 +70,7 @@ const PaymentHistory = (): ReactElement => {
           amount: doc.data().amount.toLocaleString() + '円',
           createdUserName: doc.data().createdUserName,
           id: doc.id,
-        } as any;
+        } as PaymentData;
       });
       setRows(data);
     });

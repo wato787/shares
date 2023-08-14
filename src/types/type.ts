@@ -31,3 +31,10 @@ export type GroupUser = {
   photoUrl: string;
   position: string;
 };
+
+export type PaymentData = {
+  createdAt: any;
+  amount: string;
+  createdUserName: string;
+  id: string;
+};
