@@ -47,14 +47,12 @@ const Header = (): ReactElement => {
         <IconButton onClick={handleOpenUserMenu}>
           <Avatar
             sx={{ bgcolor: 'lightblue' }}
-            aria-label='recipe'
             src={user?.photoURL as string}
           />
         </IconButton>
       </Tooltip>
       <Menu
         sx={{ mt: '45px' }}
-        id='menu-appbar'
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
