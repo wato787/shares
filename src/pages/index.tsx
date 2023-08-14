@@ -64,54 +64,60 @@ export default function Home({ current }: Current) {
   useEffect(() => {
     if (thisMonthData.length > 0) return;
     setIsLoading(true);
-    (async (): Promise<void> => {
+
+    const fetchData = async () => {
       await getThisMonthData();
-    })();
-    setIsLoading(false);
+
+      setIsLoading(false);
+    };
+
+    fetchData();
   }, [getThisMonthData]);
 
   return (
-    <PageLayout current={current} grayBg>
-      <>
-        {isLoading && <LoadingScreen />}
-        {groupId ? (
-          <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
-            <div className=' -mt-2 -mb-6 mx-auto'>
-              <MonthBadge monthColor={monthColor} monthName={monthName} />
-            </div>
-            <ExpensesCard groupData={groupData} />
+    <>
+      {isLoading && <LoadingScreen />}
+      <PageLayout current={current} grayBg>
+        <>
+          {groupId ? (
+            <div className='p-6 w-full flex flex-col gap-y-10 h-full'>
+              <div className=' -mt-2 -mb-6 mx-auto'>
+                <MonthBadge monthColor={monthColor} monthName={monthName} />
+              </div>
+              <ExpensesCard groupData={groupData} />
 
-            <div className='grid grid-cols-3 gap-x-10'>
-              <div>
-                <InputCard groupId={groupId} user={user} />
-              </div>
-              <div>
-                <TotalCard
-                  groupData={groupData}
-                  thisMonthData={thisMonthData}
-                />
-              </div>
-              <div>
-                <IndividualCard groupUsers={groupUsers} />
-              </div>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className='p-5 h-full'>
-              <div className='flex justify-center items-center  w-full gap-x-5 h-full'>
-                <div className='w-1/3 '>
-                  <GroupCreateCard />
+              <div className='grid grid-cols-3 gap-x-10'>
+                <div>
+                  <InputCard groupId={groupId} user={user} />
                 </div>
-                <div className='w-1/3'>
-                  <GroupJoinCard />
+                <div>
+                  <TotalCard
+                    groupData={groupData}
+                    thisMonthData={thisMonthData}
+                  />
+                </div>
+                <div>
+                  <IndividualCard groupUsers={groupUsers} />
                 </div>
               </div>
             </div>
-          </>
-        )}
-      </>
-    </PageLayout>
+          ) : (
+            <>
+              <div className='p-5 h-full'>
+                <div className='flex justify-center items-center  w-full gap-x-5 h-full'>
+                  <div className='w-1/3 '>
+                    <GroupCreateCard />
+                  </div>
+                  <div className='w-1/3'>
+                    <GroupJoinCard />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </>
+      </PageLayout>
+    </>
   );
 }
 
