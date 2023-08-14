@@ -35,10 +35,7 @@ const IndividualCard = memo((props: Props) => {
               key={user.id}
             >
               <div className='flex items-center gap-x-2'>
-                <Avatar
-                  src={user.photoUrl as string}
-                  sx={{ width: 30, height: 30 }}
-                />
+                <Avatar src={user.photoUrl} sx={{ width: 30, height: 30 }} />
                 <span>{user.name}</span>
               </div>
               <div>
