@@ -25,7 +25,7 @@ import { useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
 import { CostType } from '@/utils/CostType';
 
-const getCostType = (costType: string): string => {
+const getCostTypeValue = (costType: string): string => {
   switch (costType) {
     case CostType.FOOD:
       return '食費';
@@ -118,13 +118,20 @@ const CostHistory = (): ReactElement => {
         return {
           ...doc.data(),
           createdAt: isoTimestamp.slice(5, 10),
-          costType: getCostType(doc.data().costType),
+          costType: getCostTypeValue(doc.data().costType),
           amount: doc.data().amount.toLocaleString(),
         } as CostData;
       });
       setRows(data);
     });
   }, [groupId]);
+
+  const handleConfirmDelete = async (): Promise<void> => {
+    if (groupId && selectedItemId) {
+      await deleteDoc(doc(db, 'group', groupId, 'cost', selectedItemId));
+      setIsDialogOpen(false);
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -134,17 +141,12 @@ const CostHistory = (): ReactElement => {
     })();
   }, [getAllData]);
 
-  const handleConfirmDelete = async (): Promise<void> => {
-    if (groupId && selectedItemId) {
-      await deleteDoc(doc(db, 'group', groupId, 'cost', selectedItemId));
-      setIsDialogOpen(false);
-    }
-  };
-
   return (
     <>
       <Card>
-        <div className='text-center text-xl my-3 font-bold'>費用履歴</div>
+        <div className='text-center text-xl my-3 font-bold'>
+          <p>費用履歴</p>
+        </div>
         <DataGrid columns={columns} rows={rows} loading={isLoading} />
       </Card>
 

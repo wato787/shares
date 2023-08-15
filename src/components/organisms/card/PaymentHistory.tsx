@@ -25,6 +25,12 @@ import { useSelector } from 'react-redux';
 import { db } from '../../../../firebase';
 
 const PaymentHistory = (): ReactElement => {
+  const [rows, setRows] = useState<PaymentData[]>([]);
+  const groupId = useSelector((state: RootState) => state.groupId.groupId);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+
   const columns = [
     { field: 'createdAt', headerName: '日付', flex: 1 },
     {
@@ -65,12 +71,6 @@ const PaymentHistory = (): ReactElement => {
     },
   ];
 
-  const [rows, setRows] = useState<PaymentData[]>([]);
-  const groupId = useSelector((state: RootState) => state.groupId.groupId);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-
   const getAllData = useCallback(async (): Promise<void> => {
     if (!groupId) return;
 
@@ -93,14 +93,6 @@ const PaymentHistory = (): ReactElement => {
     });
   }, [groupId]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    (async (): Promise<void> => {
-      await getAllData();
-      setIsLoading(false);
-    })();
-  }, [getAllData]);
-
   const handleConfirmDelete = async (): Promise<void> => {
     if (groupId && selectedItemId) {
       await deleteDoc(doc(db, 'group', groupId, 'payment', selectedItemId));
@@ -108,10 +100,20 @@ const PaymentHistory = (): ReactElement => {
     }
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    (async (): Promise<void> => {
+      await getAllData();
+    })();
+    setIsLoading(false);
+  }, [getAllData]);
+
   return (
     <>
       <Card>
-        <div className='text-center text-xl my-3 font-bold'>入金履歴</div>
+        <div className='text-center text-xl my-3 font-bold'>
+          <p>入金履歴</p>
+        </div>
         <DataGrid columns={columns} rows={rows} loading={isLoading} />
       </Card>
       <Dialog open={isDialogOpen} onClose={(): void => setIsDialogOpen(true)}>
