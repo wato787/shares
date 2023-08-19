@@ -84,7 +84,7 @@ const RentCard = memo((props: Props) => {
                   fullWidth
                   onClick={changeRentCost}
                   disabled={!rentCost}
-                  className='bg-primary hover:opacity-[0.99] text-white font-bold py-2 px-4 rounded'
+                  className='bg-primary hover:opacity-[0.99] !text-white font-bold py-2 px-4 rounded'
                   sx={{ height: '36px' }}
                 >
                   変更
